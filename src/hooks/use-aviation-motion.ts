@@ -73,11 +73,61 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
               });
             });
             // foreground/background separation: image layer and copy drift at different rates
-            const overview = root.querySelector<HTMLElement>('[data-liquid="overview"] .liquid-frame');
-            if (overview) gsap.fromTo(overview, { yPercent: 2.6 }, { yPercent: -2.6, ease: "none", scrollTrigger: { trigger: overview, start: "top bottom", end: "bottom top", scrub: 1.2 } });
+            root.querySelectorAll<HTMLElement>('[data-liquid="overview"] .liquid-frame, [data-liquid="leasing"] .liquid-frame').forEach(frame => {
+              gsap.fromTo(frame, { yPercent: 2.6 }, { yPercent: -2.6, ease: "none", scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: 1.2 } });
+            });
             root.querySelectorAll<HTMLElement>(".city-section .page-width").forEach(copy => {
               gsap.fromTo(copy, { y: 26 }, { y: -26, ease: "none", scrollTrigger: { trigger: copy.parentElement, start: "top bottom", end: "bottom top", scrub: 1.4 } });
             });
+          });
+
+          /* ---------- scroll-responsive atmospheric cloud depth & lighting (desktop fine-pointer only) ---------- */
+          matchMedia.add("(min-width: 701px) and (hover: hover) and (pointer: fine)", () => {
+            const defaultDepth = { y: 8, x: -3 };
+            const depthSpecs: Record<string, { y: number; x: number }> = {
+              far: defaultDepth,
+              near: { y: 18, x: -7 },
+              "frame-far": { y: 5, x: -2 },
+              "frame-near": { y: 11, x: -5 },
+              "contact-far": { y: 6, x: -2 },
+            };
+            root.querySelectorAll<HTMLElement>("[data-atmo-depth]").forEach(layer => {
+              const kind = layer.dataset["atmoDepth"] ?? "far";
+              const spec = depthSpecs[kind] ?? defaultDepth;
+              const trigger = layer.closest("section") ?? layer;
+              gsap.fromTo(layer, { yPercent: -spec.y * .45, xPercent: 0 }, {
+                yPercent: spec.y, xPercent: spec.x, ease: "none",
+                scrollTrigger: { trigger, start: "top bottom", end: "bottom top", scrub: 1.3 },
+              });
+            });
+
+            const heroLight = root.querySelector<HTMLElement>("[data-atmo-light]");
+            const heroSection = root.querySelector<HTMLElement>(".hero");
+            if (heroLight && heroSection) {
+              gsap.fromTo(heroLight, { yPercent: 0, xPercent: 0, opacity: 1 }, {
+                yPercent: 14, xPercent: -4, opacity: .55, ease: "none",
+                scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 1.2 },
+              });
+            }
+
+            const sunwash = root.querySelector<HTMLElement>("[data-atmo-sunwash]");
+            const haze = root.querySelector<HTMLElement>("[data-atmo-haze]");
+            if (sunwash) {
+              gsap.timeline({
+                scrollTrigger: { trigger: root, start: "top top", end: "bottom bottom", scrub: 1.5 },
+              })
+                .to(sunwash, { xPercent: -16, yPercent: 10, scale: 1.08, opacity: .88, ease: "none" })
+                .to(sunwash, { xPercent: 8, yPercent: 22, scale: 1.02, opacity: .62, ease: "none" })
+                .to(sunwash, { xPercent: -6, yPercent: 32, scale: 1.12, opacity: .82, ease: "none" });
+            }
+            if (haze) {
+              gsap.timeline({
+                scrollTrigger: { trigger: root, start: "top top", end: "bottom bottom", scrub: 1.5 },
+              })
+                .to(haze, { xPercent: 12, yPercent: -8, opacity: .78, ease: "none" })
+                .to(haze, { xPercent: -10, yPercent: -18, opacity: .58, ease: "none" })
+                .to(haze, { xPercent: 6, yPercent: -26, opacity: .84, ease: "none" });
+            }
           });
 
           /* ---------- blueprint outline drawn through light, replayed on every entry ---------- */
@@ -162,7 +212,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
         }
 
         if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-          root.querySelectorAll<HTMLElement>('[data-liquid="overview"]').forEach(figure => {
+          root.querySelectorAll<HTMLElement>('[data-liquid="overview"], [data-liquid="leasing"]').forEach(figure => {
             figure.classList.add("cine-hover");
             const move = (event: PointerEvent) => {
               const box = figure.getBoundingClientRect();
@@ -226,9 +276,11 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
           gsap.killTweensOf(item.state);
           item.sweepTween?.kill();
           item.text?.classList.remove("is-visible");
+          item.frame.classList.remove("is-atmo-active");
           gsap.to(item.state, {
             fill: 1, duration: 1.9, ease: "power2.inOut",
             onUpdate: () => {
+              if (item.state.fill >= .35) item.frame.classList.add("is-atmo-active");
               if (item.state.fill >= .42) item.text?.classList.add("is-visible");
               if (item.state.fill >= .7 && !item.swept) { item.swept = true; runSweep(item); }
             },
@@ -249,6 +301,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
           item.ribbon.style.opacity = "0";
           item.sweep.style.opacity = "0";
           item.text?.classList.remove("is-visible");
+          item.frame.classList.remove("is-atmo-active");
         };
 
         liquids.forEach(item => {
@@ -282,6 +335,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
             item.media.style.clipPath = "";
             item.ribbon.style.clipPath = "";
             item.text?.classList.add("is-visible");
+            item.frame.classList.add("is-atmo-active");
           });
           listeners.forEach(cleanup => cleanup());
           lenis.destroy();
@@ -290,6 +344,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
         };
       } catch {
         root.querySelectorAll<HTMLElement>("[data-liquid-text]").forEach(text => text.classList.add("is-visible"));
+        root.querySelectorAll<HTMLElement>("[data-liquid]").forEach(frame => frame.classList.add("is-atmo-active"));
         root.querySelectorAll<HTMLElement>("[data-liquid] .liquid-media").forEach(media => { media.style.clipPath = ""; });
       }
     };
