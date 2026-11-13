@@ -64,20 +64,9 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
         const cleanups: (() => void)[] = [];
         const context = gsap.context(() => {
           matchMedia.add("(min-width: 701px)", () => {
-            ["[data-liquid=\"city\"]"].forEach(selector => {
-              const frame = root.querySelector<HTMLElement>(selector);
-              if (!frame) return;
-              gsap.fromTo(frame, { yPercent: -3.4 }, {
-                yPercent: 3.4, ease: "none",
-                scrollTrigger: { trigger: frame.parentElement, start: "top bottom", end: "bottom top", scrub: 1.2 },
-              });
-            });
             // foreground/background separation: image layer and copy drift at different rates
-            root.querySelectorAll<HTMLElement>('[data-liquid="overview"] .liquid-frame, [data-liquid="leasing"] .liquid-frame').forEach(frame => {
+            root.querySelectorAll<HTMLElement>('[data-liquid="overview"] .liquid-frame, [data-liquid="leasing"] .liquid-frame, [data-liquid="city"] .liquid-frame').forEach(frame => {
               gsap.fromTo(frame, { yPercent: 2.6 }, { yPercent: -2.6, ease: "none", scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: 1.2 } });
-            });
-            root.querySelectorAll<HTMLElement>(".city-section .page-width").forEach(copy => {
-              gsap.fromTo(copy, { y: 26 }, { y: -26, ease: "none", scrollTrigger: { trigger: copy.parentElement, start: "top bottom", end: "bottom top", scrub: 1.4 } });
             });
           });
 

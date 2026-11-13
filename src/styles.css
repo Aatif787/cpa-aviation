@@ -24,21 +24,21 @@
 }
 
 :root {
-  --background: oklch(0.97 0.012 300);
-  --foreground: oklch(0.32 0.09 300);
-  --primary: oklch(0.78 0.19 130);
-  --primary-foreground: oklch(0.25 0.08 300);
-  --secondary: oklch(0.93 0.03 300);
-  --muted-foreground: oklch(0.5 0.06 300);
-  --accent: oklch(0.62 0.17 55);
-  --lime: oklch(0.58 0.16 140);
-  --violet: oklch(0.6 0.14 300);
-  --destructive: oklch(0.55 0.2 25);
-  --border: oklch(0.4 0.08 300 / 16%);
-  --film-shade: oklch(0.35 0.1 300 / 45%);
-  --film-deep: oklch(0.3 0.1 300 / 88%);
-  --overlay: oklch(0.3 0.09 300 / 85%);
-  --aircraft-sky: oklch(0.96 0.015 300);
+  --background: #faf9f6;
+  --foreground: #1e1b18;
+  --primary: #1e1b18;
+  --primary-foreground: #faf9f6;
+  --secondary: #f1eee7;
+  --muted-foreground: #554f47;
+  --accent: #a3752c;
+  --lime: #8a7352;
+  --violet: #c9b898;
+  --destructive: #b42318;
+  --border: rgb(30 27 24 / 14%);
+  --film-shade: rgb(30 27 24 / 38%);
+  --film-deep: rgb(24 20 16 / 84%);
+  --overlay: rgb(24 20 16 / 82%);
+  --aircraft-sky: #f5f3ee;
 }
 
 /* ---------- base & mobile-first layout primitives ---------- */
@@ -200,10 +200,10 @@ h2 {
   margin: 0 0 clamp(18px, 2.4vw, 29px);
 }
 .section-description {
-  font-size: clamp(0.8125rem, 0.25vw + 0.75rem, 0.9375rem);
+  font-size: clamp(0.875rem, 0.25vw + 0.8rem, 1rem);
   color: var(--muted-foreground);
-  line-height: 1.85;
-  max-width: 380px;
+  line-height: 1.8;
+  max-width: 50ch;
 }
 
 /* ---------- hero section (mobile-first) ---------- */
@@ -308,8 +308,10 @@ h2 {
 }
 .overview-image {
   width: 100%;
-  height: clamp(220px, 34vw, 360px);
+  height: auto;
+  aspect-ratio: 1920 / 1088;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 .image-caption {
@@ -330,72 +332,43 @@ h2 {
 }
 .editorial-copy .section-description { margin-bottom: 0; }
 
-/* ---------- aircraft operating lease section with subtle technical treatment ---------- */
+/* ---------- aircraft operating lease section (warm alabaster / champagne gold) ---------- */
 .leasing-section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding-block: clamp(56px, 8vw, 108px);
+  background: color-mix(in oklab, var(--secondary) 55%, var(--background));
+  color: var(--foreground);
+  padding-block: clamp(64px, 8.5vw, 118px);
+}
+.leasing-section .section-topline::before {
+  background: linear-gradient(90deg, var(--lime), var(--accent), var(--violet));
 }
 .leasing-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(28px, 5vw, 84px);
+  gap: clamp(30px, 5.5vw, 88px);
   align-items: center;
 }
 .leasing-frame {
-  border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
-  background: color-mix(in oklab, var(--secondary) 40%, var(--background));
+  border: 1px solid color-mix(in oklab, var(--accent) 26%, transparent);
+  background: var(--secondary);
 }
 .leasing-image {
   width: 100%;
-  height: clamp(220px, 34vw, 360px);
+  height: auto;
+  aspect-ratio: 1376 / 768;
   object-fit: cover;
-  object-position: 62% center;
+  object-position: center;
   display: block;
-  filter: contrast(1.04) saturate(.88);
-}
-.technical-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-.technical-grid-lines {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--foreground) 8%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 8%, transparent) 1px, transparent 1px);
-  background-size: clamp(32px, 5vw, 48px) clamp(32px, 5vw, 48px);
-  opacity: .55;
-}
-.technical-crosshair {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-color: color-mix(in oklab, var(--accent) 68%, transparent);
-}
-.technical-crosshair--tl { top: 14px; left: 14px; border-top: 1px solid; border-left: 1px solid; }
-.technical-crosshair--br { bottom: 14px; right: 14px; border-bottom: 1px solid; border-right: 1px solid; }
-.technical-tag {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  padding: 2px 4px;
-  font-size: 9px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--foreground);
-  text-shadow: 0 1px 6px color-mix(in oklab, var(--background) 80%, transparent);
 }
 .leasing-meta {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding-top: clamp(14px, 2vw, 18px);
+  gap: 6px;
+  padding-top: clamp(16px, 2vw, 20px);
   border-top: 1px solid var(--border);
-  max-width: 440px;
+  max-width: 48ch;
 }
 .leasing-meta span {
   font-size: 10px;
@@ -405,7 +378,7 @@ h2 {
 }
 .leasing-meta strong {
   font-weight: 400;
-  font-size: clamp(0.8125rem, 0.25vw + 0.74rem, 0.9rem);
+  font-size: clamp(0.875rem, 0.2vw + 0.8rem, 0.95rem);
   color: var(--muted-foreground);
   line-height: 1.65;
 }
@@ -503,58 +476,62 @@ h2 {
 }
 .approach-grid .editorial-copy { margin-bottom: 0; max-width: 560px; }
 
-/* ---------- GIFT City section (mobile-first: stacked photo above copy) ---------- */
+/* ---------- GIFT City & Gujarat corridor section (mobile-first, uncropped visuals) ---------- */
 .city-section {
   position: relative;
-  display: block;
-  min-height: 0;
-  padding-bottom: clamp(40px, 6vw, 56px);
-  isolation: isolate;
-  overflow: hidden;
+  padding-block: clamp(56px, 8vw, 108px);
 }
-.city-section .liquid-fill {
-  position: relative;
-  inset: 0;
-  height: clamp(230px, 56vw, 340px);
-  width: calc(100% - clamp(32px, 6vw, 48px));
-  margin-inline: auto;
-  border-radius: clamp(16px, 2.5vw, 22px);
+.city-overview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 5vw, 84px);
+  align-items: center;
 }
-.city-image {
-  position: absolute;
-  inset: 0;
+.city-overview-grid h2 {
+  font-size: clamp(2rem, 2.8vw + 1rem, 3.125rem);
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+.city-lead-image {
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 1536 / 1024;
   object-fit: cover;
   object-position: center;
-  z-index: -2;
-  opacity: 1;
-  filter: none;
-  box-shadow: none;
+  display: block;
+  filter: sepia(.12) saturate(.92);
 }
-.city-section::after, .city-section::before { content: none; display: none; background: none; box-shadow: none; }
-.city-section .page-width { padding-top: clamp(24px, 4.5vw, 36px); }
-.city-section h2 {
-  font-size: clamp(2.125rem, 3vw + 1rem, 3.375rem);
-  max-width: none;
-  color: var(--foreground);
+.gujarat-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(22px, 3vw, 34px);
+  margin-top: clamp(40px, 5.5vw, 68px);
+  padding-top: clamp(28px, 4vw, 44px);
+  border-top: 1px solid var(--border);
 }
-.city-copy {
+.gujarat-card-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1376 / 768;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.gujarat-caption {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: clamp(18px, 2.5vw, 26px);
+  gap: 4px;
+  margin-top: clamp(10px, 1.4vw, 14px);
 }
-.city-copy .section-description { margin-bottom: 0; }
-.city-section .section-description { color: var(--foreground); opacity: 1; max-width: none; }
-.city-section .eyebrow { color: var(--accent); }
-.city-note {
-  display: block;
-  width: min(100% - clamp(32px, 6vw, 112px), 1440px);
-  margin: 14px auto 0;
+.gujarat-caption strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.1875rem, 0.5vw + 1rem, 1.4rem);
+  font-weight: 400;
   color: var(--foreground);
-  opacity: .75;
-  font-size: 8px;
+}
+.gujarat-caption span {
+  font-size: clamp(0.75rem, 0.15vw + 0.7rem, 0.8125rem);
+  color: var(--muted-foreground);
+  line-height: 1.5;
 }
 
 /* ---------- corporate information section (mobile-first) ---------- */
@@ -644,8 +621,9 @@ h2 {
 .contact-section .liquid-fill {
   position: relative;
   inset: 0;
-  height: clamp(210px, 34svh, 440px);
-  width: min(calc(100% - clamp(32px, 5vw, 48px)), 1440px);
+  height: auto;
+  aspect-ratio: 1920 / 1088;
+  width: min(calc(100% - clamp(32px, 5vw, 48px)), 860px);
   margin-inline: auto;
   border-radius: clamp(16px, 2.5vw, 22px);
 }
@@ -741,37 +719,7 @@ footer {
 
 @media (min-width: 701px) {
   .hero-media, .hero-poster { object-position: center; }
-  .city-section {
-    display: flex;
-    align-items: center;
-    min-height: clamp(500px, 54vw, 640px);
-    padding-bottom: 0;
-  }
-  .city-section .liquid-fill {
-    position: absolute;
-    inset: clamp(16px, 2vw, 24px);
-    width: auto;
-    height: auto;
-    border-radius: 22px;
-  }
-  .city-section .liquid-fill::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(96deg, color-mix(in oklab, var(--background) 76%, transparent) 0%, color-mix(in oklab, var(--background) 38%, transparent) 48%, transparent 74%);
-  }
-  .city-section .page-width { padding-top: 0; }
-  .city-section h2 { max-width: 470px; }
-  .city-section .section-description { max-width: 430px; }
-  .city-note {
-    position: absolute;
-    width: auto;
-    margin: 0;
-    bottom: clamp(24px, 3vw, 34px);
-    right: clamp(32px, 4vw, 56px);
-    opacity: .8;
-  }
+  .gujarat-gallery { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (min-width: 768px) {
@@ -797,6 +745,7 @@ footer {
 @media (min-width: 900px) {
   .overview-grid { grid-template-columns: 1fr 1fr; }
   .leasing-grid { grid-template-columns: 1.05fr 1fr; }
+  .city-overview-grid { grid-template-columns: 1fr 1.05fr; }
   .approach-grid { grid-template-columns: 0.9fr 1.1fr; }
   .corporate-layout { grid-template-columns: 0.85fr 1.15fr; }
   .advisor { grid-template-columns: 1.1fr 1fr; }
@@ -831,12 +780,19 @@ footer {
 
 /* aircraft blueprint line drawing + scroll-synced flight path */
 .leasing-section, .approach-section, .focus-section, .advisor-section { position: relative; isolation: isolate; overflow: hidden; }
-.blueprint, .flight-path { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: .5; }
-.flight-path { opacity: .6; }
-@media (min-width: 701px) { .blueprint, .flight-path { opacity: 1; } }
-.bp-line { fill: none; stroke: var(--foreground); stroke-opacity: .17; stroke-width: 1; stroke-linejoin: round; }
-.bp-axis { fill: none; stroke: var(--lime); stroke-opacity: .4; stroke-width: 1; stroke-dasharray: 5 9; }
-.bp-mark { fill: none; stroke: var(--accent); stroke-opacity: .42; stroke-width: 1; }
+.blueprint, .flight-path { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: .28; }
+.flight-path { opacity: .35; }
+@media (min-width: 701px) {
+  .blueprint {
+    opacity: .62;
+    -webkit-mask-image: linear-gradient(90deg, rgb(0 0 0 / 82%) 0%, rgb(0 0 0 / 40%) 40%, transparent 56%);
+    mask-image: linear-gradient(90deg, rgb(0 0 0 / 82%) 0%, rgb(0 0 0 / 40%) 40%, transparent 56%);
+  }
+  .flight-path { opacity: .55; }
+}
+.bp-line { fill: none; stroke: var(--foreground); stroke-opacity: .16; stroke-width: 1; stroke-linejoin: round; }
+.bp-axis { fill: none; stroke: var(--lime); stroke-opacity: .32; stroke-width: 1; stroke-dasharray: 5 9; }
+.bp-mark { fill: none; stroke: var(--accent); stroke-opacity: .38; stroke-width: 1; }
 .bp-sheen { fill: none; stroke: url(#bp-sheen-grad); stroke-width: 1.8; opacity: 0; }
 .bp-sheen-edge { stop-color: var(--foreground); stop-opacity: 0; }
 .bp-sheen-core { stop-color: var(--foreground); stop-opacity: .9; }

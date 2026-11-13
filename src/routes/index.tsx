@@ -6,7 +6,11 @@ import { ServiceAdvisor } from "@/components/ServiceAdvisor";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import aircraftImage from "@/assets/aircraft-flight.jpg";
+import leasingAircraftImage from "@/assets/leasing-aircraft.jpg";
 import cityImage from "@/assets/gift-city.jpg";
+import giftCityAerial from "@/assets/gift-city-aerial.jpg";
+import ahmedabadImage from "@/assets/ahmedabad-skyline.jpg";
+import suratImage from "@/assets/surat-skyline.jpg";
 import cpaLogo from "@/assets/cpa-logo.png";
 import flightFilm from "@/assets/white-aircraft-flight.mp4.asset.json";
 import flightStill from "@/assets/white-aircraft-still.jpg.asset.json";
@@ -136,7 +140,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="leasing" className="leasing-section page-width">
+      <section id="leasing" className="leasing-section">
         <svg className="blueprint" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
           <defs>
             <linearGradient id="bp-sheen-grad" gradientUnits="userSpaceOnUse" x1="-460" y1="0" x2="-140" y2="0">
@@ -167,31 +171,28 @@ function Index() {
             <path d="M648 348 L420 524 L378 518 L498 348 Z" />
           </g>
         </svg>
-        <div className="section-topline reveal"><p className="eyebrow">Aircraft Leasing</p><span className="section-number">02</span></div>
-        <div className="leasing-grid">
-          <figure className="leasing-figure m-0" data-liquid="leasing">
-            <span className="liquid-frame leasing-frame">
-              <img className="leasing-image liquid-media" src={flightStill.url} alt="Commercial aircraft silhouette in technical profile" width={1920} height={1080} loading="lazy" />
-              <span className="technical-overlay" aria-hidden="true">
-                <span className="technical-grid-lines" />
-                <span className="technical-crosshair technical-crosshair--tl" />
-                <span className="technical-crosshair technical-crosshair--br" />
-                <span className="technical-tag">LOA · OPERATING LEASE</span>
+        <div className="page-width">
+          <div className="section-topline reveal"><p className="eyebrow">Aircraft Leasing</p><span className="section-number">02</span></div>
+          <div className="leasing-grid">
+            <figure className="leasing-figure m-0" data-liquid="leasing">
+              <span className="liquid-frame leasing-frame">
+                <img className="leasing-image liquid-media" src={leasingAircraftImage} alt="Full commercial jetliner flying above sunlit clouds" width={1376} height={768} loading="lazy" />
+                <span className="frame-atmosphere" aria-hidden="true"><span className="frame-sunbeam" /><span className="frame-metallic-sheen" /></span>
+                <span className="liquid-ribbon" aria-hidden="true" />
+                <span className="liquid-sweep" aria-hidden="true" />
               </span>
-              <span className="liquid-ribbon" aria-hidden="true" />
-              <span className="liquid-sweep" aria-hidden="true" />
-            </span>
-            <figcaption className="image-caption reveal"><span>Technical aircraft study</span><ArrowUpRight size={13} /></figcaption>
-          </figure>
-          <div className="reveal" data-liquid-text>
-            <h2>Aircraft Operating<br /><span className="muted-heading">Lease</span></h2>
-            <div className="editorial-copy">
-              <p className="section-description">Aircraft operating leases provide an alternative to outright aircraft ownership. They form an important part of the commercial aviation ecosystem, allowing aircraft to be made available under agreed lease arrangements.</p>
-              <p className="section-description">CPA Aviation Leasing Capital has received a Letter of Approval identifying operating lease for aircraft as an authorised operation, subject to the applicable regulatory conditions.</p>
-            </div>
-            <div className="leasing-meta">
-              <span>Authorised Scope</span>
-              <strong>Operating lease for aircraft under Letter of Approval conditions</strong>
+              <figcaption className="image-caption reveal"><span>Operating lease study · Illustrative aircraft visual</span><ArrowUpRight size={13} /></figcaption>
+            </figure>
+            <div className="reveal" data-liquid-text>
+              <h2>Aircraft Operating<br /><span className="muted-heading">Lease</span></h2>
+              <div className="editorial-copy">
+                <p className="section-description">Aircraft operating leases provide an alternative to outright aircraft ownership. They form an important part of the commercial aviation ecosystem, allowing aircraft to be made available under agreed lease arrangements.</p>
+                <p className="section-description">CPA Aviation Leasing Capital has received a Letter of Approval identifying operating lease for aircraft as an authorised operation, subject to the applicable regulatory conditions.</p>
+              </div>
+              <div className="leasing-meta">
+                <span>Authorised Scope</span>
+                <strong>Operating lease for aircraft under Letter of Approval conditions</strong>
+              </div>
             </div>
           </div>
         </div>
@@ -275,10 +276,51 @@ function Index() {
         </div>
       </section>
 
-      <section id="gift-city" className="city-section"><span className="liquid-fill" data-liquid="city"><img src={cityImage} alt="Architectural visual of the GIFT City financial district" className="city-image liquid-media" width={1536} height={1024} loading="lazy" /><span className="liquid-ribbon" aria-hidden="true" /><span className="liquid-sweep" aria-hidden="true" /></span><div className="page-width reveal" data-liquid-text><p className="eyebrow">GIFT City, Gujarat</p><h2>Based in<br />GIFT City</h2><div className="city-copy"><p className="section-description">Located in Gujarat International Finance Tec-City, CPA Aviation Leasing Capital operates from an IFSC business environment designed for international financial services.</p><p className="section-description">Its presence in GIFT City forms an important part of the company&apos;s corporate identity and business structure.</p></div><div className="location-tag"><Building2 size={15} /> GIFT City, Gandhinagar, Gujarat</div></div><span className="city-note">Architectural visualisation</span></section>
+      <section id="gift-city" className="city-section page-width">
+        <div className="section-topline reveal"><p className="eyebrow">GIFT City &amp; Gujarat</p><span className="section-number">05</span></div>
+        <div className="city-overview-grid">
+          <div className="reveal" data-liquid-text>
+            <h2>Based in<br /><span className="muted-heading">GIFT City</span></h2>
+            <div className="editorial-copy">
+              <p className="section-description">Located in Gujarat International Finance Tec-City, CPA Aviation Leasing Capital operates from an IFSC business environment designed for international financial services.</p>
+              <p className="section-description">Its presence in GIFT City, anchored within Gujarat&apos;s broader commercial corridor spanning Gandhinagar, Ahmedabad, and Surat, forms an important part of the company&apos;s corporate identity and business structure.</p>
+            </div>
+            <div className="location-tag"><Building2 size={15} /> GIFT City, Gandhinagar, Gujarat</div>
+          </div>
+          <figure className="m-0" data-liquid="city">
+            <span className="liquid-frame">
+              <img src={cityImage} alt="Modern glass towers in GIFT City, Gandhinagar, Gujarat" className="city-lead-image liquid-media" width={1536} height={1024} loading="lazy" />
+              <span className="liquid-ribbon" aria-hidden="true" />
+              <span className="liquid-sweep" aria-hidden="true" />
+            </span>
+            <figcaption className="image-caption reveal"><span>GIFT City, Gandhinagar · Architectural visualisation</span><ArrowUpRight size={13} /></figcaption>
+          </figure>
+        </div>
+
+        <div className="gujarat-gallery">
+          <figure className="gujarat-card reveal m-0">
+            <span className="liquid-frame">
+              <img src={giftCityAerial} alt="Aerial golden-hour skyline of GIFT City, Gandhinagar, Gujarat" className="gujarat-card-image" width={1376} height={768} loading="lazy" />
+            </span>
+            <figcaption className="gujarat-caption"><strong>GIFT City, Gandhinagar</strong><span>International Financial Services Centre district visual</span></figcaption>
+          </figure>
+          <figure className="gujarat-card reveal m-0">
+            <span className="liquid-frame">
+              <img src={ahmedabadImage} alt="Sabarmati Riverfront and skyline of Ahmedabad, Gujarat" className="gujarat-card-image" width={1376} height={768} loading="lazy" />
+            </span>
+            <figcaption className="gujarat-caption"><strong>Ahmedabad, Gujarat</strong><span>Sabarmati Riverfront and commercial skyline visual</span></figcaption>
+          </figure>
+          <figure className="gujarat-card reveal m-0">
+            <span className="liquid-frame">
+              <img src={suratImage} alt="Modern financial district skyline of Surat, Gujarat" className="gujarat-card-image" width={1376} height={768} loading="lazy" />
+            </span>
+            <figcaption className="gujarat-caption"><strong>Surat, Gujarat</strong><span>Modern commercial district and riverfront visual</span></figcaption>
+          </figure>
+        </div>
+      </section>
 
       <section id="corporate-info" className="corporate-section page-width">
-        <div className="section-topline reveal"><p className="eyebrow">Corporate Information</p><span className="section-number">05</span></div>
+        <div className="section-topline reveal"><p className="eyebrow">Corporate Information</p><span className="section-number">06</span></div>
         <div className="corporate-layout">
           <div className="corporate-heading reveal">
             <h2>Registered<br /><span className="muted-heading">Particulars</span></h2>
@@ -296,7 +338,7 @@ function Index() {
       </section>
 
       <section id="advisor" className="advisor-section page-width">
-        <div className="section-topline reveal"><p className="eyebrow">Service Finder</p><span className="section-number">06</span></div><div className="focus-heading reveal"><h2>Tell us what you need.<br /><span className="muted-heading">We will point you to the right area.</span></h2></div><ServiceAdvisor />
+        <div className="section-topline reveal"><p className="eyebrow">Service Finder</p><span className="section-number">07</span></div><div className="focus-heading reveal"><h2>Tell us what you need.<br /><span className="muted-heading">We will point you to the right area.</span></h2></div><ServiceAdvisor />
       </section>
 
       <section id="contact" className="contact-section"><span className="liquid-fill" data-liquid="contact"><img className="contact-background liquid-media" src={aircraftImage} width={1920} height={1088} alt="" loading="lazy" /><span className="frame-atmosphere frame-atmosphere--contact" aria-hidden="true"><span className="atmo-depth-wrap frame-cloud-wrap--far" data-atmo-depth="contact-far"><span className="cloud-track cloud-track--frame-far" /></span><span className="frame-sunbeam frame-sunbeam--contact" /><span className="frame-haze frame-haze--contact" /></span><span className="liquid-ribbon" aria-hidden="true" /><span className="liquid-sweep" aria-hidden="true" /></span><div className="reveal" data-liquid-text><p className="eyebrow">Contact</p><h2>Discuss an Aviation<br /><span className="muted-heading">Leasing Enquiry</span></h2><p className="contact-intro">For business enquiries and further information about our aircraft leasing activities, please get in touch with our team.</p><ContactForm /><a className="contact-email" href="mailto:info@cpaaviations.com">info@cpaaviations.com</a></div></section>
