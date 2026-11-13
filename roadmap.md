@@ -1,0 +1,13 @@
+# Website roadmap
+- [x] Build cinematic aviation landing page and contact links.
+- [x] Add refined motion and mobile layouts.
+- [x] Verify page, controls, and reduced-motion behavior.
+- [x] Restore the original opening text and buttons, edit the supplied aircraft animation to pure white, and verify playback and mobile display.
+- [x] Review and refine all website wording without adding sections or unverified business claims.
+- [x] Add the supplied reference's reveal and entrance animations without replacing content or media, and verify desktop, mobile, and reduced motion.
+- [x] Polish scroll depth, transparent navigation, button interactions, and mobile motion; verify all navigation and reduced-motion behavior.
+- [x] Add the repeating liquid-fill image reveal with wave surface, depth, parallax, light sweep and synced text; verify replay, mobile and reduced motion.
+- [ ] Official-document verification awaits the three referenced documents, which were not uploaded.
+- [ ] Publish approved privacy and terms text when the company supplies it.- [x] AI service finder section (recommends only the three focus areas)
+- [x] Contact form stores enquiries (owner email pending verified domain)
+- [x] Add the aircraft blueprint line-drawing and the scroll-synced flight path; verify replay, mobile and reduced motion.
