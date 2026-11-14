@@ -44,7 +44,6 @@ function AboutPage() {
       <section id="corporate-overview" className="subpage-band page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Incorporation &amp; Corporate Background</p>
-          <span className="section-number">01</span>
         </div>
         <div className="about-dossier-layout">
           <div className="reveal" data-liquid-text>
@@ -89,7 +88,6 @@ function AboutPage() {
       <section id="moa-objectives" className="subpage-band page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Electronic Memorandum of Association (e-MOA)</p>
-          <span className="section-number">02</span>
         </div>
         <div className="scope-header reveal">
           <h2>
@@ -126,7 +124,6 @@ function AboutPage() {
       <section id="corporate-particulars" className="corporate-section page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Statutory Identity &amp; Records</p>
-          <span className="section-number">03</span>
         </div>
         <div className="corporate-layout">
           <div className="corporate-heading reveal">

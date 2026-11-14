@@ -323,7 +323,6 @@ h2 {
   transition: transform 1.2s cubic-bezier(.2,.8,.2,1);
 }
 .section-topline.is-visible::before { transform: scaleX(1); }
-.section-number { color: var(--muted-foreground); font-size: 10px; flex-shrink: 0; }
 .section-topline .eyebrow { margin: 0; }
 
 /* ---------- approach / overview section (mobile-first) ---------- */

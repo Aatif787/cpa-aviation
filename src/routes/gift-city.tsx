@@ -85,7 +85,6 @@ function GiftCityPage() {
       <section ref={deckSectionRef} id="gujarat-corridor" className="city-section page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">GIFT City &amp; Gujarat Ecosystem</p>
-          <span className="section-number">01</span>
         </div>
         <div className="city-overview-grid">
           <div className="city-copy-panel reveal" data-liquid-text>
@@ -170,7 +169,6 @@ function GiftCityPage() {
       <section id="loa-details" className="subpage-band page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Letter of Approval &amp; Regulatory Context</p>
-          <span className="section-number">02</span>
         </div>
         <div className="scope-header reveal">
           <h2>
@@ -206,7 +204,6 @@ function GiftCityPage() {
       <section id="ifsc-context" className="subpage-band page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">IFSC Framework &amp; Registered Office</p>
-          <span className="section-number">03</span>
         </div>
         <div className="subpage-cards-grid subpage-cards-grid--two reveal">
           {GIFT_CITY_ADVANTAGES.map((item) => (

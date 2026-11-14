@@ -54,7 +54,6 @@ function AircraftLeasingPage() {
       <section id="operating-lease-role" className="overview page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Operating Lease Mechanics &amp; Considerations</p>
-          <span className="section-number">01</span>
         </div>
         <div className="overview-grid">
           <div className="reveal" data-liquid-text>
@@ -88,7 +87,6 @@ function AircraftLeasingPage() {
         <div className="page-width">
           <div className="section-topline reveal">
             <p className="eyebrow">Structured Operating Lease Framework</p>
-            <span className="section-number">02</span>
           </div>
           <div className="scope-header reveal">
             <h2>
@@ -114,7 +112,6 @@ function AircraftLeasingPage() {
       <section id="approved-activity" className="subpage-band page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">LOA Authority vs. e-MOA Objects</p>
-          <span className="section-number">03</span>
         </div>
         <div className="loa-comparison-grid reveal">
           <article className="regulatory-card">

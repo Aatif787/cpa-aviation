@@ -288,7 +288,6 @@ function Index() {
       <section id="about" className="overview page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">About the Company</p>
-          <span className="section-number">01</span>
         </div>
         <div className="overview-grid">
           <div className="reveal" data-liquid-text>
@@ -350,7 +349,6 @@ function Index() {
         <div className="page-width">
           <div className="section-topline reveal">
             <p className="eyebrow">Aircraft Leasing</p>
-            <span className="section-number">02</span>
           </div>
           <div className="leasing-grid">
             <figure className="leasing-figure m-0" data-liquid="leasing">
@@ -394,7 +392,6 @@ function Index() {
       <section id="business-scope" className="focus-section page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Our Business Scope</p>
-          <span className="section-number">03</span>
         </div>
         <div className="scope-header reveal">
           <h2>
@@ -461,7 +458,6 @@ function Index() {
         <FlightPathSvg />
         <div className="section-topline reveal">
           <p className="eyebrow">Our Approach</p>
-          <span className="section-number">04</span>
         </div>
         <div className="approach-grid">
           <div className="reveal">
@@ -490,7 +486,6 @@ function Index() {
         <div className="page-width city-sky-content">
           <div className="section-topline reveal">
             <p className="eyebrow">GIFT City &amp; Gujarat</p>
-            <span className="section-number">05</span>
           </div>
           <div className="city-overview-grid">
             <div className="city-copy-panel reveal" data-liquid-text>

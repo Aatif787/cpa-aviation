@@ -44,7 +44,6 @@ function AviationAssetsPage() {
       <section id="asset-categories" className="focus-section page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Stated Asset Classes</p>
-          <span className="section-number">01</span>
         </div>
         <div className="scope-header reveal">
           <h2>
@@ -83,7 +82,6 @@ function AviationAssetsPage() {
         <div className="page-width">
           <div className="section-topline reveal">
             <p className="eyebrow">Asset Lifecycle &amp; Corporate Objects</p>
-            <span className="section-number">02</span>
           </div>
           <div className="leasing-grid">
             <LiquidVisualFrame
@@ -134,7 +132,6 @@ function AviationAssetsPage() {
       <section id="participation-structures" className="subpage-band page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Ownership &amp; Participation Frameworks</p>
-          <span className="section-number">03</span>
         </div>
         <div className="scope-header reveal">
           <h2>

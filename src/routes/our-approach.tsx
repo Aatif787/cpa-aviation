@@ -61,7 +61,6 @@ function OurApproachPage() {
         <div className="approach-process-wrap">
           <div className="section-topline reveal">
             <p className="eyebrow">Structured Evaluation Process</p>
-            <span className="section-number">01</span>
           </div>
           <div className="scope-header reveal">
             <h2>
@@ -93,7 +92,6 @@ function OurApproachPage() {
       <section id="approach-pillars" className="subpage-band page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Assets, Leasing &amp; Counterparty Principles</p>
-          <span className="section-number">02</span>
         </div>
         <div className="approach-grid">
           <div className="reveal">
@@ -140,7 +138,6 @@ function OurApproachPage() {
       <section id="focus-advisor" className="advisor-section page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Focus Area Alignment</p>
-          <span className="section-number">03</span>
         </div>
         <div className="scope-header reveal">
           <h2>
