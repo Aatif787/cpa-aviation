@@ -2183,7 +2183,7 @@ footer {
   }
 }
 
-/* ---------- GIFT City glassmorphism sky showcase ---------- */
+/* ---------- GIFT City transparent sky showcase ---------- */
 .city-sky-section {
   position: relative;
   isolation: isolate;
@@ -2193,77 +2193,23 @@ footer {
 .city-sky-content {
   position: relative;
   z-index: 2;
+  background: transparent;
 }
-.city-sky-section .section-topline {
-  border-bottom-color: rgba(255, 255, 255, 0.52);
-}
-.city-glass-shell {
-  position: relative;
+.city-sky-section .city-copy-panel {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
   min-width: 0;
-  padding: clamp(18px, 3.2vw, 42px);
-  border-radius: clamp(18px, 2.2vw, 26px);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.34) 0%,
-    rgba(255, 255, 255, 0.16) 52%,
-    rgba(255, 255, 255, 0.28) 100%
-  );
-  -webkit-backdrop-filter: blur(22px) saturate(165%);
-  backdrop-filter: blur(22px) saturate(165%);
-  border: 1px solid rgba(255, 255, 255, 0.62);
-  box-shadow:
-    0 30px 64px -26px rgba(15, 23, 42, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.78),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.24);
 }
-.city-sky-section .city-copy-panel--glass {
-  min-width: 0;
-  padding: clamp(20px, 2.8vw, 34px);
-  border-radius: clamp(14px, 1.8vw, 20px);
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.42) 0%,
-    rgba(255, 255, 255, 0.22) 100%
-  );
-  -webkit-backdrop-filter: blur(18px) saturate(155%);
-  backdrop-filter: blur(18px) saturate(155%);
-  border: 1px solid rgba(255, 255, 255, 0.66);
-  box-shadow:
-    0 18px 42px -22px rgba(15, 23, 42, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.78);
-}
-.city-sky-section .city-copy-panel--glass .section-description {
+.city-sky-section .city-copy-panel .section-description {
   color: color-mix(in oklab, var(--foreground) 86%, transparent);
 }
 .city-sky-section .city-deck-card {
-  background: rgba(255, 255, 255, 0.30);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.68);
-  box-shadow:
-    0 24px 52px -20px rgba(15, 23, 42, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72);
-}
-.city-sky-section .location-tag {
-  padding: 7px 13px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.38);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  backdrop-filter: blur(12px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.64);
-  color: var(--foreground);
-}
-.city-sky-section .navigation-button {
-  padding: 8px 16px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.44);
-  -webkit-backdrop-filter: blur(12px) saturate(145%);
-  backdrop-filter: blur(12px) saturate(145%);
-  border: 1px solid rgba(255, 255, 255, 0.72);
-}
-.city-sky-section .navigation-button:hover {
-  background: rgba(255, 255, 255, 0.66);
-  border-color: var(--accent);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: 0 24px 52px -20px rgba(15, 23, 42, 0.24);
 }
 
 @keyframes overview-plane-flight {

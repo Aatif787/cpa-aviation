@@ -453,89 +453,87 @@ function Index() {
             <p className="eyebrow">GIFT City &amp; Gujarat</p>
             <span className="section-number">05</span>
           </div>
-          <div className="city-glass-shell">
-            <div className="city-overview-grid">
-              <div className="city-copy-panel city-copy-panel--glass reveal" data-liquid-text>
-                <div key={activeScene.code} className="city-copy-stage">
-                  <h2>
-                    {activeScene.headingTop}<br />
-                    <span className="muted-heading">{activeScene.headingAccent}</span>
-                  </h2>
-                  <div className="editorial-copy">
-                    {activeScene.paragraphs.map((text) => (
-                      <p key={text} className="section-description">
-                        {text}
-                      </p>
-                    ))}
+          <div className="city-overview-grid">
+            <div className="city-copy-panel reveal" data-liquid-text>
+              <div key={activeScene.code} className="city-copy-stage">
+                <h2>
+                  {activeScene.headingTop}<br />
+                  <span className="muted-heading">{activeScene.headingAccent}</span>
+                </h2>
+                <div className="editorial-copy">
+                  {activeScene.paragraphs.map((text) => (
+                    <p key={text} className="section-description">
+                      {text}
+                    </p>
+                  ))}
+                </div>
+                <div className="flex flex-wrap items-center gap-4">
+                  <div className="location-tag">
+                    <Building2 size={15} /> {activeScene.location}
                   </div>
-                  <div className="flex flex-wrap items-center gap-4">
-                    <div className="location-tag">
-                      <Building2 size={15} /> {activeScene.location}
-                    </div>
-                    <Button asChild variant="navigation">
-                      <Link to="/gift-city">
-                        Explore GIFT City IFSC <ArrowUpRight />
-                      </Link>
-                    </Button>
-                  </div>
+                  <Button asChild variant="navigation">
+                    <Link to="/gift-city">
+                      Explore GIFT City IFSC <ArrowUpRight />
+                    </Link>
+                  </Button>
                 </div>
               </div>
-              <figure
-                className="m-0 city-visual-stack"
-                data-liquid="city"
-                onMouseEnter={() => setCityPaused(true)}
-                onMouseLeave={() => setCityPaused(false)}
-              >
-                <span className="liquid-frame">
-                  <span className="city-deck liquid-media">
-                    <span className="city-deck-track">
-                      {GUJARAT_SCENES.map((scene, index) => {
-                        const offset = (index - cityIndex + GUJARAT_SCENES.length) % GUJARAT_SCENES.length;
-                        return (
-                          <button
-                            key={scene.code}
-                            type="button"
-                            className="city-deck-card"
-                            data-pos={offset}
-                            onClick={() =>
-                              setCityIndex(offset === 0 ? (cityIndex + 1) % GUJARAT_SCENES.length : index)
-                            }
-                            aria-label={
-                              offset === 0 ? `${scene.label} — show next view` : `Show ${scene.label}`
-                            }
-                          >
-                            <span className="city-deck-photo">
-                              <picture>
-                                <source
-                                  srcSet={scene.avifSrcSet}
-                                  sizes="(max-width: 700px) 90vw, 48vw"
-                                  type="image/avif"
-                                />
-                                <source
-                                  srcSet={scene.webpSrcSet}
-                                  sizes="(max-width: 700px) 90vw, 48vw"
-                                  type="image/webp"
-                                />
-                                <img
-                                  src={scene.image}
-                                  alt={scene.alt}
-                                  width={scene.width}
-                                  height={scene.height}
-                                  loading="lazy"
-                                  decoding="async"
-                                />
-                              </picture>
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </span>
-                  </span>
-                  <span className="liquid-ribbon" aria-hidden="true" />
-                  <span className="liquid-sweep" aria-hidden="true" />
-                </span>
-              </figure>
             </div>
+            <figure
+              className="m-0 city-visual-stack"
+              data-liquid="city"
+              onMouseEnter={() => setCityPaused(true)}
+              onMouseLeave={() => setCityPaused(false)}
+            >
+              <span className="liquid-frame">
+                <span className="city-deck liquid-media">
+                  <span className="city-deck-track">
+                    {GUJARAT_SCENES.map((scene, index) => {
+                      const offset = (index - cityIndex + GUJARAT_SCENES.length) % GUJARAT_SCENES.length;
+                      return (
+                        <button
+                          key={scene.code}
+                          type="button"
+                          className="city-deck-card"
+                          data-pos={offset}
+                          onClick={() =>
+                            setCityIndex(offset === 0 ? (cityIndex + 1) % GUJARAT_SCENES.length : index)
+                          }
+                          aria-label={
+                            offset === 0 ? `${scene.label} — show next view` : `Show ${scene.label}`
+                          }
+                        >
+                          <span className="city-deck-photo">
+                            <picture>
+                              <source
+                                srcSet={scene.avifSrcSet}
+                                sizes="(max-width: 700px) 90vw, 48vw"
+                                type="image/avif"
+                              />
+                              <source
+                                srcSet={scene.webpSrcSet}
+                                sizes="(max-width: 700px) 90vw, 48vw"
+                                type="image/webp"
+                              />
+                              <img
+                                src={scene.image}
+                                alt={scene.alt}
+                                width={scene.width}
+                                height={scene.height}
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            </picture>
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </span>
+                </span>
+                <span className="liquid-ribbon" aria-hidden="true" />
+                <span className="liquid-sweep" aria-hidden="true" />
+              </span>
+            </figure>
           </div>
         </div>
       </section>
