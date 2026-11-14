@@ -2,12 +2,11 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight, FileText, Lock, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LiquidVisualFrame, PageBreadcrumbs, SiteShell } from "@/components/SiteLayout";
-import { COMPANY_CIN, CORPORATE_EMAIL, LEGAL_NAME, buildPageHead } from "@/lib/seo";
+import { COMPANY_CIN, LEGAL_NAME, buildPageHead } from "@/lib/seo";
 import {
   ABOUT_AIRCRAFT_VISUAL,
   ABOUT_IDENTITY_DOSSIER,
   CORPORATE_DOCUMENTS,
-  CORPORATE_PARTICULARS,
   MOA_OBJECTIVE_CLAUSES,
 } from "@/lib/site-content";
 
@@ -124,45 +123,6 @@ function AboutPage() {
       <section id="corporate-particulars" className="corporate-section page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Statutory Identity &amp; Records</p>
-        </div>
-        <div className="corporate-layout">
-          <div className="corporate-heading reveal">
-            <h2>
-              Registered Particulars<br />
-              <span className="muted-heading">&amp; Governance</span>
-            </h2>
-            <p className="corporate-note">
-              Official corporate identification records and statutory seat of {LEGAL_NAME}. Personal subscriber identification numbers are intentionally omitted from public disclosures.
-            </p>
-            <div className="mt-4">
-              <Button asChild variant="navigation">
-                <Link to="/gift-city">
-                  GIFT City &amp; LoA Details <ArrowUpRight />
-                </Link>
-              </Button>
-            </div>
-          </div>
-          <div className="corporate-ledger-card reveal">
-            <dl className="corporate-list">
-              {CORPORATE_PARTICULARS.map((item) => (
-                <div key={item.label} className="corporate-row">
-                  <dt>{item.label}</dt>
-                  <dd>
-                    {item.label === "Corporate Contact" ? (
-                      <>
-                        <a href={`mailto:${CORPORATE_EMAIL}`}>{CORPORATE_EMAIL}</a> ·{" "}
-                        <a href="tel:+918527712949" className="whitespace-nowrap">
-                          +91 85277 12949
-                        </a>
-                      </>
-                    ) : (
-                      item.value
-                    )}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
         </div>
 
         <div id="regulatory-scope" className="regulatory-panel reveal" aria-labelledby="about-regulatory-heading">
