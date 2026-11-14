@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowUpRight, Building2, Globe2, Layers3, MapPin, Menu, Plane, X } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
-import { ServiceAdvisor } from "@/components/ServiceAdvisor";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import aircraftImage from "@/assets/aircraft-flight.jpg";
@@ -35,6 +34,73 @@ const navigation = [
   { label: "GIFT City", id: "gift-city" },
 ];
 
+const GUJARAT_SCENES = [
+  {
+    code: "01",
+    label: "GIFT City",
+    headingTop: "Based in",
+    headingAccent: "GIFT City",
+    paragraphs: [
+      "Located in Gujarat International Finance Tec-City, CPA Aviation Leasing Capital operates from an IFSC business environment designed for international financial services.",
+      "Its presence in GIFT City forms an important part of the company's corporate identity and business structure.",
+    ],
+    location: "GIFT City, Gandhinagar, Gujarat",
+    caption: "GIFT City, Gandhinagar · Architectural visualisation",
+    image: cityImage,
+    alt: "Architectural twin towers at GIFT City, Gandhinagar, Gujarat",
+    width: 1536,
+    height: 1024,
+  },
+  {
+    code: "02",
+    label: "IFSC District",
+    headingTop: "Operating from",
+    headingAccent: "IFSC District",
+    paragraphs: [
+      "Within Gandhinagar's International Financial Services Centre, dedicated commercial and regulatory frameworks support cross-border aviation leasing structures.",
+      "Operating from this jurisdiction positions the company within India's designated hub for international aviation finance.",
+    ],
+    location: "GIFT City IFSC Zone · Gandhinagar",
+    caption: "GIFT City IFSC Zone, Gandhinagar · Illustrative aerial visual",
+    image: giftCityAerial,
+    alt: "Aerial golden-hour skyline of GIFT City, Gandhinagar, Gujarat",
+    width: 1376,
+    height: 768,
+  },
+  {
+    code: "03",
+    label: "Ahmedabad",
+    headingTop: "Connected to",
+    headingAccent: "Ahmedabad",
+    paragraphs: [
+      "Positioned close to Ahmedabad, GIFT City links India's dedicated IFSC jurisdiction with one of Gujarat's primary commercial and aviation centres.",
+      "This proximity supports connectivity with banking, legal, and institutional stakeholders while the company's operations remain anchored in GIFT City.",
+    ],
+    location: "Ahmedabad · Gujarat Commercial Hub",
+    caption: "Ahmedabad, Gujarat · Illustrative Sabarmati skyline visual",
+    image: ahmedabadImage,
+    alt: "Sabarmati Riverfront and skyline of Ahmedabad, Gujarat",
+    width: 1376,
+    height: 768,
+  },
+  {
+    code: "04",
+    label: "Surat",
+    headingTop: "Anchored in",
+    headingAccent: "Gujarat",
+    paragraphs: [
+      "Across Gujarat's major enterprise centres from Gandhinagar and Ahmedabad to Surat, commercial infrastructure underpins long-term financial activity.",
+      "Operating within this corridor aligns the company with a state structured for international trade, aviation services, and enterprise growth.",
+    ],
+    location: "Surat · Gujarat Economic Corridor",
+    caption: "Surat, Gujarat · Illustrative commercial skyline visual",
+    image: suratImage,
+    alt: "Modern commercial district skyline of Surat, Gujarat",
+    width: 1376,
+    height: 768,
+  },
+] as const;
+
 function Wordmark() {
   return <a href="#top" className="wordmark" aria-label="CPA Aviation home">
     <img className="wordmark-logo" src={cpaLogo} alt="CPA Aviation — Elevating Aviation" width={268} height={159} />
@@ -47,6 +113,8 @@ function Index() {
   const [reducedMotion, setReducedMotion] = useState(true);
   const [activeSection, setActiveSection] = useState("");
   const [legal, setLegal] = useState<"privacy" | "terms" | null>(null);
+  const [cityIndex, setCityIndex] = useState(0);
+  const [cityPaused, setCityPaused] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   useAviationMotion(rootRef);
@@ -59,7 +127,7 @@ function Index() {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("is-visible"); observer.unobserve(entry.target); } });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal:not([data-liquid-text])").forEach(element => observer.observe(element));
+    document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
     const sectionObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) setActiveSection(entry.target.id); });
     }, { rootMargin: "-25% 0px -45% 0px" });
@@ -74,6 +142,15 @@ function Index() {
     else video.pause();
   }, [playing, reducedMotion]);
 
+  useEffect(() => {
+    if (reducedMotion || cityPaused) return;
+    const timer = window.setInterval(() => {
+      setCityIndex(current => (current + 1) % GUJARAT_SCENES.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [reducedMotion, cityPaused]);
+
+  const activeScene = GUJARAT_SCENES[cityIndex] ?? GUJARAT_SCENES[0];
   const navLinks = navigation.map(item => <Button key={item.id} asChild variant="navigation" className={activeSection === item.id ? "active" : ""}><a href={`#${item.id}`} onClick={() => setMenuOpen(false)}>{item.label}</a></Button>);
 
   return <div id="top" ref={rootRef}>
@@ -279,44 +356,98 @@ function Index() {
       <section id="gift-city" className="city-section page-width">
         <div className="section-topline reveal"><p className="eyebrow">GIFT City &amp; Gujarat</p><span className="section-number">05</span></div>
         <div className="city-overview-grid">
-          <div className="reveal" data-liquid-text>
-            <h2>Based in<br /><span className="muted-heading">GIFT City</span></h2>
-            <div className="editorial-copy">
-              <p className="section-description">Located in Gujarat International Finance Tec-City, CPA Aviation Leasing Capital operates from an IFSC business environment designed for international financial services.</p>
-              <p className="section-description">Its presence in GIFT City, anchored within Gujarat&apos;s broader commercial corridor spanning Gandhinagar, Ahmedabad, and Surat, forms an important part of the company&apos;s corporate identity and business structure.</p>
+          <div className="city-copy-panel reveal" data-liquid-text>
+            <div key={activeScene.code} className="city-copy-stage">
+              <h2>{activeScene.headingTop}<br /><span className="muted-heading">{activeScene.headingAccent}</span></h2>
+              <div className="editorial-copy">
+                {activeScene.paragraphs.map(text => <p key={text} className="section-description">{text}</p>)}
+              </div>
+              <div className="location-tag"><Building2 size={15} /> {activeScene.location}</div>
             </div>
-            <div className="location-tag"><Building2 size={15} /> GIFT City, Gandhinagar, Gujarat</div>
           </div>
-          <figure className="m-0" data-liquid="city">
+          <figure className="m-0 city-visual-stack" data-liquid="city" onMouseEnter={() => setCityPaused(true)} onMouseLeave={() => setCityPaused(false)}>
             <span className="liquid-frame">
-              <img src={cityImage} alt="Modern glass towers in GIFT City, Gandhinagar, Gujarat" className="city-lead-image liquid-media" width={1536} height={1024} loading="lazy" />
+              <span className="city-deck liquid-media">
+                <span className="city-deck-track">
+                  {GUJARAT_SCENES.map((scene, index) => {
+                    const offset = (index - cityIndex + GUJARAT_SCENES.length) % GUJARAT_SCENES.length;
+                    return (
+                      <button
+                        key={scene.code}
+                        type="button"
+                        className="city-deck-card"
+                        data-pos={offset}
+                        onClick={() => setCityIndex(offset === 0 ? (cityIndex + 1) % GUJARAT_SCENES.length : index)}
+                        aria-label={offset === 0 ? `${scene.label} — show next view` : `Show ${scene.label}`}
+                      >
+                        <span className="city-deck-photo">
+                          <img
+                            src={scene.image}
+                            alt={scene.alt}
+                            width={scene.width}
+                            height={scene.height}
+                            loading={index === 0 ? "eager" : "lazy"}
+                          />
+                        </span>
+                      </button>
+                    );
+                  })}
+                </span>
+              </span>
               <span className="liquid-ribbon" aria-hidden="true" />
               <span className="liquid-sweep" aria-hidden="true" />
             </span>
-            <figcaption className="image-caption reveal"><span>GIFT City, Gandhinagar · Architectural visualisation</span><ArrowUpRight size={13} /></figcaption>
+            <figcaption key={activeScene.code} className="image-caption city-caption-fade"><span>{activeScene.code} / 0{GUJARAT_SCENES.length} · {activeScene.caption}</span><ArrowUpRight size={13} /></figcaption>
           </figure>
         </div>
+      </section>
 
-        <div className="gujarat-gallery">
-          <figure className="gujarat-card reveal m-0">
-            <span className="liquid-frame">
-              <img src={giftCityAerial} alt="Aerial golden-hour skyline of GIFT City, Gandhinagar, Gujarat" className="gujarat-card-image" width={1376} height={768} loading="lazy" />
-            </span>
-            <figcaption className="gujarat-caption"><strong>GIFT City, Gandhinagar</strong><span>International Financial Services Centre district visual</span></figcaption>
-          </figure>
-          <figure className="gujarat-card reveal m-0">
-            <span className="liquid-frame">
-              <img src={ahmedabadImage} alt="Sabarmati Riverfront and skyline of Ahmedabad, Gujarat" className="gujarat-card-image" width={1376} height={768} loading="lazy" />
-            </span>
-            <figcaption className="gujarat-caption"><strong>Ahmedabad, Gujarat</strong><span>Sabarmati Riverfront and commercial skyline visual</span></figcaption>
-          </figure>
-          <figure className="gujarat-card reveal m-0">
-            <span className="liquid-frame">
-              <img src={suratImage} alt="Modern financial district skyline of Surat, Gujarat" className="gujarat-card-image" width={1376} height={768} loading="lazy" />
-            </span>
-            <figcaption className="gujarat-caption"><strong>Surat, Gujarat</strong><span>Modern commercial district and riverfront visual</span></figcaption>
-          </figure>
+      <section id="contact" className="contact-section">
+        <div className="contact-sky" aria-hidden="true">
+          <div className="contact-sky-glow" />
+          <div className="atmo-depth-wrap contact-cloud-band contact-cloud-band--far" data-atmo-depth="contact-far">
+            <div className="cloud-track cloud-track--contact-far" />
+          </div>
+          <div className="atmo-depth-wrap contact-cloud-band contact-cloud-band--near" data-atmo-depth="contact-near">
+            <div className="cloud-track cloud-track--contact-near" />
+          </div>
+          <svg className="contact-charter" viewBox="0 0 1600 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="cc-route-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="0">
+                <stop offset="0" stopColor="currentColor" stopOpacity="0" />
+                <stop offset=".2" stopColor="currentColor" stopOpacity=".24" />
+                <stop offset=".8" stopColor="currentColor" stopOpacity=".24" />
+                <stop offset="1" stopColor="currentColor" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="cc-trail-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="0">
+                <stop offset="0" stopColor="#a3752c" stopOpacity="0" />
+                <stop offset=".35" stopColor="#a3752c" stopOpacity=".42" />
+                <stop offset=".8" stopColor="#1e1b18" stopOpacity=".22" />
+                <stop offset="1" stopColor="#1e1b18" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path className="cc-arc" d="M-60 340 C320 265 620 218 960 228 C1260 237 1460 198 1660 144" />
+            <path className="cc-route" d="M-80 236 C280 184 560 108 880 132 C1180 154 1410 104 1680 62" />
+            <path className="cc-trail" d="M-80 236 C280 184 560 108 880 132 C1180 154 1410 104 1680 62" />
+            <g className="cc-waypoint" transform="translate(462 135)">
+              <circle r="10" className="cc-waypoint-ring" />
+              <circle r="2.5" className="cc-waypoint-dot" />
+            </g>
+            <g className="cc-waypoint" transform="translate(1152 132)">
+              <circle r="10" className="cc-waypoint-ring" />
+              <circle r="2.5" className="cc-waypoint-dot" />
+            </g>
+            <g className="cc-plane" transform="translate(880 132) rotate(-1)">
+              <path className="cc-plane-contrail" d="M-120 -1.5 L-18 -0.6 L-18 0.6 L-120 1.5 Z" />
+              <path className="cc-plane-wings" d="M3 0 L-9 -21 L-13 -20.5 L-5.5 0 L-13 20.5 L-9 21 Z" />
+              <path className="cc-plane-tail" d="M-15 0 L-21 -7.5 L-23.5 -7.2 L-19.5 0 L-23.5 7.2 L-21 7.5 Z" />
+              <path className="cc-plane-body" d="M22 0 C17 -2.3 10 -2.6 -18 -1.8 L-23 0 L-18 1.8 C10 2.6 17 2.3 22 0 Z" />
+              <ellipse className="cc-plane-engine" cx="-9.5" cy="-3.6" rx="3.2" ry="1.2" />
+              <ellipse className="cc-plane-engine" cx="-9.5" cy="3.6" rx="3.2" ry="1.2" />
+            </g>
+          </svg>
         </div>
+        <div className="contact-content page-width reveal"><p className="eyebrow">Contact</p><h2>Discuss an Aviation<br /><span className="muted-heading">Leasing Enquiry</span></h2><p className="contact-intro">For business enquiries and further information about our aircraft leasing activities, please get in touch with our team.</p><ContactForm /><div className="contact-direct"><a className="contact-email" href="mailto:cpaaviationleasing@gmail.com">cpaaviationleasing@gmail.com</a><span aria-hidden="true">·</span><a className="contact-email" href="tel:+918527712949">+91 85277 12949</a></div></div>
       </section>
 
       <section id="corporate-info" className="corporate-section page-width">
@@ -330,22 +461,17 @@ function Index() {
             <div className="corporate-row"><dt>Legal Name</dt><dd>CPA Aviation Leasing Capital IFSC Private Limited</dd></div>
             <div className="corporate-row"><dt>Corporate Identification Number</dt><dd>U66190GJ2026PTC180823</dd></div>
             <div className="corporate-row"><dt>Date of Incorporation</dt><dd>16 July 2026</dd></div>
-            <div className="corporate-row"><dt>Registered Office</dt><dd>GIFT City, Gandhinagar, Gujarat</dd></div>
+            <div className="corporate-row"><dt>Registered Office</dt><dd>U.71 S 1-4 GRD FLR 11T2, THE PLATFORM BK11 GIFTSEZ, Gift City, Gandhi Nagar, Gujarat, India, 382050</dd></div>
             <div className="corporate-row"><dt>Authorised Operation (LoA)</dt><dd>Operating lease for aircraft, subject to applicable regulatory conditions</dd></div>
-            <div className="corporate-row"><dt>Official Email</dt><dd><a href="mailto:info@cpaaviations.com">info@cpaaviations.com</a></dd></div>
+            <div className="corporate-row"><dt>Telephone</dt><dd><a href="tel:+918527712949">+91 85277 12949</a></dd></div>
+            <div className="corporate-row"><dt>Official Email</dt><dd><a href="mailto:cpaaviationleasing@gmail.com">cpaaviationleasing@gmail.com</a></dd></div>
           </dl>
         </div>
       </section>
-
-      <section id="advisor" className="advisor-section page-width">
-        <div className="section-topline reveal"><p className="eyebrow">Service Finder</p><span className="section-number">07</span></div><div className="focus-heading reveal"><h2>Tell us what you need.<br /><span className="muted-heading">We will point you to the right area.</span></h2></div><ServiceAdvisor />
-      </section>
-
-      <section id="contact" className="contact-section"><span className="liquid-fill" data-liquid="contact"><img className="contact-background liquid-media" src={aircraftImage} width={1920} height={1088} alt="" loading="lazy" /><span className="frame-atmosphere frame-atmosphere--contact" aria-hidden="true"><span className="atmo-depth-wrap frame-cloud-wrap--far" data-atmo-depth="contact-far"><span className="cloud-track cloud-track--frame-far" /></span><span className="frame-sunbeam frame-sunbeam--contact" /><span className="frame-haze frame-haze--contact" /></span><span className="liquid-ribbon" aria-hidden="true" /><span className="liquid-sweep" aria-hidden="true" /></span><div className="reveal" data-liquid-text><p className="eyebrow">Contact</p><h2>Discuss an Aviation<br /><span className="muted-heading">Leasing Enquiry</span></h2><p className="contact-intro">For business enquiries and further information about our aircraft leasing activities, please get in touch with our team.</p><ContactForm /><a className="contact-email" href="mailto:info@cpaaviations.com">info@cpaaviations.com</a></div></section>
     </main>
 
-    <footer><div className="page-width"><div className="footer-top"><div><Wordmark /><p className="legal-name">CPA AVIATION LEASING CAPITAL IFSC PRIVATE LIMITED</p><p className="footer-location">CIN: U66190GJ2026PTC180823 · GIFT City, Gandhinagar, Gujarat</p></div><nav className="footer-links" aria-label="Footer navigation">{navLinks}<Button asChild variant="navigation"><a href="#corporate-info">Corporate Info</a></Button><Button asChild variant="navigation"><a href="#contact">Contact <ArrowUpRight /></a></Button></nav></div><div className="footer-bottom"><span>© {new Date().getUTCFullYear()} CPA AVIATION LEASING CAPITAL IFSC PRIVATE LIMITED.</span><div className="footer-policies"><Button variant="navigation" onClick={() => setLegal("privacy")}>Privacy Policy</Button><Button variant="navigation" onClick={() => setLegal("terms")}>Terms &amp; Conditions</Button></div></div></div></footer>
-    <Dialog open={legal !== null} onOpenChange={open => { if (!open) setLegal(null); }}><DialogContent><DialogTitle>{legal === "privacy" ? "Privacy Policy" : "Terms & Conditions"}</DialogTitle><DialogDescription className="leading-7">Our {legal === "privacy" ? "privacy policy is" : "website terms are"} not yet available on this website. For {legal === "privacy" ? "privacy enquiries" : "legal enquiries"}, please email <a className="text-primary" href="mailto:info@cpaaviations.com">info@cpaaviations.com</a>.</DialogDescription></DialogContent></Dialog>
+    <footer><div className="page-width"><div className="footer-top"><div><Wordmark /><p className="legal-name">CPA AVIATION LEASING CAPITAL IFSC PRIVATE LIMITED</p><p className="footer-location">CIN: U66190GJ2026PTC180823 · U.71 S 1-4 GRD FLR 11T2, THE PLATFORM BK11 GIFTSEZ, Gift City, Gandhi Nagar, Gujarat, India, 382050</p><p className="footer-contact"><a href="mailto:cpaaviationleasing@gmail.com">cpaaviationleasing@gmail.com</a> · <a href="tel:+918527712949">+91 85277 12949</a></p></div><nav className="footer-links" aria-label="Footer navigation">{navLinks}<Button asChild variant="navigation"><a href="#contact">Contact <ArrowUpRight /></a></Button><Button asChild variant="navigation"><a href="#corporate-info">Corporate Info</a></Button></nav></div><div className="footer-bottom"><span>© {new Date().getUTCFullYear()} CPA AVIATION LEASING CAPITAL IFSC PRIVATE LIMITED.</span><div className="footer-policies"><Button variant="navigation" onClick={() => setLegal("privacy")}>Privacy Policy</Button><Button variant="navigation" onClick={() => setLegal("terms")}>Terms &amp; Conditions</Button></div></div></div></footer>
+    <Dialog open={legal !== null} onOpenChange={open => { if (!open) setLegal(null); }}><DialogContent><DialogTitle>{legal === "privacy" ? "Privacy Policy" : "Terms & Conditions"}</DialogTitle><DialogDescription className="leading-7">Our {legal === "privacy" ? "privacy policy is" : "website terms are"} not yet available on this website. For {legal === "privacy" ? "privacy enquiries" : "legal enquiries"}, please email <a className="text-primary" href="mailto:cpaaviationleasing@gmail.com">cpaaviationleasing@gmail.com</a>.</DialogDescription></DialogContent></Dialog>
     <svg className="liquid-defs" aria-hidden="true" focusable="false"><defs><filter id="liquid-refract" x="-15%" y="-60%" width="130%" height="220%"><feTurbulence type="fractalNoise" baseFrequency="0.011 0.055" numOctaves="2" seed="11" result="ripple" /><feDisplacementMap in="SourceGraphic" in2="ripple" scale="7" xChannelSelector="R" yChannelSelector="G" /></filter></defs></svg>
   </div>;
 }

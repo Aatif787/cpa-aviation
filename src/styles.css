@@ -337,7 +337,7 @@ h2 {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: color-mix(in oklab, var(--secondary) 55%, var(--background));
+  background: color-mix(in oklab, var(--secondary) 28%, var(--background));
   color: var(--foreground);
   padding-block: clamp(64px, 8.5vw, 118px);
 }
@@ -476,7 +476,7 @@ h2 {
 }
 .approach-grid .editorial-copy { margin-bottom: 0; max-width: 560px; }
 
-/* ---------- GIFT City & Gujarat corridor section (mobile-first, uncropped visuals) ---------- */
+/* ---------- GIFT City & Gujarat stacked visual showcase (mobile-first) ---------- */
 .city-section {
   position: relative;
   padding-block: clamp(56px, 8vw, 108px);
@@ -487,51 +487,106 @@ h2 {
   gap: clamp(28px, 5vw, 84px);
   align-items: center;
 }
-.city-overview-grid h2 {
+.city-copy-panel {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 34px);
+}
+.city-copy-stage {
+  animation: city-copy-enter .45s cubic-bezier(.22, .61, .36, 1) both;
+}
+.city-copy-panel h2 {
   font-size: clamp(2rem, 2.8vw + 1rem, 3.125rem);
   margin-bottom: clamp(16px, 2vw, 24px);
 }
-.city-lead-image {
+
+.city-visual-stack .liquid-frame {
+  overflow: visible;
+  border-radius: 0;
+}
+.city-visual-stack .liquid-sweep {
+  inset: clamp(24px, 3.5vw, 42px);
+  border-radius: clamp(14px, 1.8vw, 18px);
+}
+.city-deck {
+  position: relative;
+  display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 1536 / 1024;
+  padding: clamp(24px, 3.5vw, 42px) clamp(24px, 3.6vw, 44px);
+}
+.city-deck-track {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+.city-deck-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: clamp(5px, 0.7vw, 8px);
+  border-radius: clamp(16px, 2vw, 22px);
+  background: #fffefb;
+  border: 1px solid color-mix(in oklab, var(--border) 95%, white);
+  box-shadow:
+    0 24px 52px -20px rgba(30, 27, 24, .22),
+    0 6px 18px -6px rgba(30, 27, 24, .08);
+  cursor: pointer;
+  appearance: none;
+  display: block;
+  transform-origin: center center;
+  transition:
+    transform .9s cubic-bezier(.22, .61, .36, 1),
+    opacity .8s ease,
+    box-shadow .8s ease;
+}
+.city-deck-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.city-deck-card[data-pos="0"] {
+  z-index: 4;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+}
+.city-deck-card[data-pos="0"]:hover {
+  transform: translate3d(0, -3px, 0) rotate(0deg) scale(1.006);
+}
+.city-deck-card[data-pos="1"] {
+  z-index: 3;
+  opacity: .96;
+  transform: translate3d(-14px, 6px, 0) rotate(-3.6deg) scale(.98);
+}
+.city-deck-card[data-pos="2"] {
+  z-index: 2;
+  opacity: .92;
+  transform: translate3d(15px, 8px, 0) rotate(3.4deg) scale(.975);
+}
+.city-deck-card[data-pos="3"] {
+  z-index: 1;
+  opacity: .88;
+  transform: translate3d(-10px, 14px, 0) rotate(-6.2deg) scale(.96);
+}
+.city-deck-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: clamp(11px, 1.4vw, 15px);
+  overflow: hidden;
+  background: var(--secondary);
+}
+.city-deck-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  display: block;
-  filter: sepia(.12) saturate(.92);
 }
-.gujarat-gallery {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(22px, 3vw, 34px);
-  margin-top: clamp(40px, 5.5vw, 68px);
-  padding-top: clamp(28px, 4vw, 44px);
-  border-top: 1px solid var(--border);
-}
-.gujarat-card-image {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1376 / 768;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-.gujarat-caption {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: clamp(10px, 1.4vw, 14px);
-}
-.gujarat-caption strong {
-  font-family: var(--font-display);
-  font-size: clamp(1.1875rem, 0.5vw + 1rem, 1.4rem);
-  font-weight: 400;
-  color: var(--foreground);
-}
-.gujarat-caption span {
-  font-size: clamp(0.75rem, 0.15vw + 0.7rem, 0.8125rem);
-  color: var(--muted-foreground);
-  line-height: 1.5;
+.city-caption-fade { animation: city-copy-enter .45s cubic-bezier(.22, .61, .36, 1) both; }
+@keyframes city-copy-enter {
+  from { opacity: .82; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ---------- corporate information section (mobile-first) ---------- */
@@ -609,37 +664,104 @@ h2 {
 .advisor-note a { color: var(--accent); }
 .advisor-error { color: var(--destructive); font-size: 14px; }
 
-/* ---------- contact section (mobile-first) ---------- */
+/* ---------- contact section (full-bleed unboxed charter sky) ---------- */
 .contact-section {
   text-align: center;
-  padding: 0 0 clamp(64px, 8vw, 96px);
+  padding: clamp(88px, 11vw, 152px) 0 clamp(72px, 9vw, 108px);
   background: var(--background);
   position: relative;
   isolation: isolate;
   overflow: hidden;
 }
-.contact-section .liquid-fill {
-  position: relative;
-  inset: 0;
-  height: auto;
-  aspect-ratio: 1920 / 1088;
-  width: min(calc(100% - clamp(32px, 5vw, 48px)), 860px);
-  margin-inline: auto;
-  border-radius: clamp(16px, 2.5vw, 22px);
-}
-.contact-background {
+.contact-sky {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -2;
-  opacity: 1;
-  filter: none;
-  box-shadow: none;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
 }
-.contact-section::after, .contact-section::before { content: none; display: none; background: none; box-shadow: none; }
-.contact-section [data-liquid-text] { padding: clamp(36px, 5vw, 56px) clamp(16px, 4vw, 24px) 0; }
+.contact-sky-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(88% 62% at 50% 18%, rgba(255, 252, 246, .92) 0%, color-mix(in oklab, var(--accent) 18%, #f2ebd9) 38%, var(--background) 82%),
+    linear-gradient(180deg, var(--background) 0%, color-mix(in oklab, var(--accent) 14%, #f1e9d6) 30%, var(--background) 84%);
+}
+.contact-cloud-band {
+  height: 78%;
+  mix-blend-mode: screen;
+}
+.contact-cloud-band--far {
+  top: -6%;
+  opacity: .72;
+}
+.contact-cloud-band--near {
+  top: 12%;
+  opacity: .56;
+}
+.cloud-track--contact-far {
+  background-image: url("/media/cloud-layer-far.webp");
+  animation: cloud-drift-reverse 78s linear infinite;
+}
+.cloud-track--contact-near {
+  background-image: url("/media/cloud-layer-near.webp");
+  animation: cloud-drift-reverse 48s linear infinite;
+}
+.contact-charter {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: clamp(280px, 34vw, 440px);
+  color: var(--accent);
+  pointer-events: none;
+}
+.cc-arc {
+  fill: none;
+  stroke: var(--foreground);
+  stroke-opacity: .11;
+  stroke-width: 1;
+  stroke-dasharray: 3 10;
+}
+.cc-route {
+  fill: none;
+  stroke: url(#cc-route-grad);
+  stroke-width: 1.15;
+  stroke-dasharray: 5 8;
+}
+.cc-trail {
+  fill: none;
+  stroke: url(#cc-trail-grad);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.cc-waypoint-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-opacity: .32;
+  stroke-width: 1;
+}
+.cc-waypoint-dot {
+  fill: var(--accent);
+  fill-opacity: .7;
+}
+.cc-plane-contrail {
+  fill: url(#cc-trail-grad);
+  opacity: .55;
+}
+.cc-plane-wings, .cc-plane-tail {
+  fill: var(--accent);
+  fill-opacity: .88;
+}
+.cc-plane-body, .cc-plane-engine {
+  fill: var(--foreground);
+  fill-opacity: .86;
+}
+.contact-content {
+  position: relative;
+  z-index: 1;
+}
 .contact-section .eyebrow { justify-content: center; }
 .contact-section h2 { font-size: clamp(2.125rem, 3vw + 1rem, 3.375rem); margin-bottom: clamp(14px, 2vw, 20px); }
 .contact-intro {
@@ -649,7 +771,17 @@ h2 {
   font-size: clamp(0.8125rem, 0.25vw + 0.75rem, 0.9375rem);
   line-height: 1.8;
 }
-.contact-email { display: block; width: fit-content; margin: 22px auto 0; font-size: 12px; color: var(--muted-foreground); text-decoration: none; }
+.contact-direct {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  margin: 22px auto 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.contact-email { display: inline-block; font-size: 12px; color: var(--muted-foreground); text-decoration: none; }
 .contact-email:hover { color: var(--accent); }
 
 .contact-form {
@@ -691,8 +823,11 @@ footer {
   gap: clamp(20px, 3vw, 40px);
   padding-bottom: clamp(28px, 4vw, 43px);
 }
-.legal-name { max-width: 330px; color: var(--muted-foreground); font-size: 10px; line-height: 1.8; margin: 18px 0 8px; }
-.footer-location { color: var(--muted-foreground); font-size: 10px; margin: 0; }
+.legal-name { max-width: 360px; color: var(--muted-foreground); font-size: 10px; line-height: 1.8; margin: 18px 0 8px; }
+.footer-location { max-width: 440px; color: var(--muted-foreground); font-size: 10px; line-height: 1.75; margin: 0 0 8px; }
+.footer-contact { color: var(--muted-foreground); font-size: 10px; line-height: 1.7; margin: 0; }
+.footer-contact a { color: var(--accent); text-decoration: none; }
+.footer-contact a:hover { text-decoration: underline; }
 .footer-links { display: flex; flex-wrap: wrap; gap: clamp(16px, 2.2vw, 30px); padding-top: 6px; }
 .footer-bottom {
   display: flex;
@@ -719,7 +854,6 @@ footer {
 
 @media (min-width: 701px) {
   .hero-media, .hero-poster { object-position: center; }
-  .gujarat-gallery { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (min-width: 768px) {
@@ -746,6 +880,7 @@ footer {
   .overview-grid { grid-template-columns: 1fr 1fr; }
   .leasing-grid { grid-template-columns: 1.05fr 1fr; }
   .city-overview-grid { grid-template-columns: 1fr 1.05fr; }
+  .city-copy-stage { min-height: 270px; display: flex; flex-direction: column; justify-content: center; }
   .approach-grid { grid-template-columns: 0.9fr 1.1fr; }
   .corporate-layout { grid-template-columns: 0.85fr 1.15fr; }
   .advisor { grid-template-columns: 1.1fr 1fr; }
@@ -822,15 +957,15 @@ footer {
 .atmo-sunwash {
   position: absolute;
   inset: -25% -15%;
-  background: radial-gradient(62% 48% at 72% 24%, color-mix(in oklab, var(--accent) 11%, transparent), color-mix(in oklab, var(--accent) 3%, transparent) 48%, transparent 78%);
-  opacity: .72;
+  background: radial-gradient(62% 48% at 72% 24%, rgba(255, 252, 245, .52), color-mix(in oklab, var(--accent) 5%, transparent) 48%, transparent 78%);
+  opacity: .9;
   will-change: transform, opacity;
 }
 .atmo-cool-haze {
   position: absolute;
   inset: -20% -15%;
-  background: radial-gradient(58% 52% at 24% 68%, color-mix(in oklab, var(--violet) 8%, transparent), transparent 74%);
-  opacity: .65;
+  background: radial-gradient(58% 52% at 24% 68%, rgba(255, 253, 249, .58), transparent 74%);
+  opacity: .84;
   will-change: transform, opacity;
 }
 
@@ -845,7 +980,7 @@ footer {
   position: absolute;
   inset: 0;
   z-index: 4;
-  background: linear-gradient(180deg, color-mix(in oklab, var(--aircraft-sky) 68%, transparent) 0%, color-mix(in oklab, var(--aircraft-sky) 36%, transparent) 55%, transparent 100%);
+  background: linear-gradient(180deg, color-mix(in oklab, var(--background) 38%, transparent) 0%, color-mix(in oklab, var(--background) 18%, transparent) 55%, transparent 100%);
 }
 .atmo-depth-wrap {
   position: absolute;
@@ -904,34 +1039,21 @@ footer {
 
 .hero-cloud-shadow {
   display: none;
-  position: absolute;
-  inset: 28% -15% -10%;
-  z-index: 1;
-  background: radial-gradient(52% 45% at 58% 62%, color-mix(in oklab, var(--foreground) 7%, transparent), transparent 72%);
-  animation: shadow-drift 41s ease-in-out infinite alternate;
-  will-change: transform, opacity;
 }
 
 .hero-metallic-glint {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: linear-gradient(112deg, transparent 36%, rgba(255, 252, 246, .14) 48%, color-mix(in oklab, var(--accent) 10%, transparent) 52%, transparent 64%);
-  mix-blend-mode: screen;
-  opacity: 0;
-  animation: metallic-glint 19s ease-in-out infinite;
-  will-change: transform, opacity;
+  display: none;
 }
 
 .hero-horizon-haze {
   position: absolute;
   inset: auto 0 0;
-  height: 30%;
+  height: 26%;
   z-index: 3;
-  background: linear-gradient(180deg, transparent 0%, color-mix(in oklab, var(--background) 42%, transparent) 68%, color-mix(in oklab, var(--background) 88%, transparent) 100%);
+  background: linear-gradient(180deg, transparent 0%, color-mix(in oklab, var(--background) 32%, transparent) 68%, color-mix(in oklab, var(--background) 78%, transparent) 100%);
 }
 
-.hero-motes { display: none; position: absolute; inset: 0; z-index: 3; }
+.hero-motes { display: none; }
 .mote {
   position: absolute;
   border-radius: 50%;
@@ -968,39 +1090,35 @@ footer {
   animation: sunbeam-breathe 26s ease-in-out infinite alternate;
 }
 .frame-metallic-sheen {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(114deg, transparent 34%, rgba(255, 252, 246, .16) 49%, color-mix(in oklab, var(--accent) 12%, transparent) 53%, transparent 66%);
-  mix-blend-mode: screen;
-  opacity: 0;
-  animation: metallic-glint 17s ease-in-out 2s infinite;
+  display: none;
 }
 .frame-haze {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255, 251, 245, .05) 0%, transparent 40%, color-mix(in oklab, var(--background) 22%, transparent) 100%);
+  background: linear-gradient(180deg, rgba(255, 253, 249, .06) 0%, transparent 45%, color-mix(in oklab, var(--background) 8%, transparent) 100%);
 }
-.frame-atmosphere--contact .frame-cloud-wrap--far { top: 25%; height: 80%; opacity: .3; }
-.frame-sunbeam--contact { opacity: .75; }
-.frame-haze--contact { background: linear-gradient(180deg, color-mix(in oklab, var(--background) 18%, transparent) 0%, transparent 45%, color-mix(in oklab, var(--background) 48%, transparent) 100%); }
 
 @media (min-width: 701px) {
-  .hero-copy-veil { background: linear-gradient(96deg, color-mix(in oklab, var(--aircraft-sky) 64%, transparent) 0%, color-mix(in oklab, var(--aircraft-sky) 28%, transparent) 38%, transparent 66%); }
-  .atmo-depth-wrap--far, .hero-cloud-shadow, .hero-motes, .frame-cloud-wrap--near { display: block; }
-  .atmo-depth-wrap--near { top: 34%; height: 72%; opacity: .52; }
+  .hero-copy-veil { background: linear-gradient(96deg, color-mix(in oklab, var(--background) 34%, transparent) 0%, color-mix(in oklab, var(--background) 14%, transparent) 38%, transparent 66%); }
+  .atmo-depth-wrap--far, .frame-cloud-wrap--near { display: block; }
+  .atmo-depth-wrap--near { top: 34%; height: 72%; opacity: .48; }
 }
 
 @keyframes cloud-drift {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
 }
+@keyframes cloud-drift-reverse {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
 @keyframes sunbeam-breathe {
-  0% { opacity: .62; transform: translate3d(-2%, -1%, 0) scale(1); }
-  100% { opacity: .96; transform: translate3d(2.5%, 1.5%, 0) scale(1.03); }
+  0% { opacity: .86; transform: translate3d(-2%, -1%, 0) scale(1); }
+  100% { opacity: 1; transform: translate3d(2.5%, 1.5%, 0) scale(1.03); }
 }
 @keyframes sunbeam-breathe-alt {
-  0% { opacity: .78; transform: translate3d(2%, 1%, 0) scale(1.02); }
-  100% { opacity: .48; transform: translate3d(-2%, -1.5%, 0) scale(1); }
+  0% { opacity: .94; transform: translate3d(2%, 1%, 0) scale(1.02); }
+  100% { opacity: .82; transform: translate3d(-2%, -1.5%, 0) scale(1); }
 }
 @keyframes shadow-drift {
   0% { opacity: .55; transform: translate3d(-4%, 0, 0); }

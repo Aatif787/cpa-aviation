@@ -51,7 +51,7 @@ export function ServiceAdvisor() {
               {result.recommendations.map(r => { const m = META[r.service]; return (
                 <article key={r.service} className="advisor-item"><m.Icon className="focus-icon" /><div><h3>{m.title}</h3><p>{r.reason}</p></div></article>
               ); })}
-              <p className="advisor-note">{result.note} <a href="mailto:info@cpaaviations.com">info@cpaaviations.com</a></p>
+              <p className="advisor-note">{result.note} <a href="mailto:cpaaviationleasing@gmail.com">cpaaviationleasing@gmail.com</a></p>
             </>)}
       </div>
     </div>

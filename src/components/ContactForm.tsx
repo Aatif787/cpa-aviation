@@ -22,7 +22,7 @@ export function ContactForm() {
     try {
       const res = await send({ data: parsed.data });
       if (res.ok) { setStatus("sent"); setForm({ name: "", company: "", email: "", subject: "", message: "" }); }
-      else { setStatus("idle"); setError("Your message could not be sent. Please try again or email info@cpaaviations.com."); }
+      else { setStatus("idle"); setError("Your message could not be sent. Please try again or email cpaaviationleasing@gmail.com."); }
     } catch { setStatus("idle"); setError("Your message could not be sent. Please try again."); }
   }
 

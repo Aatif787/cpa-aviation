@@ -78,7 +78,8 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
               near: { y: 18, x: -7 },
               "frame-far": { y: 5, x: -2 },
               "frame-near": { y: 11, x: -5 },
-              "contact-far": { y: 6, x: -2 },
+              "contact-far": { y: 8, x: -3 },
+              "contact-near": { y: 14, x: 5 },
             };
             root.querySelectorAll<HTMLElement>("[data-atmo-depth]").forEach(layer => {
               const kind = layer.dataset["atmoDepth"] ?? "far";
@@ -94,7 +95,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
             const heroSection = root.querySelector<HTMLElement>(".hero");
             if (heroLight && heroSection) {
               gsap.fromTo(heroLight, { yPercent: 0, xPercent: 0, opacity: 1 }, {
-                yPercent: 14, xPercent: -4, opacity: .55, ease: "none",
+                yPercent: 14, xPercent: -4, opacity: .9, ease: "none",
                 scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 1.2 },
               });
             }
@@ -105,17 +106,17 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
               gsap.timeline({
                 scrollTrigger: { trigger: root, start: "top top", end: "bottom bottom", scrub: 1.5 },
               })
-                .to(sunwash, { xPercent: -16, yPercent: 10, scale: 1.08, opacity: .88, ease: "none" })
-                .to(sunwash, { xPercent: 8, yPercent: 22, scale: 1.02, opacity: .62, ease: "none" })
-                .to(sunwash, { xPercent: -6, yPercent: 32, scale: 1.12, opacity: .82, ease: "none" });
+                .to(sunwash, { xPercent: -16, yPercent: 10, scale: 1.08, opacity: .94, ease: "none" })
+                .to(sunwash, { xPercent: 8, yPercent: 22, scale: 1.02, opacity: .86, ease: "none" })
+                .to(sunwash, { xPercent: -6, yPercent: 32, scale: 1.12, opacity: .94, ease: "none" });
             }
             if (haze) {
               gsap.timeline({
                 scrollTrigger: { trigger: root, start: "top top", end: "bottom bottom", scrub: 1.5 },
               })
-                .to(haze, { xPercent: 12, yPercent: -8, opacity: .78, ease: "none" })
-                .to(haze, { xPercent: -10, yPercent: -18, opacity: .58, ease: "none" })
-                .to(haze, { xPercent: 6, yPercent: -26, opacity: .84, ease: "none" });
+                .to(haze, { xPercent: 12, yPercent: -8, opacity: .88, ease: "none" })
+                .to(haze, { xPercent: -10, yPercent: -18, opacity: .8, ease: "none" })
+                .to(haze, { xPercent: 6, yPercent: -26, opacity: .9, ease: "none" });
             }
           });
 
@@ -177,6 +178,37 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
               onLeaveBack: () => { state.progress = 0; place(); },
             });
             cleanups.push(() => trigger.kill());
+          });
+
+          /* ---------- continuous open-sky charter cruise across contact sky ---------- */
+          Array.from(root.querySelectorAll<SVGSVGElement>(".contact-charter")).forEach(svg => {
+            const route = svg.querySelector<SVGPathElement>(".cc-route");
+            const trail = svg.querySelector<SVGPathElement>(".cc-trail");
+            const plane = svg.querySelector<SVGGElement>(".cc-plane");
+            if (!route || !trail || !plane) return;
+            const length = route.getTotalLength();
+            const wake = Math.min(340, length * 0.24);
+            trail.style.strokeDasharray = `${wake} ${length + wake}`;
+            const state = { progress: 0 };
+            const cruise = () => {
+              const at = length * state.progress;
+              const point = route.getPointAtLength(at);
+              const ahead = route.getPointAtLength(Math.min(length, at + 2));
+              const behind = route.getPointAtLength(Math.max(0, at - 2));
+              const angle = Math.atan2(ahead.y - behind.y, ahead.x - behind.x) * 180 / Math.PI;
+              plane.setAttribute("transform", `translate(${point.x.toFixed(2)} ${point.y.toFixed(2)}) rotate(${angle.toFixed(2)})`);
+              trail.style.strokeDashoffset = `${(wake - at).toFixed(2)}`;
+            };
+            cruise();
+            const tween = gsap.to(state, { progress: 1, duration: 22, ease: "none", repeat: -1, onUpdate: cruise, paused: true });
+            const trigger = ScrollTrigger.create({
+              trigger: svg, start: "top bottom", end: "bottom top",
+              onEnter: () => tween.play(),
+              onEnterBack: () => tween.play(),
+              onLeave: () => tween.pause(),
+              onLeaveBack: () => tween.pause(),
+            });
+            cleanups.push(() => { trigger.kill(); tween.kill(); });
           });
         }, root);
         const listeners: (() => void)[] = [];
@@ -264,13 +296,11 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
           item.swept = false;
           gsap.killTweensOf(item.state);
           item.sweepTween?.kill();
-          item.text?.classList.remove("is-visible");
-          item.frame.classList.remove("is-atmo-active");
+          item.text?.classList.add("is-visible");
+          item.frame.classList.add("is-atmo-active");
           gsap.to(item.state, {
             fill: 1, duration: 1.9, ease: "power2.inOut",
             onUpdate: () => {
-              if (item.state.fill >= .35) item.frame.classList.add("is-atmo-active");
-              if (item.state.fill >= .42) item.text?.classList.add("is-visible");
               if (item.state.fill >= .7 && !item.swept) { item.swept = true; runSweep(item); }
             },
             onComplete: () => { item.running = false; paint(item); },
@@ -289,8 +319,6 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
           item.media.style.transform = "";
           item.ribbon.style.opacity = "0";
           item.sweep.style.opacity = "0";
-          item.text?.classList.remove("is-visible");
-          item.frame.classList.remove("is-atmo-active");
         };
 
         liquids.forEach(item => {
