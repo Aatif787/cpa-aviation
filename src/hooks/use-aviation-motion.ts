@@ -583,20 +583,21 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
             root.querySelectorAll<HTMLElement>("[data-hero-flip]").forEach((element, index) => {
               const spin = element.animate(
                 [
-                  { transform: "perspective(1000px) rotateX(0deg)" },
-                  { transform: "perspective(1000px) rotateX(360deg)" },
+                  { transform: "perspective(1400px) rotateX(0deg)", offset: 0 },
+                  { transform: "perspective(1400px) rotateX(360deg)", offset: 0.5, easing: "cubic-bezier(0.45, 0, 0.55, 1)" },
+                  { transform: "perspective(1400px) rotateX(0deg)", offset: 1, easing: "cubic-bezier(0.45, 0, 0.55, 1)" },
                 ],
                 {
-                  duration: 2100,
-                  delay: index * 180,
-                  easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+                  duration: 7600,
+                  delay: index * 480,
+                  easing: "linear",
                   fill: "both",
                 },
               );
               postLoadAnimations.push(spin);
               spin.finished.then(() => spin.cancel()).catch(() => {});
             });
-          }, 180);
+          }, 1400);
         });
       };
 
