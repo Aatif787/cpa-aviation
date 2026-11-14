@@ -205,9 +205,10 @@ h1 {
 }
 h1 span { color: var(--accent); font-style: italic; }
 .hero-copy h1 .hero-racing-title {
-  font-family: "Racing Sans One", var(--font-display), sans-serif;
+  font-family: "Oxanium", var(--font-display), sans-serif;
+  font-weight: 400;
   font-style: normal;
-  letter-spacing: 0.015em;
+  letter-spacing: 0.02em;
   display: inline-block;
 }
 h2 {
