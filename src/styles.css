@@ -357,7 +357,7 @@ h2 {
 .overview-image {
   width: 100%;
   height: auto;
-  aspect-ratio: 2.45 / 1;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -2206,7 +2206,7 @@ footer {
   display: block;
   position: relative;
   width: 100%;
-  aspect-ratio: 2.45 / 1;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   background: transparent;
 }
