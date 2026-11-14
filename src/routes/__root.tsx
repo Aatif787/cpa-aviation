@@ -8,29 +8,40 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
+import { LEGAL_NAME, SEO_DESCRIPTION, SEO_TITLE, normalizeOrigin } from "@/lib/seo";
 
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
+  useEffect(() => {
+    document.title = "Page Not Found | CPA Aviation Leasing Capital";
+    let robotsMeta = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    if (!robotsMeta) {
+      robotsMeta = document.createElement("meta");
+      robotsMeta.name = "robots";
+      document.head.appendChild(robotsMeta);
+    }
+    robotsMeta.content = "noindex, nofollow";
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          We couldn't find the page you're looking for.
+    <main className="flex min-h-screen items-center justify-center bg-background px-6 py-16 text-foreground">
+      <div className="max-w-lg text-center">
+        <p className="eyebrow justify-center">404 · Page Unavailable</p>
+        <h1 className="mt-2 text-5xl font-normal tracking-tight text-foreground sm:text-6xl">
+          Page Not <span className="muted-heading">Found</span>
+        </h1>
+        <p className="mt-4 text-sm leading-7 text-muted-foreground">
+          The requested URL is not available on the {LEGAL_NAME} website.
         </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Return to home page
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Link to="/" className="aviation-button">
+            Return to Home Page
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -70,33 +81,53 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    // Replace these placeholders with the app's name and description when first building the app.
-    // Each content route, / included, must still set its own head(). Never add og:image or
-    // twitter:image here: every page without its own would inherit the root's preview image.
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "CPA Aviation | Leasing Capital" },
-      { name: "description", content: "CPA Aviation Leasing Capital, based in GIFT City, India, focuses on aircraft operating lease opportunities." },
-      { property: "og:title", content: "CPA Aviation | Leasing Capital" },
-      { property: "og:description", content: "Aircraft operating lease opportunities from CPA Aviation Leasing Capital in GIFT City, India." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300..600&display=swap" },
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "192x192" },
-      { rel: "icon", href: "/favicon.ico", sizes: "any" },
-      { rel: "apple-touch-icon", href: "/favicon.png" },
-    ],
-  }),
+  head: () => {
+    const siteOrigin = normalizeOrigin(import.meta.env["VITE_SITE_URL"] as string | undefined);
+    const verificationToken = (import.meta.env["VITE_GOOGLE_SITE_VERIFICATION"] as string | undefined)?.trim();
+
+    return {
+      // Each content route, / included, must set its own head(). Never add og:image or
+      // twitter:image here: every page without its own would inherit the root's preview image.
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { title: SEO_TITLE },
+        { name: "description", content: SEO_DESCRIPTION },
+        { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+        { property: "og:title", content: SEO_TITLE },
+        { property: "og:description", content: SEO_DESCRIPTION },
+        { property: "og:type", content: "website" },
+        { property: "og:locale", content: "en_IN" },
+        { property: "og:site_name", content: LEGAL_NAME },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: SEO_TITLE },
+        { name: "twitter:description", content: SEO_DESCRIPTION },
+        ...(siteOrigin ? [{ property: "og:url", content: `${siteOrigin}/` }] : []),
+        ...(verificationToken ? [{ name: "google-site-verification", content: verificationToken }] : []),
+      ],
+      links: [
+        ...(siteOrigin ? [{ rel: "canonical", href: `${siteOrigin}/` }] : []),
+        { rel: "preload", href: "/fonts/Gambarino-Regular.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+        {
+          rel: "preload",
+          as: "image",
+          imageSrcSet: "/media/white-aircraft-still-768w.avif 768w, /media/white-aircraft-still-1280w.avif 1280w, /media/white-aircraft-still.avif 1920w",
+          imageSizes: "100vw",
+          type: "image/avif",
+          fetchPriority: "high",
+        },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+        {
+          rel: "stylesheet",
+          href: appCss,
+        },
+        { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "192x192" },
+        { rel: "icon", href: "/favicon.ico", sizes: "any" },
+        { rel: "apple-touch-icon", href: "/favicon.png" },
+      ],
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -108,6 +139,18 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap"
+          media="print"
+          onLoad={e => { e.currentTarget.media = "all"; }}
+        />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap"
+          />
+        </noscript>
       </head>
       <body>
         {children}

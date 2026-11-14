@@ -25,6 +25,7 @@ type Liquid = {
   ribbon: HTMLElement;
   sweep: HTMLElement;
   text: HTMLElement | null;
+  height: number;
   state: { fill: number };
   phase: number;
   running: boolean;
@@ -45,8 +46,21 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
       if (event.key === "Escape") root.querySelector<HTMLButtonElement>('.mobile-toggle[aria-expanded="true"]')?.click();
     };
     window.addEventListener("keydown", onEscape);
+
+    const heroAtmosphere = root.querySelector<HTMLElement>(".hero-atmosphere");
+    heroAtmosphere?.classList.add("is-atmo-visible");
+    const heroElement = root.querySelector<HTMLElement>(".hero");
+    let heroAtmoObserver: IntersectionObserver | undefined;
+    if (heroAtmosphere && heroElement && typeof IntersectionObserver !== "undefined") {
+      heroAtmoObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => heroAtmosphere.classList.toggle("is-atmo-visible", entry.isIntersecting));
+      });
+      heroAtmoObserver.observe(heroElement);
+    }
+
     let cleanupDepth: (() => void) | undefined;
     let depthGeneration = 0;
+    let cancelScheduledDepth: (() => void) | undefined;
     const setupDepth = async () => {
       const generation = ++depthGeneration;
       cleanupDepth?.();
@@ -78,8 +92,6 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
               near: { y: 18, x: -7 },
               "frame-far": { y: 5, x: -2 },
               "frame-near": { y: 11, x: -5 },
-              "contact-far": { y: 8, x: -3 },
-              "contact-near": { y: 14, x: 5 },
             };
             root.querySelectorAll<HTMLElement>("[data-atmo-depth]").forEach(layer => {
               const kind = layer.dataset["atmoDepth"] ?? "far";
@@ -98,25 +110,6 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
                 yPercent: 14, xPercent: -4, opacity: .9, ease: "none",
                 scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 1.2 },
               });
-            }
-
-            const sunwash = root.querySelector<HTMLElement>("[data-atmo-sunwash]");
-            const haze = root.querySelector<HTMLElement>("[data-atmo-haze]");
-            if (sunwash) {
-              gsap.timeline({
-                scrollTrigger: { trigger: root, start: "top top", end: "bottom bottom", scrub: 1.5 },
-              })
-                .to(sunwash, { xPercent: -16, yPercent: 10, scale: 1.08, opacity: .94, ease: "none" })
-                .to(sunwash, { xPercent: 8, yPercent: 22, scale: 1.02, opacity: .86, ease: "none" })
-                .to(sunwash, { xPercent: -6, yPercent: 32, scale: 1.12, opacity: .94, ease: "none" });
-            }
-            if (haze) {
-              gsap.timeline({
-                scrollTrigger: { trigger: root, start: "top top", end: "bottom bottom", scrub: 1.5 },
-              })
-                .to(haze, { xPercent: 12, yPercent: -8, opacity: .88, ease: "none" })
-                .to(haze, { xPercent: -10, yPercent: -18, opacity: .8, ease: "none" })
-                .to(haze, { xPercent: 6, yPercent: -26, opacity: .9, ease: "none" });
             }
           });
 
@@ -160,7 +153,10 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
             const length = draw.getTotalLength();
             draw.style.strokeDasharray = `${length}`;
             const state = { progress: 0 };
+            let lastProgress = -1;
             const place = () => {
+              if (Math.abs(state.progress - lastProgress) < 0.0005) return;
+              lastProgress = state.progress;
               const at = length * state.progress;
               const point = draw.getPointAtLength(at);
               const ahead = draw.getPointAtLength(Math.min(length, at + 2));
@@ -180,7 +176,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
             cleanups.push(() => trigger.kill());
           });
 
-          /* ---------- continuous open-sky charter cruise across contact sky ---------- */
+          /* ---------- continuous open-sky charter cruise across contact clouds ---------- */
           Array.from(root.querySelectorAll<SVGSVGElement>(".contact-charter")).forEach(svg => {
             const route = svg.querySelector<SVGPathElement>(".cc-route");
             const trail = svg.querySelector<SVGPathElement>(".cc-trail");
@@ -189,7 +185,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
             const length = route.getTotalLength();
             const wake = Math.min(340, length * 0.24);
             trail.style.strokeDasharray = `${wake} ${length + wake}`;
-            const state = { progress: 0 };
+            const state = { progress: 0.28 };
             const cruise = () => {
               const at = length * state.progress;
               const point = route.getPointAtLength(at);
@@ -200,9 +196,16 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
               trail.style.strokeDashoffset = `${(wake - at).toFixed(2)}`;
             };
             cruise();
-            const tween = gsap.to(state, { progress: 1, duration: 22, ease: "none", repeat: -1, onUpdate: cruise, paused: true });
+            const tween = gsap.fromTo(
+              state,
+              { progress: 0 },
+              { progress: 1, duration: 18, ease: "none", repeat: -1, onUpdate: cruise, paused: true },
+            );
+            tween.progress(0.28);
             const trigger = ScrollTrigger.create({
-              trigger: svg, start: "top bottom", end: "bottom top",
+              trigger: svg,
+              start: "top bottom",
+              end: "bottom top",
               onEnter: () => tween.play(),
               onEnterBack: () => tween.play(),
               onLeave: () => tween.pause(),
@@ -260,11 +263,40 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
           const sweep = frame.querySelector<HTMLElement>(".liquid-sweep");
           if (!media || !ribbon || !sweep) return [];
           const text = frame.closest("section")?.querySelector<HTMLElement>("[data-liquid-text]") ?? null;
-          return [{ frame, media, ribbon, sweep, text, state: { fill: 0 }, phase: Math.random() * 6.28, running: false, swept: false }];
+          return [{
+            frame,
+            media,
+            ribbon,
+            sweep,
+            text,
+            height: media.getBoundingClientRect().height || 1,
+            state: { fill: 0 },
+            phase: Math.random() * 6.28,
+            running: false,
+            swept: false,
+          }];
         });
 
+        const liquidResizeObserver = typeof ResizeObserver !== "undefined"
+          ? new ResizeObserver(entries => {
+            entries.forEach(entry => {
+              const target = entry.target as HTMLElement;
+              const match = liquids.find(item => item.media === target);
+              if (match && entry.contentRect.height > 0) match.height = entry.contentRect.height;
+            });
+          })
+          : undefined;
+        liquids.forEach(item => liquidResizeObserver?.observe(item.media));
+        const refreshLiquidHeights = () => {
+          liquids.forEach(item => {
+            const measured = item.media.getBoundingClientRect().height;
+            if (measured > 0) item.height = measured;
+          });
+        };
+        ScrollTrigger.addEventListener("refreshInit", refreshLiquidHeights);
+
         const paint = (item: Liquid) => {
-          const height = item.media.getBoundingClientRect().height || 1;
+          const height = item.height;
           const fill = Math.max(0, Math.min(1, item.state.fill));
           const swell = Math.sin(Math.PI * fill);
           const amp = height * .032 * swell;
@@ -344,6 +376,8 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
 
         ScrollTrigger.refresh();
         cleanupDepth = () => {
+          liquidResizeObserver?.disconnect();
+          ScrollTrigger.removeEventListener("refreshInit", refreshLiquidHeights);
           gsap.ticker.remove(tick);
           cleanups.forEach(cleanup => cleanup());
           triggers.forEach(trigger => trigger.kill());
@@ -365,12 +399,60 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
         root.querySelectorAll<HTMLElement>("[data-liquid] .liquid-media").forEach(media => { media.style.clipPath = ""; });
       }
     };
-    void setupDepth();
-    preference.addEventListener("change", setupDepth);
+    const scheduleDepth = () => {
+      cancelScheduledDepth?.();
+      cancelScheduledDepth = undefined;
+      if (preference.matches) return;
+      let started = false;
+      const start = () => {
+        if (started) return;
+        started = true;
+        cancelScheduledDepth?.();
+        cancelScheduledDepth = undefined;
+        void setupDepth();
+      };
+      const win = window as Window & {
+        requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+        cancelIdleCallback?: (id: number) => void;
+      };
+      let idleId: number | undefined;
+      let timerId: number | undefined;
+      const queueAfterLoad = () => {
+        if (started) return;
+        idleId = win.requestIdleCallback
+          ? win.requestIdleCallback(start, { timeout: 4500 })
+          : undefined;
+        timerId = window.setTimeout(start, 3800);
+      };
+      if (document.readyState === "complete") queueAfterLoad();
+      else window.addEventListener("load", queueAfterLoad, { once: true });
+      const events: (keyof WindowEventMap)[] = ["scroll", "wheel", "touchstart", "pointerdown", "pointermove", "keydown"];
+      events.forEach(evt => window.addEventListener(evt, start, { passive: true, once: true }));
+      cancelScheduledDepth = () => {
+        window.removeEventListener("load", queueAfterLoad);
+        if (idleId !== undefined && win.cancelIdleCallback) win.cancelIdleCallback(idleId);
+        if (timerId !== undefined) window.clearTimeout(timerId);
+        events.forEach(evt => window.removeEventListener(evt, start));
+      };
+    };
+    scheduleDepth();
+    const onMotionPrefChange = () => {
+      if (preference.matches) {
+        cancelScheduledDepth?.();
+        depthGeneration++;
+        cleanupDepth?.();
+        cleanupDepth = undefined;
+      } else {
+        scheduleDepth();
+      }
+    };
+    preference.addEventListener("change", onMotionPrefChange);
     const cleanupInteractions = () => {
+      cancelScheduledDepth?.();
+      heroAtmoObserver?.disconnect();
       depthGeneration++;
       cleanupDepth?.();
-      preference.removeEventListener("change", setupDepth);
+      preference.removeEventListener("change", onMotionPrefChange);
       window.removeEventListener("scroll", updateHeader);
       window.removeEventListener("keydown", onEscape);
     };
@@ -401,22 +483,22 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
       { clipPath: "inset(0% 46% round 999px)", offset: .30 },
       { clipPath: "inset(0% 28% round 999px)", offset: .58 },
       { clipPath: "inset(0% 0% round 0px)", offset: 1 },
-    ], 0, phone ? 1300 : 1700);
+    ], 0, phone ? 650 : 1100);
     animate(".header-inner", [
       { opacity: 0, transform: "translateY(-35px)" },
       { opacity: 1, transform: "translateY(0)" },
-    ], 180, 700);
+    ], 140, 620);
     [".hero-copy h1", ".hero-description", ".hero-actions"].forEach((selector, index) => {
       animate(selector, [
         { opacity: 0, transform: "translateY(28px)", clipPath: "inset(0 0 100% 0)" },
         { opacity: 1, transform: "translateY(0)", clipPath: "inset(0 0 0% 0)" },
-      ], (phone ? 420 : 580) + index * 140);
+      ], (phone ? 300 : 420) + index * 110);
     });
     animate(".hero-bottom", [
       { opacity: 0, transform: "translateY(35px)" },
       { opacity: 1, transform: "translateY(0)" },
-    ], 900, 690);
-    animate(".scroll-line", [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }], 1150, 850);
+    ], 680, 620);
+    animate(".scroll-line", [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }], 860, 720);
 
     const finish = () => {
       animations.forEach(animation => { animation.finish(); animation.cancel(); });
@@ -425,7 +507,10 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
     const onResize = () => { disposed = true; finish(); };
     preference.addEventListener("change", onPreferenceChange);
     window.addEventListener("resize", onResize);
-    document.fonts.ready.then(() => {
+    Promise.race([
+      document.fonts.ready,
+      new Promise<void>(resolve => { window.setTimeout(resolve, 60); }),
+    ]).then(() => {
       if (disposed) return;
       animations.forEach(animation => animation.play());
       Promise.all(animations.map(animation => animation.finished)).then(() => {
