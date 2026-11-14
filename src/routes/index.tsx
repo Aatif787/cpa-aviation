@@ -325,7 +325,7 @@ function Index() {
           setContactInView(entry.isIntersecting);
           if (entry.isIntersecting) setContactVisible(true);
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.05 });
       contactObserver.observe(contactEl);
 
       contactFormObserver = new IntersectionObserver(entries => {
@@ -803,7 +803,7 @@ function Index() {
                     <div className="document-meta">
                       <span className="document-code">{doc.code}</span>
                       <div>
-                        <h3 className="document-title"><FileText size={14} aria-hidden="true" /> {doc.title}</h3>
+                        <h3 className="document-title"><FileText size={14} aria-hidden="true" /><span>{doc.title}</span></h3>
                         <p className="document-ref">{doc.reference}</p>
                         <p className="document-summary">{doc.summary}</p>
                       </div>
@@ -835,7 +835,7 @@ function Index() {
             <p className="footer-contact">
               <a href="mailto:cpaaviationleasing@gmail.com">cpaaviationleasing@gmail.com</a>
               <span aria-hidden="true"> · </span>
-              <a href="tel:+918527712949">+91 85277 12949</a>
+              <a className="footer-phone whitespace-nowrap" href="tel:+918527712949">+91 85277 12949</a>
             </p>
           </div>
           <div className="footer-nav-block">
