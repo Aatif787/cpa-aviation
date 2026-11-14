@@ -1,6 +1,5 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight, Plane } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { createFileRoute } from "@tanstack/react-router";
+import { Plane } from "lucide-react";
 import { LiquidVisualFrame, PageBreadcrumbs, SiteShell } from "@/components/SiteLayout";
 import { LEGAL_NAME, buildPageHead } from "@/lib/seo";
 import {
@@ -28,18 +27,6 @@ function AviationAssetsPage() {
             <p className="lead-description">
               Overview of the aircraft, helicopters, propulsion engines, and allied aviation equipment classes referenced in the corporate objects of {LEGAL_NAME}.
             </p>
-            <div className="subpage-hero-actions">
-              <Button asChild variant="aviation">
-                <Link to="/aircraft-leasing">
-                  Authorised Operating Lease <ArrowUpRight />
-                </Link>
-              </Button>
-              <Button asChild variant="cinematic">
-                <Link to="/contact">
-                  Enquire About Assets <ArrowUpRight />
-                </Link>
-              </Button>
-            </div>
           </div>
           <div className="subpage-hero-visual">
             <LiquidVisualFrame
@@ -108,18 +95,6 @@ function AviationAssetsPage() {
                 <p className="section-description">
                   Under our current GIFT SEZ Letter of Approval, our permitted activity is operating lease for aircraft; any expansion into additional asset categories or financial products would occur solely upon obtaining requisite regulatory consents.
                 </p>
-              </div>
-              <div className="subpage-inline-links">
-                <Button asChild variant="aviation">
-                  <Link to="/our-approach">
-                    Explore Our Approach <ArrowUpRight />
-                  </Link>
-                </Button>
-                <Button asChild variant="cinematic">
-                  <Link to="/contact">
-                    Contact Us <ArrowUpRight />
-                  </Link>
-                </Button>
               </div>
             </div>
           </div>

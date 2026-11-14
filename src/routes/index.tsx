@@ -302,18 +302,6 @@ function Index() {
             <p className="hero-description">
               {LEGAL_NAME} focuses on aircraft operating lease activities and aviation asset structures from GIFT City, Gujarat.
             </p>
-            <div className="hero-actions">
-              <Button asChild variant="aviation">
-                <Link to="/aircraft-leasing">
-                  Aircraft Leasing <ArrowUpRight />
-                </Link>
-              </Button>
-              <Button asChild variant="cinematic">
-                <Link to="/contact">
-                  Contact Us <ArrowUpRight />
-                </Link>
-              </Button>
-            </div>
           </div>
         </div>
         <div className="page-width hero-bottom">
@@ -371,9 +359,6 @@ function Index() {
               <span className="liquid-ribbon" aria-hidden="true" />
               <span className="liquid-sweep" aria-hidden="true" />
             </span>
-            <figcaption className="image-caption reveal">
-              <span>Illustrative aircraft visual</span>
-            </figcaption>
           </figure>
         </div>
       </section>
@@ -396,9 +381,6 @@ function Index() {
                 <span className="liquid-ribbon" aria-hidden="true" />
                 <span className="liquid-sweep" aria-hidden="true" />
               </span>
-              <figcaption className="image-caption reveal">
-                <span>Operating lease study · Illustrative aircraft visual</span>
-              </figcaption>
             </figure>
             <div className="reveal" data-liquid-text>
               <h2>
@@ -606,11 +588,6 @@ function Index() {
               <span className="liquid-ribbon" aria-hidden="true" />
               <span className="liquid-sweep" aria-hidden="true" />
             </span>
-            <figcaption key={activeScene.code} className="image-caption city-caption-fade">
-              <span>
-                {activeScene.code} / 0{GUJARAT_SCENES.length} · {activeScene.caption}
-              </span>
-            </figcaption>
           </figure>
         </div>
       </section>

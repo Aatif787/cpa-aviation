@@ -35,18 +35,6 @@ function AircraftLeasingPage() {
               <p className="lead-description">
                 Structured aircraft operating leases enable airline operators and aviation stakeholders to access aircraft capacity through agreed commercial lease arrangements without outright asset acquisition.
               </p>
-              <div className="subpage-hero-actions">
-                <Button asChild variant="aviation">
-                  <Link to="/contact">
-                    Discuss a Leasing Enquiry <ArrowUpRight />
-                  </Link>
-                </Button>
-                <Button asChild variant="cinematic">
-                  <Link to="/our-approach">
-                    Our Approach <ArrowUpRight />
-                  </Link>
-                </Button>
-              </div>
             </div>
             <div className="subpage-hero-visual">
               <LiquidVisualFrame
@@ -133,26 +121,6 @@ function AircraftLeasingPage() {
               <p>{pillar.summary}</p>
             </article>
           ))}
-        </div>
-        <div className="subpage-cta-band reveal">
-          <div>
-            <h2>Review Asset Scope or Submit an Enquiry</h2>
-            <p>
-              Examine the aviation asset categories referenced in our corporate objectives or contact our team in GIFT City.
-            </p>
-          </div>
-          <div className="subpage-hero-actions">
-            <Button asChild variant="aviation">
-              <Link to="/aviation-assets">
-                View Aviation Assets <ArrowUpRight />
-              </Link>
-            </Button>
-            <Button asChild variant="cinematic">
-              <Link to="/contact">
-                Contact Us <ArrowUpRight />
-              </Link>
-            </Button>
-          </div>
         </div>
       </section>
     </SiteShell>

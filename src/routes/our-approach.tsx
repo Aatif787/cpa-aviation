@@ -1,7 +1,5 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Suspense, lazy } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   BlueprintSvg,
   FlightPathSvg,
@@ -37,18 +35,6 @@ function OurApproachPage() {
               <p className="lead-description">
                 Aircraft leasing involves more than the airframe itself. Ownership discipline, contractual architecture, lifecycle oversight, and IFSC regulatory compliance form the pillars of our approach.
               </p>
-              <div className="subpage-hero-actions">
-                <Button asChild variant="aviation">
-                  <Link to="/aircraft-leasing">
-                    View Operating Lease <ArrowUpRight />
-                  </Link>
-                </Button>
-                <Button asChild variant="cinematic">
-                  <Link to="/contact">
-                    Start a Conversation <ArrowUpRight />
-                  </Link>
-                </Button>
-              </div>
             </div>
             <div className="subpage-hero-visual">
               <LiquidVisualFrame
@@ -116,26 +102,6 @@ function OurApproachPage() {
           <Suspense fallback={<div className="advisor-card" aria-hidden="true" />}>
             <LazyServiceAdvisor />
           </Suspense>
-        </div>
-        <div className="subpage-cta-band reveal">
-          <div>
-            <h2>Explore Our GIFT City IFSC Jurisdiction</h2>
-            <p>
-              See how our registered seat in GIFT SEZ supports statutory clarity and international leasing administration.
-            </p>
-          </div>
-          <div className="subpage-hero-actions">
-            <Button asChild variant="aviation">
-              <Link to="/gift-city">
-                Explore GIFT City <ArrowUpRight />
-              </Link>
-            </Button>
-            <Button asChild variant="cinematic">
-              <Link to="/contact">
-                Contact Our Team <ArrowUpRight />
-              </Link>
-            </Button>
-          </div>
         </div>
       </section>
     </SiteShell>

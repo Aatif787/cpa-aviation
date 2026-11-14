@@ -78,14 +78,13 @@ export function ResponsivePicture({
 export function LiquidVisualFrame({
   liquidId,
   asset,
-  caption,
   frameClassName = "liquid-frame",
   mediaClassName = "overview-image liquid-media",
   eager = false,
 }: {
   liquidId: string;
   asset: ResponsivePictureAsset;
-  caption: string;
+  caption?: string;
   frameClassName?: string;
   mediaClassName?: string;
   eager?: boolean;
@@ -108,9 +107,6 @@ export function LiquidVisualFrame({
         <span className="liquid-ribbon" aria-hidden="true" />
         <span className="liquid-sweep" aria-hidden="true" />
       </span>
-      <figcaption className="image-caption reveal">
-        <span>{caption}</span>
-      </figcaption>
     </figure>
   );
 }

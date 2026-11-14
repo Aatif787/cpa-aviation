@@ -28,18 +28,6 @@ function AboutPage() {
             <p className="lead-description">
               {LEGAL_NAME} is an aircraft leasing company incorporated in Gujarat, India and positioned inside GIFT City&apos;s International Financial Services Centre (IFSC).
             </p>
-            <div className="subpage-hero-actions">
-              <Button asChild variant="aviation">
-                <Link to="/aircraft-leasing">
-                  Explore Aircraft Leasing <ArrowUpRight />
-                </Link>
-              </Button>
-              <Button asChild variant="cinematic">
-                <Link to="/contact">
-                  Contact Us <ArrowUpRight />
-                </Link>
-              </Button>
-            </div>
           </div>
           <div className="subpage-hero-visual">
             <LiquidVisualFrame

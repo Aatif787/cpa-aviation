@@ -1,7 +1,6 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Building2, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Building2, MapPin } from "lucide-react";
 import { LiquidVisualFrame, PageBreadcrumbs, SiteShell } from "@/components/SiteLayout";
 import { buildPageHead } from "@/lib/seo";
 import {
@@ -70,18 +69,6 @@ function GiftCityPage() {
             <p className="lead-description">
               Positioned inside Gujarat International Finance Tec-City (GIFT City) — India&apos;s International Financial Services Centre structured for international aviation leasing and financial administration.
             </p>
-            <div className="subpage-hero-actions">
-              <Button asChild variant="aviation">
-                <Link to="/contact">
-                  Contact GIFT SEZ Office <ArrowUpRight />
-                </Link>
-              </Button>
-              <Button asChild variant="cinematic">
-                <Link to="/about">
-                  Corporate Particulars <ArrowUpRight />
-                </Link>
-              </Button>
-            </div>
           </div>
           <div className="subpage-hero-visual">
             <LiquidVisualFrame
@@ -174,11 +161,6 @@ function GiftCityPage() {
               <span className="liquid-ribbon" aria-hidden="true" />
               <span className="liquid-sweep" aria-hidden="true" />
             </span>
-            <figcaption key={activeScene.code} className="image-caption city-caption-fade">
-              <span>
-                {activeScene.code} / 0{GUJARAT_SCENES.length} · {activeScene.caption}
-              </span>
-            </figcaption>
           </figure>
         </div>
       </section>
@@ -206,18 +188,6 @@ function GiftCityPage() {
             </p>
             <h2>THE PLATFORM BK11 GIFTSEZ</h2>
             <p>{REGISTERED_OFFICE_ADDRESS}</p>
-          </div>
-          <div className="subpage-hero-actions">
-            <Button asChild variant="aviation">
-              <Link to="/contact">
-                Send an Enquiry <ArrowUpRight />
-              </Link>
-            </Button>
-            <Button asChild variant="cinematic">
-              <Link to="/aircraft-leasing">
-                Aircraft Leasing <ArrowUpRight />
-              </Link>
-            </Button>
           </div>
         </div>
       </section>
