@@ -204,6 +204,12 @@ h1 {
   overflow-wrap: break-word;
 }
 h1 span { color: var(--accent); font-style: italic; }
+.hero-copy h1 .hero-racing-title {
+  font-family: "Racing Sans One", var(--font-display), sans-serif;
+  font-style: normal;
+  letter-spacing: 0.015em;
+  display: inline-block;
+}
 h2 {
   font-family: var(--font-display);
   font-size: clamp(1.65rem, 2.8vw + 0.85rem, 3.125rem);
