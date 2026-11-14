@@ -117,31 +117,6 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
                 scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 1.2 },
               });
             }
-
-            const heroHeadingLines = Array.from(root.querySelectorAll<HTMLElement>(".hero-heading-line"));
-            if (heroHeadingLines.length > 0 && heroSection) {
-              ScrollTrigger.create({
-                trigger: heroSection,
-                start: "top+=20 top",
-                once: true,
-                onEnter: () => {
-                  gsap.fromTo(
-                    heroHeadingLines,
-                    { rotateX: 0, rotateZ: 0 },
-                    {
-                      rotateX: 360,
-                      rotateZ: 0,
-                      transformPerspective: 1000,
-                      transformOrigin: "50% 55%",
-                      duration: 0.95,
-                      stagger: 0.1,
-                      ease: "power3.inOut",
-                      clearProps: "transform",
-                    },
-                  );
-                },
-              });
-            }
           });
 
           /* ---------- blueprint outline drawn through light, replayed on every entry ---------- */
@@ -542,33 +517,11 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
         { opacity: 0, transform: "translateY(-35px)" },
         { opacity: 1, transform: "translateY(0)" },
       ], 140, 620);
-      root.querySelectorAll<HTMLElement>("[data-hero-flip]").forEach((element, index) => {
-        const animation = element.animate(
-          [
-            {
-              opacity: 0,
-              transform: "perspective(1000px) rotateX(-86deg) rotateZ(-2.5deg) translateY(20px)",
-            },
-            {
-              opacity: 1,
-              transform: "perspective(1000px) rotateX(0deg) rotateZ(0deg) translateY(0)",
-            },
-          ],
-          {
-            duration: phone ? 760 : 920,
-            delay: (phone ? 260 : 380) + index * 140,
-            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-            fill: "both",
-          },
-        );
-        animation.pause();
-        animations.push(animation);
-      });
-      [".hero-description", ".hero-actions"].forEach((selector, index) => {
+      [".hero-copy h1", ".hero-description", ".hero-actions"].forEach((selector, index) => {
         animate(selector, [
           { opacity: 0, transform: "translateY(28px)", clipPath: "inset(0 0 100% 0)" },
           { opacity: 1, transform: "translateY(0)", clipPath: "inset(0 0 0% 0)" },
-        ], (phone ? 380 : 520) + index * 110);
+        ], (phone ? 300 : 420) + index * 110);
       });
       animate(".hero-bottom", [
         { opacity: 0, transform: "translateY(35px)" },
@@ -589,8 +542,21 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
       });
     }
 
+    const postLoadAnimations: Animation[] = [];
+    let postLoadTimer: number | undefined;
+    let onWindowLoad: (() => void) | undefined;
+
     const finish = () => {
+      if (postLoadTimer !== undefined) {
+        window.clearTimeout(postLoadTimer);
+        postLoadTimer = undefined;
+      }
+      if (onWindowLoad) {
+        window.removeEventListener("load", onWindowLoad);
+        onWindowLoad = undefined;
+      }
       animations.forEach(animation => { animation.finish(); animation.cancel(); });
+      postLoadAnimations.forEach(animation => { animation.finish(); animation.cancel(); });
     };
     const onPreferenceChange = () => { if (preference.matches) { disposed = true; finish(); } };
     const onResize = () => { disposed = true; finish(); };
@@ -606,10 +572,52 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
         animations.forEach(animation => animation.cancel());
       }).catch(() => { /* Cancellation restores the unanimated composition. */ });
     });
+
+    if (!isSubpage) {
+      const startSlowFlipRotate = () => {
+        if (disposed) return;
+        document.fonts.ready.then(() => {
+          if (disposed) return;
+          postLoadTimer = window.setTimeout(() => {
+            if (disposed) return;
+            root.querySelectorAll<HTMLElement>("[data-hero-flip]").forEach((element, index) => {
+              const spin = element.animate(
+                [
+                  { transform: "perspective(1000px) rotateX(0deg)" },
+                  { transform: "perspective(1000px) rotateX(360deg)" },
+                ],
+                {
+                  duration: 2100,
+                  delay: index * 180,
+                  easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+                  fill: "both",
+                },
+              );
+              postLoadAnimations.push(spin);
+              spin.finished.then(() => spin.cancel()).catch(() => {});
+            });
+          }, 180);
+        });
+      };
+
+      if (document.readyState === "complete") {
+        startSlowFlipRotate();
+      } else {
+        onWindowLoad = () => {
+          onWindowLoad = undefined;
+          startSlowFlipRotate();
+        };
+        window.addEventListener("load", onWindowLoad, { once: true });
+      }
+    }
+
     return () => {
       cleanupInteractions();
       disposed = true;
+      if (postLoadTimer !== undefined) window.clearTimeout(postLoadTimer);
+      if (onWindowLoad) window.removeEventListener("load", onWindowLoad);
       animations.forEach(animation => animation.cancel());
+      postLoadAnimations.forEach(animation => animation.cancel());
       preference.removeEventListener("change", onPreferenceChange);
       window.removeEventListener("resize", onResize);
     };
