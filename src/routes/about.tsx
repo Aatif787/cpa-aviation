@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { LiquidVisualFrame, PageBreadcrumbs, SiteShell } from "@/components/SiteLayout";
 import { COMPANY_CIN, CORPORATE_EMAIL, LEGAL_NAME, buildPageHead } from "@/lib/seo";
 import {
-  AIRCRAFT_ASSETS_VISUAL,
+  ABOUT_AIRCRAFT_VISUAL,
   CORPORATE_DOCUMENTS,
   CORPORATE_PARTICULARS,
 } from "@/lib/site-content";
@@ -44,7 +44,7 @@ function AboutPage() {
           <div className="subpage-hero-visual">
             <LiquidVisualFrame
               liquidId="about-hero"
-              asset={AIRCRAFT_ASSETS_VISUAL}
+              asset={ABOUT_AIRCRAFT_VISUAL}
               caption="CPA Aviation Leasing Capital IFSC Private Limited · Illustrative visual"
               eager
             />

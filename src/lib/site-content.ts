@@ -12,6 +12,41 @@ import leasingAircraftImageWebp from "@/assets/commercial-aircraft-operating-lea
 import leasingAircraftImage1024Webp from "@/assets/commercial-aircraft-operating-lease-1024w.webp";
 import leasingAircraftImage640Webp from "@/assets/commercial-aircraft-operating-lease-640w.webp";
 
+import aboutAircraftImageAvif from "@/assets/narrowbody-commercial-airliner-takeoff.avif";
+import aboutAircraftImage1024Avif from "@/assets/narrowbody-commercial-airliner-takeoff-1024w.avif";
+import aboutAircraftImage640Avif from "@/assets/narrowbody-commercial-airliner-takeoff-640w.avif";
+import aboutAircraftImageWebp from "@/assets/narrowbody-commercial-airliner-takeoff.webp";
+import aboutAircraftImage1024Webp from "@/assets/narrowbody-commercial-airliner-takeoff-1024w.webp";
+import aboutAircraftImage640Webp from "@/assets/narrowbody-commercial-airliner-takeoff-640w.webp";
+
+import leasingHeroImageAvif from "@/assets/widebody-a350-commercial-flight.avif";
+import leasingHeroImage1024Avif from "@/assets/widebody-a350-commercial-flight-1024w.avif";
+import leasingHeroImage640Avif from "@/assets/widebody-a350-commercial-flight-640w.avif";
+import leasingHeroImageWebp from "@/assets/widebody-a350-commercial-flight.webp";
+import leasingHeroImage1024Webp from "@/assets/widebody-a350-commercial-flight-1024w.webp";
+import leasingHeroImage640Webp from "@/assets/widebody-a350-commercial-flight-640w.webp";
+
+import leasingFleetImageAvif from "@/assets/regional-turboprop-aircraft-flight.avif";
+import leasingFleetImage1024Avif from "@/assets/regional-turboprop-aircraft-flight-1024w.avif";
+import leasingFleetImage640Avif from "@/assets/regional-turboprop-aircraft-flight-640w.avif";
+import leasingFleetImageWebp from "@/assets/regional-turboprop-aircraft-flight.webp";
+import leasingFleetImage1024Webp from "@/assets/regional-turboprop-aircraft-flight-1024w.webp";
+import leasingFleetImage640Webp from "@/assets/regional-turboprop-aircraft-flight-640w.webp";
+
+import assetsHeroImageAvif from "@/assets/heavy-cargo-freighter-aircraft.avif";
+import assetsHeroImage1024Avif from "@/assets/heavy-cargo-freighter-aircraft-1024w.avif";
+import assetsHeroImage640Avif from "@/assets/heavy-cargo-freighter-aircraft-640w.avif";
+import assetsHeroImageWebp from "@/assets/heavy-cargo-freighter-aircraft.webp";
+import assetsHeroImage1024Webp from "@/assets/heavy-cargo-freighter-aircraft-1024w.webp";
+import assetsHeroImage640Webp from "@/assets/heavy-cargo-freighter-aircraft-640w.webp";
+
+import assetsRotaryImageAvif from "@/assets/commercial-twin-helicopter-flight.avif";
+import assetsRotaryImage1024Avif from "@/assets/commercial-twin-helicopter-flight-1024w.avif";
+import assetsRotaryImage640Avif from "@/assets/commercial-twin-helicopter-flight-640w.avif";
+import assetsRotaryImageWebp from "@/assets/commercial-twin-helicopter-flight.webp";
+import assetsRotaryImage1024Webp from "@/assets/commercial-twin-helicopter-flight-1024w.webp";
+import assetsRotaryImage640Webp from "@/assets/commercial-twin-helicopter-flight-640w.webp";
+
 import cityImageAvif from "@/assets/gift-city-ifsc-gujarat.avif";
 import cityImage1024Avif from "@/assets/gift-city-ifsc-gujarat-1024w.avif";
 import cityImage640Avif from "@/assets/gift-city-ifsc-gujarat-640w.avif";
@@ -99,6 +134,56 @@ export const LEASING_AIRCRAFT_VISUAL: ResponsivePictureAsset = {
   src: leasingAircraftImageWebp,
   sizes: "(max-width: 1024px) 100vw, 48vw",
   alt: "Illustrative commercial jet aircraft banking smoothly at altitude representing aircraft operating lease activities",
+  width: 1376,
+  height: 768,
+};
+
+export const ABOUT_AIRCRAFT_VISUAL: ResponsivePictureAsset = {
+  avifSrcSet: `${aboutAircraftImage640Avif} 640w, ${aboutAircraftImage1024Avif} 1024w, ${aboutAircraftImageAvif} 1376w`,
+  webpSrcSet: `${aboutAircraftImage640Webp} 640w, ${aboutAircraftImage1024Webp} 1024w, ${aboutAircraftImageWebp} 1376w`,
+  src: aboutAircraftImageWebp,
+  sizes: "(max-width: 1024px) 100vw, 48vw",
+  alt: "Illustrative narrowbody commercial passenger jet climbing after takeoff above an international airport runway at golden hour",
+  width: 1376,
+  height: 768,
+};
+
+export const LEASING_HERO_VISUAL: ResponsivePictureAsset = {
+  avifSrcSet: `${leasingHeroImage640Avif} 640w, ${leasingHeroImage1024Avif} 1024w, ${leasingHeroImageAvif} 1376w`,
+  webpSrcSet: `${leasingHeroImage640Webp} 640w, ${leasingHeroImage1024Webp} 1024w, ${leasingHeroImageWebp} 1376w`,
+  src: leasingHeroImageWebp,
+  sizes: "(max-width: 1024px) 100vw, 48vw",
+  alt: "Illustrative long-haul widebody commercial airliner cruising in high-altitude morning light",
+  width: 1376,
+  height: 768,
+};
+
+export const LEASING_FLEET_VISUAL: ResponsivePictureAsset = {
+  avifSrcSet: `${leasingFleetImage640Avif} 640w, ${leasingFleetImage1024Avif} 1024w, ${leasingFleetImageAvif} 1376w`,
+  webpSrcSet: `${leasingFleetImage640Webp} 640w, ${leasingFleetImage1024Webp} 1024w, ${leasingFleetImageWebp} 1376w`,
+  src: leasingFleetImageWebp,
+  sizes: "(max-width: 1024px) 100vw, 48vw",
+  alt: "Illustrative twin-turboprop regional commercial aircraft cruising above coastal cloud cover",
+  width: 1376,
+  height: 768,
+};
+
+export const ASSETS_HERO_VISUAL: ResponsivePictureAsset = {
+  avifSrcSet: `${assetsHeroImage640Avif} 640w, ${assetsHeroImage1024Avif} 1024w, ${assetsHeroImageAvif} 1376w`,
+  webpSrcSet: `${assetsHeroImage640Webp} 640w, ${assetsHeroImage1024Webp} 1024w, ${assetsHeroImageWebp} 1376w`,
+  src: assetsHeroImageWebp,
+  sizes: "(max-width: 1024px) 100vw, 48vw",
+  alt: "Illustrative four-engine widebody cargo and commercial freighter aircraft accelerating on an airport runway",
+  width: 1376,
+  height: 768,
+};
+
+export const ASSETS_ROTARY_VISUAL: ResponsivePictureAsset = {
+  avifSrcSet: `${assetsRotaryImage640Avif} 640w, ${assetsRotaryImage1024Avif} 1024w, ${assetsRotaryImageAvif} 1376w`,
+  webpSrcSet: `${assetsRotaryImage640Webp} 640w, ${assetsRotaryImage1024Webp} 1024w, ${assetsRotaryImageWebp} 1376w`,
+  src: assetsRotaryImageWebp,
+  sizes: "(max-width: 1024px) 100vw, 48vw",
+  alt: "Illustrative twin-engine commercial and offshore helicopter in forward flight along a sunlit coastline",
   width: 1376,
   height: 768,
 };

@@ -9,8 +9,8 @@ import {
 } from "@/components/SiteLayout";
 import { LEGAL_NAME, buildPageHead } from "@/lib/seo";
 import {
-  AIRCRAFT_ASSETS_VISUAL,
-  LEASING_AIRCRAFT_VISUAL,
+  LEASING_FLEET_VISUAL,
+  LEASING_HERO_VISUAL,
   LEASING_LIFECYCLE_PILLARS,
 } from "@/lib/site-content";
 
@@ -51,7 +51,7 @@ function AircraftLeasingPage() {
             <div className="subpage-hero-visual">
               <LiquidVisualFrame
                 liquidId="leasing-hero"
-                asset={LEASING_AIRCRAFT_VISUAL}
+                asset={LEASING_HERO_VISUAL}
                 frameClassName="liquid-frame leasing-frame"
                 mediaClassName="leasing-image liquid-media"
                 caption="Operating lease visual study · Illustrative commercial aircraft"
@@ -91,7 +91,7 @@ function AircraftLeasingPage() {
           </div>
           <LiquidVisualFrame
             liquidId="overview"
-            asset={AIRCRAFT_ASSETS_VISUAL}
+            asset={LEASING_FLEET_VISUAL}
             caption="Illustrative aircraft operating study"
           />
         </div>

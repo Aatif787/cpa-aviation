@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { LiquidVisualFrame, PageBreadcrumbs, SiteShell } from "@/components/SiteLayout";
 import { LEGAL_NAME, buildPageHead } from "@/lib/seo";
 import {
-  AIRCRAFT_ASSETS_VISUAL,
+  ASSETS_HERO_VISUAL,
+  ASSETS_ROTARY_VISUAL,
   AVIATION_ASSET_CATEGORIES,
-  LEASING_AIRCRAFT_VISUAL,
 } from "@/lib/site-content";
 
 export const Route = createFileRoute("/aviation-assets")({
@@ -44,7 +44,7 @@ function AviationAssetsPage() {
           <div className="subpage-hero-visual">
             <LiquidVisualFrame
               liquidId="assets-hero"
-              asset={AIRCRAFT_ASSETS_VISUAL}
+              asset={ASSETS_HERO_VISUAL}
               caption="Aviation asset categories · Illustrative executive aircraft visual"
               eager
             />
@@ -91,7 +91,7 @@ function AviationAssetsPage() {
           <div className="leasing-grid">
             <LiquidVisualFrame
               liquidId="leasing"
-              asset={LEASING_AIRCRAFT_VISUAL}
+              asset={ASSETS_ROTARY_VISUAL}
               frameClassName="liquid-frame leasing-frame"
               mediaClassName="leasing-image liquid-media"
               caption="Technical oversight & leasing governance · Illustrative visual"
