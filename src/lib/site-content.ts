@@ -100,6 +100,8 @@ import type { PublicRoutePath } from "@/lib/seo";
 
 export { flightFilm, flightStill };
 
+export const OVERVIEW_AIRCRAFT_FILM_URL = "/media/G700_edit_v2_1080p.mp4" as const;
+
 export type ResponsivePictureAsset = {
   avifSrcSet: string;
   webpSrcSet: string;

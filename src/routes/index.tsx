@@ -21,6 +21,7 @@ import {
   AIRCRAFT_ASSETS_VISUAL,
   GUJARAT_SCENES,
   LEASING_AIRCRAFT_VISUAL,
+  OVERVIEW_AIRCRAFT_FILM_URL,
   flightFilm,
   flightStill,
 } from "@/lib/site-content";
@@ -58,6 +59,7 @@ function Index() {
   const [cityInView, setCityInView] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const overviewVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const nav = navigator as Navigator & {
@@ -157,6 +159,35 @@ function Index() {
       video.pause();
     }
   }, [playing, reducedMotion, desktopVideo, heroInView, videoReady]);
+
+  useEffect(() => {
+    const video = overviewVideoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.loop = true;
+    if (reducedMotion) {
+      video.pause();
+      return;
+    }
+    const ensurePlaying = () => {
+      if (!reducedMotion && document.visibilityState !== "hidden") {
+        video.play().catch(() => {});
+      }
+    };
+    ensurePlaying();
+    video.addEventListener("loadeddata", ensurePlaying);
+    video.addEventListener("canplay", ensurePlaying);
+    video.addEventListener("pause", ensurePlaying);
+    document.addEventListener("visibilitychange", ensurePlaying);
+    return () => {
+      video.removeEventListener("loadeddata", ensurePlaying);
+      video.removeEventListener("canplay", ensurePlaying);
+      video.removeEventListener("pause", ensurePlaying);
+      document.removeEventListener("visibilitychange", ensurePlaying);
+    };
+  }, [reducedMotion]);
 
   useEffect(() => {
     if (reducedMotion || cityPaused || !cityInView) return;
@@ -280,25 +311,33 @@ function Index() {
             </Button>
           </div>
           <figure className="m-0" data-liquid="overview">
-            <span className="liquid-frame">
-              <span className="overview-motion-stage">
+            <span className="liquid-frame overview-video-frame">
+              <span className="overview-motion-stage liquid-media">
                 <ResponsivePicture
                   asset={AIRCRAFT_ASSETS_VISUAL}
-                  className="overview-image overview-motion-plane liquid-media"
+                  className="overview-image overview-video-poster"
                 />
+                <video
+                  ref={overviewVideoRef}
+                  className="overview-video"
+                  src={OVERVIEW_AIRCRAFT_FILM_URL}
+                  poster={AIRCRAFT_ASSETS_VISUAL.src}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  preload="auto"
+                  width={1920}
+                  height={1080}
+                  aria-hidden="true"
+                  tabIndex={-1}
+                >
+                  <source src={OVERVIEW_AIRCRAFT_FILM_URL} type="video/mp4" />
+                </video>
               </span>
-              <span className="frame-atmosphere" aria-hidden="true">
-                <span className="atmo-depth-wrap frame-cloud-wrap--far" data-atmo-depth="frame-far">
-                  <span className="cloud-track cloud-track--frame-far" />
-                </span>
-                <span className="atmo-depth-wrap frame-cloud-wrap--near" data-atmo-depth="frame-near">
-                  <span className="cloud-track cloud-track--frame-near" />
-                </span>
-                <span className="frame-airstream" />
-                <span className="frame-sunbeam" />
-                <span className="frame-metallic-sheen" />
-                <span className="frame-haze" />
-              </span>
+              <span className="overview-shine" aria-hidden="true" />
               <span className="liquid-ribbon" aria-hidden="true" />
               <span className="liquid-sweep" aria-hidden="true" />
             </span>

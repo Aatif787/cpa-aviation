@@ -335,7 +335,7 @@ h2 {
 .overview-image {
   width: 100%;
   height: auto;
-  aspect-ratio: 1920 / 1088;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -2140,12 +2140,67 @@ footer {
 }
 
 /* ---------- overview dynamic flight motion stage ---------- */
+.overview-video-frame {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 252, 245, 0.26),
+    0 24px 56px -18px rgba(18, 22, 28, 0.26);
+  background: #0c1118;
+}
 .overview-motion-stage {
   display: block;
   position: relative;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
+  background: #0c1118;
+}
+.overview-video-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.overview-video {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+  filter: contrast(1.07) saturate(1.08) brightness(1.02);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+video.overview-video::-webkit-media-controls,
+video.overview-video::-webkit-media-controls-enclosure,
+video.overview-video::-webkit-media-controls-panel,
+video.overview-video::-webkit-media-controls-play-button,
+video.overview-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+.overview-shine {
+  position: absolute;
+  inset: -15% -35%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    112deg,
+    transparent 34%,
+    rgba(255, 255, 255, 0.05) 44%,
+    rgba(255, 252, 242, 0.44) 50%,
+    rgba(255, 255, 255, 0.06) 56%,
+    transparent 66%
+  );
+  mix-blend-mode: screen;
+  transform: translate3d(-120%, 0, 0);
+  animation: overview-shine-sweep 5.2s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
 }
 .overview-motion-plane {
   transform-origin: center center;
@@ -2316,11 +2371,29 @@ footer {
   }
 }
 
+@keyframes overview-shine-sweep {
+  0% {
+    transform: translate3d(-120%, 0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.95;
+  }
+  48% {
+    transform: translate3d(120%, 0, 0);
+    opacity: 0.95;
+  }
+  60%, 100% {
+    transform: translate3d(120%, 0, 0);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .reveal, .contact-reveal-up, .contact-reveal-right, .contact-section .contact-submit-btn { opacity: 1; transform: none; }
   .section-topline::before { transform: none; }
-  .hero-media { display: none; }
+  .hero-media, .overview-video, .overview-shine { display: none; }
   .liquid-ribbon, .liquid-sweep, .bp-sheen, .hero-motes, .hero-metallic-glint, .frame-metallic-sheen, .frame-airstream { display: none; }
   .overview-motion-plane { animation: none; transform: none; }
   .frame-atmosphere { opacity: 1; transition: none; }
