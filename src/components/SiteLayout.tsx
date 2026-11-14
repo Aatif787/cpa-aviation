@@ -212,7 +212,8 @@ export function CharterSkyBackdrop({
             className={`contact-sky-slide${index === skyIndex ? " is-active" : ""}`}
             width={1376}
             height={768}
-            loading={activeInView ? "eager" : "lazy"}
+            loading={activeInView && index === skyIndex ? "eager" : "lazy"}
+            fetchPriority={activeInView && index === skyIndex ? "auto" : "low"}
             decoding="async"
           />
         </picture>

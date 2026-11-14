@@ -1,7 +1,7 @@
 import { useEffect, type RefObject } from "react";
 
 /** Reveal the existing composition without moving or resizing its layout. */
-const WAVE_STEPS = 22;
+const WAVE_STEPS = 14;
 const WAVE_CYCLES = 1.85;
 const RIBBON_HEIGHT = 66;
 
@@ -68,13 +68,18 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
       cleanupDepth = undefined;
       if (preference.matches) return;
       try {
-        const [{ gsap }, { ScrollTrigger }, { default: Lenis }] = await Promise.all([
-          import("gsap"), import("gsap/ScrollTrigger"), import("lenis"),
+        const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+        const [{ gsap }, { ScrollTrigger }, LenisModule] = await Promise.all([
+          import("gsap"),
+          import("gsap/ScrollTrigger"),
+          isTouchDevice ? Promise.resolve(null) : import("lenis"),
         ]);
         if (generation !== depthGeneration) return;
         gsap.registerPlugin(ScrollTrigger);
-        const lenis = new Lenis({ autoRaf: true, anchors: true, duration: 1.05, smoothWheel: true });
-        lenis.on("scroll", ScrollTrigger.update);
+        const lenis = LenisModule
+          ? new LenisModule.default({ autoRaf: true, anchors: true, duration: 1.05, smoothWheel: true })
+          : null;
+        lenis?.on("scroll", ScrollTrigger.update);
         const matchMedia = gsap.matchMedia();
         const cleanups: (() => void)[] = [];
         const context = gsap.context(() => {
@@ -324,6 +329,26 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
             .to(item.sweep, { opacity: 0, duration: .5 }, .68) as unknown as { kill: () => void };
         };
 
+        let tickerActive = false;
+        const tick = (time: number) => {
+          let anyRunning = false;
+          liquids.forEach(item => {
+            if (!item.running) return;
+            anyRunning = true;
+            item.phase = time * 1.35;
+            paint(item);
+          });
+          if (!anyRunning && tickerActive) {
+            tickerActive = false;
+            gsap.ticker.remove(tick);
+          }
+        };
+        const startTicker = () => {
+          if (tickerActive) return;
+          tickerActive = true;
+          gsap.ticker.add(tick);
+        };
+
         const play = (item: Liquid) => {
           item.running = true;
           item.swept = false;
@@ -331,14 +356,15 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
           item.sweepTween?.kill();
           item.text?.classList.add("is-visible");
           item.frame.classList.add("is-atmo-active");
+          startTicker();
           gsap.to(item.state, {
-            fill: 1, duration: 1.9, ease: "power2.inOut",
+            fill: 1, duration: 1.35, ease: "power2.inOut",
             onUpdate: () => {
               if (item.state.fill >= .7 && !item.swept) { item.swept = true; runSweep(item); }
             },
             onComplete: () => { item.running = false; paint(item); },
           });
-          gsap.fromTo(item.media, { scale: 1.1, yPercent: 3 }, { scale: 1, yPercent: 0, duration: 2.4, ease: "power3.out", overwrite: true });
+          gsap.fromTo(item.media, { scale: 1.1, yPercent: 3 }, { scale: 1, yPercent: 0, duration: 1.65, ease: "power3.out", overwrite: true });
         };
 
         const reset = (item: Liquid) => {
@@ -360,15 +386,6 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
           item.sweep.style.opacity = "0";
         });
 
-        const tick = (time: number) => {
-          liquids.forEach(item => {
-            if (!item.running) return;
-            item.phase = time * 1.35;
-            paint(item);
-          });
-        };
-        gsap.ticker.add(tick);
-
         const triggers = liquids.map(item => ScrollTrigger.create({
           trigger: item.frame, start: "top bottom", end: "bottom top",
           onEnter: () => play(item), onEnterBack: () => play(item),
@@ -384,6 +401,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
         cleanupDepth = () => {
           liquidResizeObserver?.disconnect();
           ScrollTrigger.removeEventListener("refreshInit", refreshLiquidHeights);
+          tickerActive = false;
           gsap.ticker.remove(tick);
           cleanups.forEach(cleanup => cleanup());
           triggers.forEach(trigger => trigger.kill());
@@ -395,7 +413,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
             item.frame.classList.add("is-atmo-active");
           });
           listeners.forEach(cleanup => cleanup());
-          lenis.destroy();
+          lenis?.destroy();
           matchMedia.revert();
           context.revert();
         };
@@ -430,9 +448,9 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
           return;
         }
         idleId = win.requestIdleCallback
-          ? win.requestIdleCallback(start, { timeout: 4500 })
+          ? win.requestIdleCallback(start, { timeout: 1200 })
           : undefined;
-        timerId = window.setTimeout(start, 3800);
+        timerId = window.setTimeout(start, 900);
       };
       if (document.readyState === "complete") queueAfterLoad();
       else window.addEventListener("load", queueAfterLoad, { once: true });

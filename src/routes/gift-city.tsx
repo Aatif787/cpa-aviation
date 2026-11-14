@@ -150,6 +150,7 @@ function GiftCityPage() {
                               width={scene.width}
                               height={scene.height}
                               loading="lazy"
+                              fetchPriority={offset === 0 ? "auto" : "low"}
                               decoding="async"
                             />
                           </picture>

@@ -3,12 +3,11 @@
 
 @font-face {
   font-family: "Gambarino";
-  src: url("/fonts/Gambarino-Regular.eot");
   src:
-    url("/fonts/Gambarino-Regular.eot?#iefix") format("embedded-opentype"),
     url("/fonts/Gambarino-Regular.woff2") format("woff2"),
     url("/fonts/Gambarino-Regular.woff") format("woff"),
-    url("/fonts/Gambarino-Regular.ttf") format("truetype");
+    url("/fonts/Gambarino-Regular.ttf") format("truetype"),
+    url("/fonts/Gambarino-Regular.eot?#iefix") format("embedded-opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -65,8 +64,10 @@ button, a, video { outline-offset: 5px; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 ::selection { background: var(--accent); color: var(--background); }
 
+#top, main { max-width: 100%; overflow-x: clip; }
 .page-width {
-  width: min(100% - clamp(32px, 6vw, 112px), 1440px);
+  width: min(100% - clamp(28px, 6vw, 112px), 1440px);
+  max-width: 100%;
   margin-inline: auto;
 }
 
@@ -193,19 +194,21 @@ footer .wordmark-logo {
 h1, h2, h3, p { margin-top: 0; }
 h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw + 0.7rem, 5.125rem);
+  font-size: clamp(2.05rem, 5.8vw + 0.55rem, 5.125rem);
   font-weight: 400;
   line-height: 1.08;
   margin-bottom: clamp(16px, 2vw, 25px);
   letter-spacing: 0;
+  overflow-wrap: break-word;
 }
 h1 span { color: var(--accent); font-style: italic; }
 h2 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 2.8vw + 1rem, 3.125rem);
+  font-size: clamp(1.65rem, 2.8vw + 0.85rem, 3.125rem);
   font-weight: 400;
   line-height: 1.16;
   letter-spacing: 0;
+  overflow-wrap: break-word;
 }
 .muted-heading { color: var(--muted-foreground); font-style: italic; }
 .eyebrow {
@@ -215,6 +218,8 @@ h2 {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--accent);
   margin: 0 0 clamp(18px, 2.4vw, 29px);
 }
@@ -296,8 +301,10 @@ h2 {
 /* ---------- section topline ---------- */
 .section-topline {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   position: relative;
   padding-top: clamp(16px, 2vw, 24px);
   margin-bottom: clamp(32px, 4.5vw, 60px);
@@ -314,7 +321,7 @@ h2 {
   transition: transform 1.2s cubic-bezier(.2,.8,.2,1);
 }
 .section-topline.is-visible::before { transform: scaleX(1); }
-.section-number { color: var(--muted-foreground); font-size: 10px; }
+.section-number { color: var(--muted-foreground); font-size: 10px; flex-shrink: 0; }
 .section-topline .eyebrow { margin: 0; }
 
 /* ---------- approach / overview section (mobile-first) ---------- */
@@ -466,9 +473,12 @@ h2 {
 }
 .scope-status {
   display: inline-block;
+  max-width: 100%;
   font-size: 10px;
   letter-spacing: .14em;
+  line-height: 1.35;
   text-transform: uppercase;
+  white-space: normal;
   color: var(--muted-foreground);
 }
 .scope-status--authorised { color: var(--accent); }
@@ -561,10 +571,11 @@ h2 {
   appearance: none;
   display: block;
   transform-origin: center center;
+  backface-visibility: hidden;
   transition:
-    transform .9s cubic-bezier(.22, .61, .36, 1),
-    opacity .8s ease,
-    box-shadow .8s ease;
+    transform .75s cubic-bezier(.22, .61, .36, 1),
+    opacity .65s ease,
+    box-shadow .65s ease;
 }
 .city-deck-card:focus-visible {
   outline: 2px solid var(--accent);
@@ -594,14 +605,18 @@ h2 {
   transform: translate3d(-10px, 14px, 0) rotate(-6.2deg) scale(.96);
 }
 @media (max-width: 639px) {
+  .city-deck {
+    padding: 14px 12px 20px;
+    overflow: hidden;
+  }
   .city-deck-card[data-pos="1"] {
-    transform: translate3d(-8px, 5px, 0) rotate(-2.4deg) scale(.982);
+    transform: translate3d(-4px, 6px, 0) rotate(-1.4deg) scale(.96);
   }
   .city-deck-card[data-pos="2"] {
-    transform: translate3d(8px, 6px, 0) rotate(2.2deg) scale(.978);
+    transform: translate3d(4px, 11px, 0) rotate(1.4deg) scale(.93);
   }
   .city-deck-card[data-pos="3"] {
-    transform: translate3d(-6px, 10px, 0) rotate(-4deg) scale(.965);
+    transform: translate3d(-3px, 15px, 0) rotate(-2deg) scale(.9);
   }
 }
 .city-deck-photo {
@@ -1541,8 +1556,9 @@ footer {
 }
 .subpage-hero-copy { min-width: 0; }
 .subpage-hero-copy h1 {
-  font-size: clamp(2.15rem, 4.4vw + 0.7rem, 4rem);
+  font-size: clamp(1.85rem, 4.4vw + 0.6rem, 4rem);
   line-height: 1.09;
+  overflow-wrap: break-word;
 }
 .lead-description {
   font-size: clamp(1rem, 0.45vw + 0.88rem, 1.15rem);
@@ -1590,9 +1606,10 @@ footer {
 }
 .subpage-card-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 6px 12px;
 }
 .subpage-card h3 {
   font-family: var(--font-display);
@@ -1652,8 +1669,9 @@ footer {
 }
 .contact-page-header .breadcrumb-bar { justify-content: center; }
 .contact-page-header h1 {
-  font-size: clamp(2.15rem, 4.4vw + 0.7rem, 4rem);
+  font-size: clamp(1.85rem, 4.4vw + 0.6rem, 4rem);
   margin-bottom: clamp(12px, 2vw, 18px);
+  overflow-wrap: break-word;
 }
 .contact-page-grid {
   display: grid;
@@ -1855,9 +1873,10 @@ footer {
 }
 .home-preview-meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 6px 12px;
 }
 .home-preview-tag {
   font-size: 10px;
@@ -2210,6 +2229,62 @@ footer {
   border: 0;
   padding: 0;
   box-shadow: 0 24px 52px -20px rgba(15, 23, 42, 0.24);
+}
+.overview-motion-plane {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@media (max-width: 639px) {
+  .city-sky-section .city-deck {
+    padding: 10px 8px 16px;
+    overflow: hidden;
+  }
+  .subpage-hero,
+  .subpage-hero.leasing-section,
+  .contact-page-section {
+    padding-top: 88px;
+    padding-bottom: 40px;
+  }
+  .overview,
+  .leasing-section,
+  .focus-section,
+  .approach-section,
+  .city-section,
+  .advisor-section,
+  .subpage-band {
+    padding-block: clamp(44px, 8vw, 64px);
+  }
+  .subpage-hero-actions .aviation-button,
+  .subpage-hero-actions .cinematic-button,
+  .subpage-cta-band .aviation-button,
+  .advisor-actions .aviation-button {
+    width: 100%;
+    justify-content: center;
+  }
+  .contact-info-card,
+  .subpage-card,
+  .subpage-cta-band,
+  .contact-scope-strip {
+    padding: 18px;
+  }
+  .legal-name,
+  .footer-cin,
+  .footer-location {
+    max-width: 100%;
+  }
+  .footer-bottom {
+    text-align: left;
+  }
+}
+
+@media (max-width: 700px) {
+  .cloud-track,
+  .frame-sunbeam,
+  .frame-airstream,
+  .frame-metallic-sheen {
+    animation: none !important;
+  }
 }
 
 @keyframes overview-plane-flight {
