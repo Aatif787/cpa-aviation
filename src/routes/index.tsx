@@ -8,7 +8,6 @@ import {
   Globe2,
   Layers3,
   Lock,
-  MapPin,
   Plane,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -311,9 +310,6 @@ function Index() {
               Scroll to discover <ArrowDown size={12} />
             </a>
           </Button>
-          <span className="location-tag">
-            <MapPin size={12} /> GIFT City IFSC, India
-          </span>
         </div>
       </section>
 
@@ -344,7 +340,12 @@ function Index() {
           </div>
           <figure className="m-0" data-liquid="overview">
             <span className="liquid-frame">
-              <ResponsivePicture asset={AIRCRAFT_ASSETS_VISUAL} className="overview-image liquid-media" />
+              <span className="overview-motion-stage">
+                <ResponsivePicture
+                  asset={AIRCRAFT_ASSETS_VISUAL}
+                  className="overview-image overview-motion-plane liquid-media"
+                />
+              </span>
               <span className="frame-atmosphere" aria-hidden="true">
                 <span className="atmo-depth-wrap frame-cloud-wrap--far" data-atmo-depth="frame-far">
                   <span className="cloud-track cloud-track--frame-far" />
@@ -352,6 +353,7 @@ function Index() {
                 <span className="atmo-depth-wrap frame-cloud-wrap--near" data-atmo-depth="frame-near">
                   <span className="cloud-track cloud-track--frame-near" />
                 </span>
+                <span className="frame-airstream" />
                 <span className="frame-sunbeam" />
                 <span className="frame-metallic-sheen" />
                 <span className="frame-haze" />
