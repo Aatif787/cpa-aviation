@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AircraftLeasingRouteImport } from './routes/aircraft-leasing'
+import { Route as AviationAssetsRouteImport } from './routes/aviation-assets'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as GiftCityRouteImport } from './routes/gift-city'
+import { Route as OurApproachRouteImport } from './routes/our-approach'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AircraftLeasingRoute = AircraftLeasingRouteImport.update({
+  id: '/aircraft-leasing',
+  path: '/aircraft-leasing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AviationAssetsRoute = AviationAssetsRouteImport.update({
+  id: '/aviation-assets',
+  path: '/aviation-assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiftCityRoute = GiftCityRouteImport.update({
+  id: '/gift-city',
+  path: '/gift-city',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurApproachRoute = OurApproachRouteImport.update({
+  id: '/our-approach',
+  path: '/our-approach',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/aircraft-leasing': typeof AircraftLeasingRoute
+  '/aviation-assets': typeof AviationAssetsRoute
+  '/contact': typeof ContactRoute
+  '/gift-city': typeof GiftCityRoute
+  '/our-approach': typeof OurApproachRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/aircraft-leasing': typeof AircraftLeasingRoute
+  '/aviation-assets': typeof AviationAssetsRoute
+  '/contact': typeof ContactRoute
+  '/gift-city': typeof GiftCityRoute
+  '/our-approach': typeof OurApproachRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/aircraft-leasing': typeof AircraftLeasingRoute
+  '/aviation-assets': typeof AviationAssetsRoute
+  '/contact': typeof ContactRoute
+  '/gift-city': typeof GiftCityRoute
+  '/our-approach': typeof OurApproachRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/aircraft-leasing'
+    | '/aviation-assets'
+    | '/contact'
+    | '/gift-city'
+    | '/our-approach'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/aircraft-leasing'
+    | '/aviation-assets'
+    | '/contact'
+    | '/gift-city'
+    | '/our-approach'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/aircraft-leasing'
+    | '/aviation-assets'
+    | '/contact'
+    | '/gift-city'
+    | '/our-approach'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AircraftLeasingRoute: typeof AircraftLeasingRoute
+  AviationAssetsRoute: typeof AviationAssetsRoute
+  ContactRoute: typeof ContactRoute
+  GiftCityRoute: typeof GiftCityRoute
+  OurApproachRoute: typeof OurApproachRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aircraft-leasing': {
+      id: '/aircraft-leasing'
+      path: '/aircraft-leasing'
+      fullPath: '/aircraft-leasing'
+      preLoaderRoute: typeof AircraftLeasingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aviation-assets': {
+      id: '/aviation-assets'
+      path: '/aviation-assets'
+      fullPath: '/aviation-assets'
+      preLoaderRoute: typeof AviationAssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gift-city': {
+      id: '/gift-city'
+      path: '/gift-city'
+      fullPath: '/gift-city'
+      preLoaderRoute: typeof GiftCityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-approach': {
+      id: '/our-approach'
+      path: '/our-approach'
+      fullPath: '/our-approach'
+      preLoaderRoute: typeof OurApproachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AircraftLeasingRoute: AircraftLeasingRoute,
+  AviationAssetsRoute: AviationAssetsRoute,
+  ContactRoute: ContactRoute,
+  GiftCityRoute: GiftCityRoute,
+  OurApproachRoute: OurApproachRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

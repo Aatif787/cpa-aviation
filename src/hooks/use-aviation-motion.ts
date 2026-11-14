@@ -33,10 +33,11 @@ type Liquid = {
   sweepTween?: { kill: () => void };
 };
 
-export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
+export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, routeKey = "") {
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
+    const isSubpage = Boolean(root.querySelector(".subpage-hero")) || !root.querySelector(".hero-film-reveal");
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const header = root.querySelector<HTMLElement>(".site-header");
     const updateHeader = () => header?.classList.toggle("is-scrolled", window.scrollY > 32);
@@ -375,6 +376,11 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
         }));
 
         ScrollTrigger.refresh();
+        liquids.forEach(item => {
+          if (ScrollTrigger.isInViewport(item.frame) && !item.running && item.state.fill < 0.05) {
+            play(item);
+          }
+        });
         cleanupDepth = () => {
           liquidResizeObserver?.disconnect();
           ScrollTrigger.removeEventListener("refreshInit", refreshLiquidHeights);
@@ -419,6 +425,10 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
       let timerId: number | undefined;
       const queueAfterLoad = () => {
         if (started) return;
+        if (isSubpage) {
+          timerId = window.setTimeout(start, 90);
+          return;
+        }
         idleId = win.requestIdleCallback
           ? win.requestIdleCallback(start, { timeout: 4500 })
           : undefined;
@@ -471,34 +481,48 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
     };
 
     const phone = window.matchMedia("(max-width: 700px)").matches;
-    animate(".hero-film-reveal", phone ? [
-      { clipPath: "inset(49.9% 50% round 999px)", offset: 0 },
-      { clipPath: "inset(49.9% 0% round 999px)", offset: .14 },
-      { clipPath: "inset(45% 0% round 999px)", offset: .30 },
-      { clipPath: "inset(22.5% 0% round 180px)", offset: .58 },
-      { clipPath: "inset(0% 0% round 0px)", offset: 1 },
-    ] : [
-      { clipPath: "inset(50% 49.9% round 999px)", offset: 0 },
-      { clipPath: "inset(0% 49.9% round 999px)", offset: .14 },
-      { clipPath: "inset(0% 46% round 999px)", offset: .30 },
-      { clipPath: "inset(0% 28% round 999px)", offset: .58 },
-      { clipPath: "inset(0% 0% round 0px)", offset: 1 },
-    ], 0, phone ? 650 : 1100);
-    animate(".header-inner", [
-      { opacity: 0, transform: "translateY(-35px)" },
-      { opacity: 1, transform: "translateY(0)" },
-    ], 140, 620);
-    [".hero-copy h1", ".hero-description", ".hero-actions"].forEach((selector, index) => {
-      animate(selector, [
-        { opacity: 0, transform: "translateY(28px)", clipPath: "inset(0 0 100% 0)" },
-        { opacity: 1, transform: "translateY(0)", clipPath: "inset(0 0 0% 0)" },
-      ], (phone ? 300 : 420) + index * 110);
-    });
-    animate(".hero-bottom", [
-      { opacity: 0, transform: "translateY(35px)" },
-      { opacity: 1, transform: "translateY(0)" },
-    ], 680, 620);
-    animate(".scroll-line", [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }], 860, 720);
+    if (!isSubpage) {
+      animate(".hero-film-reveal", phone ? [
+        { clipPath: "inset(49.9% 50% round 999px)", offset: 0 },
+        { clipPath: "inset(49.9% 0% round 999px)", offset: .14 },
+        { clipPath: "inset(45% 0% round 999px)", offset: .30 },
+        { clipPath: "inset(22.5% 0% round 180px)", offset: .58 },
+        { clipPath: "inset(0% 0% round 0px)", offset: 1 },
+      ] : [
+        { clipPath: "inset(50% 49.9% round 999px)", offset: 0 },
+        { clipPath: "inset(0% 49.9% round 999px)", offset: .14 },
+        { clipPath: "inset(0% 46% round 999px)", offset: .30 },
+        { clipPath: "inset(0% 28% round 999px)", offset: .58 },
+        { clipPath: "inset(0% 0% round 0px)", offset: 1 },
+      ], 0, phone ? 650 : 1100);
+      animate(".header-inner", [
+        { opacity: 0, transform: "translateY(-35px)" },
+        { opacity: 1, transform: "translateY(0)" },
+      ], 140, 620);
+      [".hero-copy h1", ".hero-description", ".hero-actions"].forEach((selector, index) => {
+        animate(selector, [
+          { opacity: 0, transform: "translateY(28px)", clipPath: "inset(0 0 100% 0)" },
+          { opacity: 1, transform: "translateY(0)", clipPath: "inset(0 0 0% 0)" },
+        ], (phone ? 300 : 420) + index * 110);
+      });
+      animate(".hero-bottom", [
+        { opacity: 0, transform: "translateY(35px)" },
+        { opacity: 1, transform: "translateY(0)" },
+      ], 680, 620);
+      animate(".scroll-line", [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }], 860, 720);
+    } else {
+      root.querySelectorAll<HTMLElement>(".subpage-hero-copy > *").forEach((element, index) => {
+        const animation = element.animate(
+          [
+            { opacity: 0, transform: "translateY(20px)" },
+            { opacity: 1, transform: "translateY(0)" },
+          ],
+          { duration: 640, delay: index * 80, easing: "cubic-bezier(.2,.8,.2,1)", fill: "both" },
+        );
+        animation.pause();
+        animations.push(animation);
+      });
+    }
 
     const finish = () => {
       animations.forEach(animation => { animation.finish(); animation.cancel(); });
@@ -524,5 +548,5 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>) {
       preference.removeEventListener("change", onPreferenceChange);
       window.removeEventListener("resize", onResize);
     };
-  }, [rootRef]);
+  }, [rootRef, routeKey]);
 }

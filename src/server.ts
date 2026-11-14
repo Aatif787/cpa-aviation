@@ -8,6 +8,7 @@ import {
   buildSitemapXml,
   buildStructuredData,
   isLocalHost,
+  isPublicRoutePath,
   resolveRequestOrigin,
 } from "./lib/seo";
 
@@ -127,16 +128,17 @@ async function enhanceHtmlSeoResponse(
   }
 
   const pathname = new URL(request.url).pathname;
-  if (response.status === 200 && pathname === "/") {
+  if (response.status === 200 && isPublicRoutePath(pathname)) {
     headers.set("x-robots-tag", "index, follow, max-image-preview:large");
     let html = await response.text();
+    const canonicalUrl = `${origin}${pathname === "/" ? "/" : pathname}`;
     const headAdditions: string[] = [];
 
     if (!/rel=["']canonical["']/i.test(html)) {
-      headAdditions.push(`<link rel="canonical" href="${origin}/" />`);
+      headAdditions.push(`<link rel="canonical" href="${canonicalUrl}" />`);
     }
     if (!/property=["']og:url["']/i.test(html)) {
-      headAdditions.push(`<meta property="og:url" content="${origin}/" />`);
+      headAdditions.push(`<meta property="og:url" content="${canonicalUrl}" />`);
     }
     if (!/property=["']og:image["']/i.test(html)) {
       headAdditions.push(`<meta property="og:image" content="${origin}${HERO_POSTER_PATH}" />`);
@@ -150,15 +152,24 @@ async function enhanceHtmlSeoResponse(
       );
     }
 
+    const hydratedJsonLd = JSON.stringify(buildStructuredData(origin, pathname)).replaceAll(
+      "<",
+      "\\u003c",
+    );
+    if (/<script id="cpa-structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/i.test(html)) {
+      html = html.replace(
+        /<script id="cpa-structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/i,
+        `<script id="cpa-structured-data" type="application/ld+json">${hydratedJsonLd}</script>`,
+      );
+    } else {
+      headAdditions.push(
+        `<script id="cpa-structured-data" type="application/ld+json">${hydratedJsonLd}</script>`,
+      );
+    }
+
     if (headAdditions.length > 0) {
       html = html.replace(/<\/head>/i, `${headAdditions.join("\n")}\n</head>`);
     }
-
-    const hydratedJsonLd = JSON.stringify(buildStructuredData(origin)).replaceAll("<", "\\u003c");
-    html = html.replace(
-      /<script id="cpa-structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/i,
-      `<script id="cpa-structured-data" type="application/ld+json">${hydratedJsonLd}</script>`,
-    );
 
     return new Response(html, { status: response.status, statusText: response.statusText, headers });
   }

@@ -8,12 +8,20 @@ type ContactField = "name" | "company" | "email" | "subject" | "message";
 
 type ContactFormProps = {
   prefilledSubject?: { value: string; seq: number } | null;
+  initialSubject?: string | undefined;
 };
 
-export function ContactForm({ prefilledSubject }: ContactFormProps) {
+export function ContactForm({ prefilledSubject, initialSubject }: ContactFormProps) {
   const send = useServerFn(submitEnquiry);
   const loadedAtRef = useRef<number>(Date.now());
-  const [form, setForm] = useState({ name: "", company: "", email: "", subject: "", message: "", website: "" });
+  const [form, setForm] = useState({
+    name: "",
+    company: "",
+    email: "",
+    subject: initialSubject ?? "",
+    message: "",
+    website: "",
+  });
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<ContactField, string>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -32,12 +40,13 @@ export function ContactForm({ prefilledSubject }: ContactFormProps) {
   }, []);
 
   useEffect(() => {
-    if (!prefilledSubject?.value) return;
+    const nextSubject = prefilledSubject?.value ?? initialSubject;
+    if (!nextSubject) return;
     setStatus("idle");
     setError(null);
     clearFieldError("subject");
-    setForm(f => ({ ...f, subject: prefilledSubject.value }));
-  }, [prefilledSubject]);
+    setForm(f => ({ ...f, subject: nextSubject }));
+  }, [prefilledSubject, initialSubject]);
 
   const set = (k: ContactField | "website") => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const val = e.target.value;

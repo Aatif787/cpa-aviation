@@ -9,7 +9,7 @@ import {
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { type ReactNode, useEffect } from "react";
-import { LEGAL_NAME, SEO_DESCRIPTION, SEO_TITLE, normalizeOrigin } from "@/lib/seo";
+import { LEGAL_NAME, SEO_DESCRIPTION, SEO_TITLE } from "@/lib/seo";
 
 import appCss from "../styles.css?url";
 
@@ -27,7 +27,7 @@ function NotFoundComponent() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-6 py-16 text-foreground">
-      <div className="max-w-lg text-center">
+      <div className="max-w-xl text-center">
         <p className="eyebrow justify-center">404 · Page Unavailable</p>
         <h1 className="mt-2 text-5xl font-normal tracking-tight text-foreground sm:text-6xl">
           Page Not <span className="muted-heading">Found</span>
@@ -35,9 +35,18 @@ function NotFoundComponent() {
         <p className="mt-4 text-sm leading-7 text-muted-foreground">
           The requested URL is not available on the {LEGAL_NAME} website.
         </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link to="/" className="aviation-button">
-            Return to Home Page
+            Home Page
+          </Link>
+          <Link to="/about" className="text-cta">
+            About Us
+          </Link>
+          <Link to="/aircraft-leasing" className="text-cta">
+            Aircraft Leasing
+          </Link>
+          <Link to="/contact" className="text-cta">
+            Contact Us
           </Link>
         </div>
       </div>
@@ -82,12 +91,11 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => {
-    const siteOrigin = normalizeOrigin(import.meta.env["VITE_SITE_URL"] as string | undefined);
     const verificationToken = (import.meta.env["VITE_GOOGLE_SITE_VERIFICATION"] as string | undefined)?.trim();
 
     return {
-      // Each content route, / included, must set its own head(). Never add og:image or
-      // twitter:image here: every page without its own would inherit the root's preview image.
+      // Each content route, / included, sets its own head() via buildPageHead().
+      // Never add og:image, twitter:image, og:url, or canonical here so child routes do not duplicate or inherit wrong metadata.
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -102,20 +110,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: SEO_TITLE },
         { name: "twitter:description", content: SEO_DESCRIPTION },
-        ...(siteOrigin ? [{ property: "og:url", content: `${siteOrigin}/` }] : []),
         ...(verificationToken ? [{ name: "google-site-verification", content: verificationToken }] : []),
       ],
       links: [
-        ...(siteOrigin ? [{ rel: "canonical", href: `${siteOrigin}/` }] : []),
         { rel: "preload", href: "/fonts/Gambarino-Regular.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
-        {
-          rel: "preload",
-          as: "image",
-          imageSrcSet: "/media/white-aircraft-still-768w.avif 768w, /media/white-aircraft-still-1280w.avif 1280w, /media/white-aircraft-still.avif 1920w",
-          imageSizes: "100vw",
-          type: "image/avif",
-          fetchPriority: "high",
-        },
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
         {
