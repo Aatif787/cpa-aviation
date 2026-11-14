@@ -15,4 +15,21 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    optimizeDeps: {
+      include: ["gsap", "gsap/ScrollTrigger", "lenis", "lucide-react"],
+    },
+    server: {
+      watch: {
+        ignored: [
+          "**/.output/**",
+          "**/.nitro/**",
+          "**/.wrangler/**",
+          "**/.tanstack/**",
+          "**/dist/**",
+          "**/dist-ssr/**",
+        ],
+      },
+    },
+  },
 });
