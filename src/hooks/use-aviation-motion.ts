@@ -117,6 +117,31 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
                 scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 1.2 },
               });
             }
+
+            const heroHeadingLines = Array.from(root.querySelectorAll<HTMLElement>(".hero-heading-line"));
+            if (heroHeadingLines.length > 0 && heroSection) {
+              ScrollTrigger.create({
+                trigger: heroSection,
+                start: "top+=20 top",
+                once: true,
+                onEnter: () => {
+                  gsap.fromTo(
+                    heroHeadingLines,
+                    { rotateX: 0, rotateZ: 0 },
+                    {
+                      rotateX: 360,
+                      rotateZ: 0,
+                      transformPerspective: 1000,
+                      transformOrigin: "50% 55%",
+                      duration: 0.95,
+                      stagger: 0.1,
+                      ease: "power3.inOut",
+                      clearProps: "transform",
+                    },
+                  );
+                },
+              });
+            }
           });
 
           /* ---------- blueprint outline drawn through light, replayed on every entry ---------- */
@@ -517,11 +542,33 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
         { opacity: 0, transform: "translateY(-35px)" },
         { opacity: 1, transform: "translateY(0)" },
       ], 140, 620);
-      [".hero-copy h1", ".hero-description", ".hero-actions"].forEach((selector, index) => {
+      root.querySelectorAll<HTMLElement>("[data-hero-flip]").forEach((element, index) => {
+        const animation = element.animate(
+          [
+            {
+              opacity: 0,
+              transform: "perspective(1000px) rotateX(-86deg) rotateZ(-2.5deg) translateY(20px)",
+            },
+            {
+              opacity: 1,
+              transform: "perspective(1000px) rotateX(0deg) rotateZ(0deg) translateY(0)",
+            },
+          ],
+          {
+            duration: phone ? 760 : 920,
+            delay: (phone ? 260 : 380) + index * 140,
+            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            fill: "both",
+          },
+        );
+        animation.pause();
+        animations.push(animation);
+      });
+      [".hero-description", ".hero-actions"].forEach((selector, index) => {
         animate(selector, [
           { opacity: 0, transform: "translateY(28px)", clipPath: "inset(0 0 100% 0)" },
           { opacity: 1, transform: "translateY(0)", clipPath: "inset(0 0 0% 0)" },
-        ], (phone ? 300 : 420) + index * 110);
+        ], (phone ? 380 : 520) + index * 110);
       });
       animate(".hero-bottom", [
         { opacity: 0, transform: "translateY(35px)" },

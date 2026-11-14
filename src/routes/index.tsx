@@ -266,9 +266,13 @@ function Index() {
         </div>
         <div className="page-width hero-inner">
           <div className="hero-copy">
-            <h1>
-              CPA Aviation<br />
-              <span className="hero-racing-title">Leasing Capital</span>
+            <h1 className="hero-heading-stage">
+              <span className="hero-heading-line">
+                <span className="hero-heading-flip" data-hero-flip="primary">CPA Aviation</span>
+              </span>
+              <span className="hero-heading-line">
+                <span className="hero-racing-title hero-heading-flip" data-hero-flip="secondary">Leasing Capital</span>
+              </span>
             </h1>
             <p className="hero-description">
               {LEGAL_NAME} focuses on aircraft operating lease activities and aviation asset structures from GIFT City, Gujarat.
