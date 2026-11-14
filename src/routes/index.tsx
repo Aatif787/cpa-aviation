@@ -4,10 +4,8 @@ import {
   ArrowDown,
   ArrowUpRight,
   Building2,
-  FileText,
   Globe2,
   Layers3,
-  Lock,
   Plane,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,11 +16,11 @@ import {
   ResponsivePicture,
   SiteShell,
 } from "@/components/SiteLayout";
-import { CORPORATE_EMAIL, LEGAL_NAME, buildPageHead } from "@/lib/seo";
+import { COMPANY_CIN, CORPORATE_EMAIL, LEGAL_NAME, buildPageHead } from "@/lib/seo";
 import {
   AIRCRAFT_ASSETS_VISUAL,
-  CORPORATE_DOCUMENTS,
   GUJARAT_SCENES,
+  HOME_PAGE_PREVIEWS,
   LEASING_AIRCRAFT_VISUAL,
   REGISTERED_OFFICE_ADDRESS,
   flightFilm,
@@ -67,7 +65,6 @@ function Index() {
   const [contactVisible, setContactVisible] = useState(false);
   const [contactInView, setContactInView] = useState(false);
   const [contactFormReady, setContactFormReady] = useState(false);
-  const [docRequest, setDocRequest] = useState<{ value: string; seq: number } | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -215,17 +212,6 @@ function Index() {
   }, [reducedMotion, cityPaused, cityInView]);
 
   const activeScene = GUJARAT_SCENES[cityIndex] ?? GUJARAT_SCENES[0];
-  const requestDocumentAccess = (docTitle: string) => {
-    setDocRequest((prev) => ({
-      value: `Document Access Request: ${docTitle}`,
-      seq: (prev?.seq ?? 0) + 1,
-    }));
-    setContactVisible(true);
-    setContactFormReady(true);
-    document
-      .getElementById("contact")
-      ?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
-  };
 
   return (
     <SiteShell routeKey="/" overHeroHeader>
@@ -610,7 +596,7 @@ function Index() {
           </p>
           {contactFormReady ? (
             <Suspense fallback={<div className="contact-form contact-form-skeleton" aria-hidden="true" />}>
-              <LazyContactForm prefilledSubject={docRequest} />
+              <LazyContactForm />
             </Suspense>
           ) : (
             <div className="contact-form contact-form-skeleton" aria-hidden="true" />
@@ -633,17 +619,18 @@ function Index() {
 
       <section id="corporate-info" className="corporate-section page-width">
         <div className="section-topline reveal">
-          <p className="eyebrow">Corporate &amp; Regulatory Information</p>
+          <p className="eyebrow">Corporate Identity &amp; Directory</p>
           <span className="section-number">06</span>
         </div>
-        <div className="corporate-layout">
+
+        <div className="corporate-summary-grid">
           <div className="corporate-heading reveal">
             <h2>
-              Registered Particulars<br />
-              <span className="muted-heading">&amp; Governance</span>
+              Registered Foundation<br />
+              <span className="muted-heading">&amp; Dedicated Pages</span>
             </h2>
             <p className="corporate-note">
-              Statutory incorporation particulars of {LEGAL_NAME}, alongside a clear distinction between its Letter of Approval activity and Memorandum of Association business objectives.
+              Statutory corporate particulars, official document disclosures, and detailed regulatory materials are organised across dedicated sections of this website.
             </p>
             <div className="mt-4">
               <Button asChild variant="navigation">
@@ -653,102 +640,69 @@ function Index() {
               </Button>
             </div>
           </div>
-          <div className="corporate-stack">
-            <dl className="corporate-list reveal">
-              <div className="corporate-row">
-                <dt>Legal Company Name</dt>
-                <dd>{LEGAL_NAME}</dd>
+
+          <div className="corporate-summary-box reveal">
+            <p className="eyebrow">Verified MCA &amp; GIFT SEZ Snapshot</p>
+            <h3>{LEGAL_NAME}</h3>
+            <p className="section-description">
+              Private Limited Company anchored in GIFT City IFSC, Gandhinagar. Operating lease for aircraft is conducted under the GIFT SEZ Letter of Approval, subject to stated regulatory conditions; broader Memorandum objects remain subject to requisite permissions.
+            </p>
+            <div className="corporate-summary-pills">
+              <div className="corporate-summary-pill">
+                <span>Corporate Identification Number</span>
+                <strong>{COMPANY_CIN}</strong>
               </div>
-              <div className="corporate-row">
-                <dt>Corporate Identification Number</dt>
-                <dd>U66190GJ2026PTC180823</dd>
+              <div className="corporate-summary-pill">
+                <span>Incorporation</span>
+                <strong>16 July 2026 · Private Limited (IFSC)</strong>
               </div>
-              <div className="corporate-row">
-                <dt>Incorporation Details</dt>
-                <dd>Incorporated 16 July 2026 · Private Limited Company (IFSC, Gujarat)</dd>
+              <div className="corporate-summary-pill">
+                <span>Permitted Activity (LoA)</span>
+                <strong>Operating Lease for Aircraft</strong>
               </div>
-              <div className="corporate-row">
-                <dt>Registered Office</dt>
-                <dd>{REGISTERED_OFFICE_ADDRESS}</dd>
+              <div className="corporate-summary-pill">
+                <span>Registered Office</span>
+                <strong>{REGISTERED_OFFICE_ADDRESS}</strong>
               </div>
-              <div className="corporate-row">
-                <dt>Official Email</dt>
-                <dd>
+              <div className="corporate-summary-pill">
+                <span>Official Email</span>
+                <strong>
                   <a href={`mailto:${CORPORATE_EMAIL}`}>{CORPORATE_EMAIL}</a>
-                </dd>
+                </strong>
               </div>
-              <div className="corporate-row">
-                <dt>Telephone</dt>
-                <dd>
+              <div className="corporate-summary-pill">
+                <span>Telephone</span>
+                <strong>
                   <a href="tel:+918527712949">+91 85277 12949</a>
-                </dd>
-              </div>
-            </dl>
-
-            <div className="regulatory-panel reveal" aria-labelledby="regulatory-scope-heading">
-              <div className="regulatory-panel-header">
-                <p id="regulatory-scope-heading" className="eyebrow">
-                  Regulatory Scope Distinction
-                </p>
-              </div>
-              <div className="regulatory-grid">
-                <article className="regulatory-card">
-                  <span className="regulatory-kicker regulatory-kicker--loa">
-                    Letter of Approval (LoA)
-                  </span>
-                  <h3>Permitted Operating Activity</h3>
-                  <p>
-                    Operating lease for aircraft, conducted subject to the terms and applicable regulatory conditions set out in the company&apos;s Letter of Approval.
-                  </p>
-                </article>
-                <article className="regulatory-card">
-                  <span className="regulatory-kicker">Memorandum of Association (MoA)</span>
-                  <h3>Stated Corporate Objectives</h3>
-                  <p>
-                    Broader stated objects cover aircraft, helicopter and engine leasing, aviation asset management, aviation asset financing, and SPV or co-ownership participation structures. Objectives outside the aircraft operating lease remain subject to requisite regulatory approvals prior to commencement.
-                  </p>
-                </article>
+                </strong>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div className="documents-panel reveal" aria-labelledby="corporate-docs-heading">
-              <div className="documents-header">
-                <p id="corporate-docs-heading" className="eyebrow">
-                  Official Corporate Documents
-                </p>
-                <span className="documents-privacy-note">
-                  <Lock size={12} aria-hidden="true" /> Controlled counterparty access
+        <div className="home-directory-block reveal" aria-labelledby="home-directory-heading">
+          <div className="home-directory-header">
+            <p className="eyebrow">Site Architecture</p>
+            <h3 id="home-directory-heading">
+              Explore <span className="muted-heading">Dedicated Sections</span>
+            </h3>
+          </div>
+          <div className="home-preview-grid">
+            {HOME_PAGE_PREVIEWS.map((preview) => (
+              <Link key={preview.to} to={preview.to} className="home-preview-card">
+                <div>
+                  <div className="home-preview-meta">
+                    <span className="scope-code">{preview.code}</span>
+                    <span className="home-preview-tag">{preview.tag}</span>
+                  </div>
+                  <h4>{preview.title}</h4>
+                  <p>{preview.summary}</p>
+                </div>
+                <span className="home-preview-link">
+                  {preview.ctaLabel} <ArrowUpRight size={14} aria-hidden="true" />
                 </span>
-              </div>
-              <ul className="documents-list">
-                {CORPORATE_DOCUMENTS.map((doc) => (
-                  <li key={doc.code} className="document-row">
-                    <div className="document-meta">
-                      <span className="document-code">{doc.code}</span>
-                      <div>
-                        <h3 className="document-title">
-                          <FileText size={14} aria-hidden="true" />
-                          <span>{doc.title}</span>
-                        </h3>
-                        <p className="document-ref">{doc.reference}</p>
-                        <p className="document-summary">{doc.summary}</p>
-                      </div>
-                    </div>
-                    <Button
-                      type="button"
-                      variant="navigation"
-                      className="document-request-btn"
-                      onClick={() => requestDocumentAccess(doc.title)}
-                    >
-                      Request Access <ArrowUpRight />
-                    </Button>
-                  </li>
-                ))}
-              </ul>
-              <p className="documents-footnote">
-                Statutory corporate documents are provided upon verified institutional request; confidential subscriber particulars and personal identification numbers are excluded.
-              </p>
-            </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

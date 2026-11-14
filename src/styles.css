@@ -1762,6 +1762,364 @@ footer {
   .contact-page-grid { grid-template-columns: 0.92fr 1.08fr; }
 }
 
+/* ---------- unique per-page architecture & statutory sections (mobile-first) ---------- */
+.corporate-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(22px, 3.5vw, 44px);
+  margin-bottom: clamp(36px, 5vw, 60px);
+}
+.corporate-summary-box {
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--secondary) 44%, var(--background));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.corporate-summary-box h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 0.7vw + 1.05rem, 1.7rem);
+  font-weight: 400;
+  margin: 0;
+  color: var(--foreground);
+}
+.corporate-summary-pills {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 4px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--border);
+}
+.corporate-summary-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.corporate-summary-pill span {
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.corporate-summary-pill strong {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+}
+
+.home-directory-block {
+  border-top: 1px solid var(--border);
+  padding-top: clamp(28px, 4vw, 44px);
+}
+.home-directory-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: clamp(20px, 2.5vw, 28px);
+}
+.home-directory-header h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1vw + 1rem, 1.9rem);
+  font-weight: 400;
+  margin: 0;
+}
+.home-preview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(14px, 2vw, 20px);
+}
+.home-preview-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  padding: clamp(20px, 2.4vw, 26px);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--background);
+  text-decoration: none;
+  color: var(--foreground);
+  min-width: 0;
+  transition: border-color .28s, transform .28s, background .28s;
+}
+.home-preview-card:hover {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--secondary) 36%, var(--background));
+  transform: translateY(-2px);
+}
+.home-preview-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.home-preview-tag {
+  font-size: 10px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.home-preview-card h4 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 0.5vw + 1.02rem, 1.45rem);
+  font-weight: 400;
+  margin: 0;
+}
+.home-preview-card p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+.home-preview-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  font-weight: 500;
+}
+.home-preview-card:hover .home-preview-link { color: var(--accent); }
+
+.about-dossier-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(26px, 4vw, 56px);
+  align-items: start;
+}
+.about-dossier-grid,
+.loa-dossier-grid,
+.lease-mechanics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(14px, 2vw, 20px);
+}
+.dossier-tile,
+.loa-dossier-card,
+.mechanic-card {
+  padding: clamp(18px, 2.2vw, 24px);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--secondary) 46%, var(--background));
+  min-width: 0;
+}
+.dossier-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.dossier-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.18rem, 0.45vw + 1rem, 1.38rem);
+  font-weight: 400;
+  color: var(--foreground);
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
+.dossier-detail,
+.mechanic-card p,
+.process-stage-card p,
+.structure-card p,
+.approach-step-card p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.68;
+  color: var(--muted-foreground);
+}
+.mechanic-card h3,
+.process-stage-card h3,
+.structure-card h3,
+.approach-step-card h3,
+.governance-column-card h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 0.45vw + 1rem, 1.4rem);
+  font-weight: 400;
+  margin: 8px 0 8px;
+  color: var(--foreground);
+}
+
+.process-timeline-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(14px, 2vw, 20px);
+}
+.process-stage-card {
+  padding: clamp(18px, 2.2vw, 24px);
+  border: 1px solid var(--border);
+  border-top: 2px solid color-mix(in oklab, var(--accent) 70%, transparent);
+  border-radius: 6px;
+  background: var(--background);
+  min-width: 0;
+}
+.process-step-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.loa-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2.4vw, 24px);
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+
+.structure-cards-grid,
+.approach-governance-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2.4vw, 24px);
+}
+.structure-card,
+.governance-column-card {
+  padding: clamp(20px, 2.5vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--secondary) 44%, var(--background));
+  min-width: 0;
+}
+.compliance-callout {
+  margin-top: clamp(22px, 3vw, 32px);
+  padding: clamp(18px, 2.4vw, 24px);
+  border: 1px solid color-mix(in oklab, var(--accent) 42%, var(--border));
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--secondary) 60%, var(--background));
+  min-width: 0;
+}
+.compliance-callout-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+.compliance-callout p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.72;
+  color: var(--foreground);
+}
+
+.approach-process-wrap {
+  position: relative;
+  z-index: 1;
+}
+.approach-process-flow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2.2vw, 22px);
+}
+.approach-step-card {
+  padding: clamp(20px, 2.5vw, 26px);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--background) 92%, var(--secondary));
+  min-width: 0;
+}
+.approach-criteria-list,
+.governance-points-list {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.approach-criteria-list li,
+.governance-points-list li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--foreground);
+}
+.approach-criteria-list li::before,
+.governance-points-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.contact-scope-strip {
+  margin-top: clamp(28px, 4vw, 44px);
+  padding: clamp(20px, 2.6vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--background) 92%, var(--secondary));
+  min-width: 0;
+}
+.contact-scope-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2.4vw, 28px);
+  margin-top: 12px;
+}
+.contact-scope-item { min-width: 0; }
+.contact-scope-item h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin: 0 0 6px;
+  color: var(--foreground);
+}
+.contact-scope-item p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+
+@media (min-width: 640px) {
+  .about-dossier-grid,
+  .loa-dossier-grid,
+  .lease-mechanics-grid,
+  .home-preview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .corporate-summary-pills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 900px) {
+  .about-dossier-layout { grid-template-columns: 0.92fr 1.08fr; }
+  .corporate-summary-grid { grid-template-columns: 0.95fr 1.05fr; }
+  .loa-comparison-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .approach-process-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .structure-cards-grid,
+  .approach-governance-grid,
+  .home-preview-grid,
+  .contact-scope-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1120px) {
+  .process-timeline-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .approach-process-flow { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
 /* ---------- overview dynamic flight motion stage ---------- */
 .overview-motion-stage {
   display: block;

@@ -1,12 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Building2, MapPin } from "lucide-react";
+import { ArrowUpRight, Building2, MapPin, ShieldCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { LiquidVisualFrame, PageBreadcrumbs, SiteShell } from "@/components/SiteLayout";
 import { buildPageHead } from "@/lib/seo";
 import {
   GIFT_CITY_ADVANTAGES,
   GIFT_CITY_VISUAL,
   GUJARAT_SCENES,
+  LOA_REGULATORY_DOSSIER,
   REGISTERED_OFFICE_ADDRESS,
 } from "@/lib/site-content";
 
@@ -62,19 +64,18 @@ function GiftCityPage() {
         <PageBreadcrumbs currentLabel="GIFT City" />
         <div className="subpage-hero-grid">
           <div className="subpage-hero-copy">
-            <p className="eyebrow">Jurisdiction &amp; Connectivity</p>
+            <p className="eyebrow">GIFT SEZ · International Financial Services Centre</p>
             <h1>
-              GIFT City IFSC &amp; <span className="muted-heading">Gujarat Corridor</span>
+              GIFT City IFSC &amp; <span className="muted-heading">Regulatory Seat</span>
             </h1>
             <p className="lead-description">
-              Positioned inside Gujarat International Finance Tec-City (GIFT City) — India&apos;s International Financial Services Centre structured for international aviation leasing and financial administration.
+              Located in Gujarat International Finance Tec-City (GIFT SEZ), Gandhinagar — India&apos;s IFSC jurisdiction providing the statutory base and Letter of Approval framework for aircraft operating leasing.
             </p>
           </div>
           <div className="subpage-hero-visual">
             <LiquidVisualFrame
               liquidId="gift-hero"
               asset={GIFT_CITY_VISUAL}
-              caption="GIFT City IFSC, Gandhinagar, Gujarat · Illustrative skyline visual"
               eager
             />
           </div>
@@ -165,10 +166,46 @@ function GiftCityPage() {
         </div>
       </section>
 
+      <section id="loa-details" className="subpage-band page-width">
+        <div className="section-topline reveal">
+          <p className="eyebrow">Letter of Approval &amp; Regulatory Context</p>
+          <span className="section-number">02</span>
+        </div>
+        <div className="scope-header reveal">
+          <h2>
+            GIFT SEZ Approval &amp;<br />
+            <span className="muted-heading">Regulatory Scope</span>
+          </h2>
+          <p className="scope-intro">
+            Registered inside GIFT Special Economic Zone, Gandhinagar under India&apos;s International Financial Services Centre regime. The particulars below reflect verified official corporate and SEZ Letter of Approval records.
+          </p>
+        </div>
+
+        <div className="loa-dossier-grid reveal" aria-label="GIFT SEZ Letter of Approval Summary">
+          {LOA_REGULATORY_DOSSIER.map((item) => (
+            <article key={item.label} className="loa-dossier-card">
+              <span className="dossier-label">{item.label}</span>
+              <strong className="dossier-value">{item.value}</strong>
+              <p className="dossier-detail">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="compliance-callout reveal" role="note" aria-label="Letter of Approval Regulatory Conditions">
+          <p className="compliance-callout-title">
+            <ShieldCheck size={14} aria-hidden="true" />
+            Regulatory Condition Governing Approval
+          </p>
+          <p>
+            The GIFT SEZ Letter of Approval authorises CPA Aviation Leasing Capital IFSC Private Limited for operating lease for aircraft strictly subject to the terms, ongoing compliance obligations, and regulatory conditions stated in the Letter of Approval. Broader business objects listed in the company&apos;s electronic Memorandum of Association remain subject to requisite statutory or IFSCA permissions before undertaking any regulated activity outside that approval.
+          </p>
+        </div>
+      </section>
+
       <section id="ifsc-context" className="subpage-band page-width">
         <div className="section-topline reveal">
-          <p className="eyebrow">IFSC Framework Advantages</p>
-          <span className="section-number">02</span>
+          <p className="eyebrow">IFSC Framework &amp; Registered Office</p>
+          <span className="section-number">03</span>
         </div>
         <div className="subpage-cards-grid subpage-cards-grid--two reveal">
           {GIFT_CITY_ADVANTAGES.map((item) => (
@@ -188,6 +225,23 @@ function GiftCityPage() {
             </p>
             <h2>THE PLATFORM BK11 GIFTSEZ</h2>
             <p>{REGISTERED_OFFICE_ADDRESS}</p>
+          </div>
+          <div className="subpage-inline-links">
+            <Button asChild variant="navigation">
+              <Link to="/about">
+                About Us <ArrowUpRight />
+              </Link>
+            </Button>
+            <Button asChild variant="navigation">
+              <Link to="/aircraft-leasing">
+                Aircraft Leasing <ArrowUpRight />
+              </Link>
+            </Button>
+            <Button asChild variant="navigation">
+              <Link to="/contact">
+                Contact Us <ArrowUpRight />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

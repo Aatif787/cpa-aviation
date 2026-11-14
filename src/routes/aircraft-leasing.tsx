@@ -12,6 +12,8 @@ import {
   LEASING_FLEET_VISUAL,
   LEASING_HERO_VISUAL,
   LEASING_LIFECYCLE_PILLARS,
+  LEASING_PROCESS_STAGES,
+  OPERATING_LEASE_MECHANICS,
 } from "@/lib/site-content";
 
 export const Route = createFileRoute("/aircraft-leasing")({
@@ -28,12 +30,12 @@ function AircraftLeasingPage() {
           <PageBreadcrumbs currentLabel="Aircraft Leasing" />
           <div className="subpage-hero-grid">
             <div className="subpage-hero-copy">
-              <p className="eyebrow">Permitted IFSC Activity</p>
+              <p className="eyebrow">Permitted Activity · GIFT SEZ Letter of Approval</p>
               <h1>
                 Aircraft Operating <span className="muted-heading">Lease</span>
               </h1>
               <p className="lead-description">
-                Structured aircraft operating leases enable airline operators and aviation stakeholders to access aircraft capacity through agreed commercial lease arrangements without outright asset acquisition.
+                Under its GIFT SEZ Letter of Approval, {LEGAL_NAME} is authorised to undertake aircraft operating leases — enabling commercial operators to deploy aircraft capacity under fixed-term lease covenants without holding legal title on balance sheet.
               </p>
             </div>
             <div className="subpage-hero-visual">
@@ -42,7 +44,6 @@ function AircraftLeasingPage() {
                 asset={LEASING_HERO_VISUAL}
                 frameClassName="liquid-frame leasing-frame"
                 mediaClassName="leasing-image liquid-media"
-                caption="Operating lease visual study · Illustrative commercial aircraft"
                 eager
               />
             </div>
@@ -52,67 +53,86 @@ function AircraftLeasingPage() {
 
       <section id="operating-lease-role" className="overview page-width">
         <div className="section-topline reveal">
-          <p className="eyebrow">Role in Commercial Aviation</p>
+          <p className="eyebrow">Operating Lease Mechanics &amp; Considerations</p>
           <span className="section-number">01</span>
         </div>
         <div className="overview-grid">
           <div className="reveal" data-liquid-text>
             <h2>
-              Fleet Flexibility &amp;<br />
-              <span className="muted-heading">Capital Efficiency</span>
+              Commercial &amp; Technical<br />
+              <span className="muted-heading">Lease Architecture</span>
             </h2>
             <div className="editorial-copy">
               <p className="section-description">
-                An operating lease separates legal ownership of the airframe from operational deployment. By placing aircraft under fixed-term lease covenants, operators conserve capital for core flight operations while retaining fleet adaptability.
-              </p>
-              <p className="section-description">
-                Across international aviation markets and India&apos;s IFSC ecosystem, aircraft operating leases serve as a foundational mechanism connecting lessors, airlines, airworthiness authorities, and financial institutions.
+                An operating lease retains aircraft ownership with the lessor entity while granting quiet enjoyment and operational possession to the lessee airline for a defined term, subject to return condition covenants and airworthiness oversight.
               </p>
             </div>
-            <div className="subpage-inline-links">
-              <Button asChild variant="navigation">
-                <Link to="/aviation-assets">
-                  Explore Aviation Assets <ArrowUpRight />
-                </Link>
-              </Button>
+            <div className="lease-mechanics-grid">
+              {OPERATING_LEASE_MECHANICS.map((item) => (
+                <article key={item.code} className="mechanic-card">
+                  <span className="scope-code">{item.code}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.summary}</p>
+                </article>
+              ))}
             </div>
           </div>
           <LiquidVisualFrame
             liquidId="overview"
             asset={LEASING_FLEET_VISUAL}
-            caption="Illustrative aircraft operating study"
           />
+        </div>
+      </section>
+
+      <section id="leasing-process" className="leasing-section">
+        <div className="page-width">
+          <div className="section-topline reveal">
+            <p className="eyebrow">Structured Operating Lease Framework</p>
+            <span className="section-number">02</span>
+          </div>
+          <div className="scope-header reveal">
+            <h2>
+              Five-Stage Transaction<br />
+              <span className="muted-heading">Lifecycle Model</span>
+            </h2>
+            <p className="scope-intro">
+              An illustrative summary of standard commercial, technical, and IFSC regulatory stages involved in evaluating and administering an aircraft operating lease.
+            </p>
+          </div>
+          <div className="process-timeline-grid reveal">
+            {LEASING_PROCESS_STAGES.map((stage) => (
+              <article key={stage.step} className="process-stage-card">
+                <span className="process-step-badge">Stage {stage.step}</span>
+                <h3>{stage.title}</h3>
+                <p>{stage.detail}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
       <section id="approved-activity" className="subpage-band page-width">
         <div className="section-topline reveal">
-          <p className="eyebrow">Regulatory Clarification</p>
-          <span className="section-number">02</span>
-        </div>
-        <div className="regulatory-grid reveal">
-          <article className="regulatory-card">
-            <span className="regulatory-kicker regulatory-kicker--loa">Permitted Unit Activity</span>
-            <h3>Authorised Aircraft Operating Lease</h3>
-            <p>
-              {LEGAL_NAME} holds a Letter of Approval within GIFT SEZ identifying operating lease for aircraft as its authorised operation, subject to all conditions and applicable regulatory rules governing IFSC units.
-            </p>
-          </article>
-          <article className="regulatory-card">
-            <span className="regulatory-kicker">Statutory Alignment</span>
-            <h3>Scope &amp; Governance Separation</h3>
-            <p>
-              While the company&apos;s Memorandum of Association encompasses broader aviation financing and ownership objects, external operations are strictly conducted in accordance with specific approvals in force at any given time.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section id="leasing-framework" className="subpage-band page-width">
-        <div className="section-topline reveal">
-          <p className="eyebrow">Lease Lifecycle Pillars</p>
+          <p className="eyebrow">LOA Authority vs. e-MOA Objects</p>
           <span className="section-number">03</span>
         </div>
+        <div className="loa-comparison-grid reveal">
+          <article className="regulatory-card">
+            <span className="regulatory-kicker regulatory-kicker--loa">Permitted Under Letter of Approval</span>
+            <h3>Operating Lease for Aircraft</h3>
+            <p>
+              The company&apos;s GIFT SEZ Letter of Approval specifically identifies operating lease for aircraft as the authorised unit operation, exercisable subject to all statutory and IFSCA regulatory conditions stated in the approval letter.
+            </p>
+          </article>
+          <article className="regulatory-card">
+            <span className="regulatory-kicker">Broader Stated e-MOA Capacity</span>
+            <h3>Additional Aviation Objects</h3>
+            <p>
+              Broader e-MOA objects such as helicopters, engine leasing outside bundled aircraft leases, aviation financing structures, and co-ownership or SPV participation models remain outside immediate LoA scope until separately permitted.
+            </p>
+          </article>
+        </div>
+
         <div className="subpage-cards-grid reveal">
           {LEASING_LIFECYCLE_PILLARS.map((pillar) => (
             <article key={pillar.code} className="subpage-card">
@@ -121,6 +141,19 @@ function AircraftLeasingPage() {
               <p>{pillar.summary}</p>
             </article>
           ))}
+        </div>
+
+        <div className="subpage-inline-links reveal mt-8">
+          <Button asChild variant="navigation">
+            <Link to="/aviation-assets">
+              Review e-MOA Aviation Asset Scope <ArrowUpRight />
+            </Link>
+          </Button>
+          <Button asChild variant="navigation">
+            <Link to="/contact" search={{ subject: "Aircraft Operating Lease Enquiry" }}>
+              Discuss an Operating Lease Enquiry <ArrowUpRight />
+            </Link>
+          </Button>
         </div>
       </section>
     </SiteShell>

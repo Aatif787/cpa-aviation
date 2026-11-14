@@ -5,8 +5,10 @@ import { LiquidVisualFrame, PageBreadcrumbs, SiteShell } from "@/components/Site
 import { COMPANY_CIN, CORPORATE_EMAIL, LEGAL_NAME, buildPageHead } from "@/lib/seo";
 import {
   ABOUT_AIRCRAFT_VISUAL,
+  ABOUT_IDENTITY_DOSSIER,
   CORPORATE_DOCUMENTS,
   CORPORATE_PARTICULARS,
+  MOA_OBJECTIVE_CLAUSES,
 } from "@/lib/site-content";
 
 export const Route = createFileRoute("/about")({
@@ -21,19 +23,18 @@ function AboutPage() {
         <PageBreadcrumbs currentLabel="About Us" />
         <div className="subpage-hero-grid">
           <div className="subpage-hero-copy">
-            <p className="eyebrow">About the Company</p>
+            <p className="eyebrow">Corporate Identity · GIFT City IFSC</p>
             <h1>
               Corporate Identity &amp; <span className="muted-heading">IFSC Foundation</span>
             </h1>
             <p className="lead-description">
-              {LEGAL_NAME} is an aircraft leasing company incorporated in Gujarat, India and positioned inside GIFT City&apos;s International Financial Services Centre (IFSC).
+              Incorporated on 16 July 2026 under CIN {COMPANY_CIN}, {LEGAL_NAME} is a private limited company anchored in Gujarat International Finance Tec-City (GIFT City SEZ) for aircraft operating leases and aviation asset structuring.
             </p>
           </div>
           <div className="subpage-hero-visual">
             <LiquidVisualFrame
               liquidId="about-hero"
               asset={ABOUT_AIRCRAFT_VISUAL}
-              caption="CPA Aviation Leasing Capital IFSC Private Limited · Illustrative visual"
               eager
             />
           </div>
@@ -42,23 +43,23 @@ function AboutPage() {
 
       <section id="corporate-overview" className="subpage-band page-width">
         <div className="section-topline reveal">
-          <p className="eyebrow">Corporate Background</p>
+          <p className="eyebrow">Incorporation &amp; Corporate Background</p>
           <span className="section-number">01</span>
         </div>
-        <div className="overview-grid">
+        <div className="about-dossier-layout">
           <div className="reveal" data-liquid-text>
             <h2>
               Structured in GIFT City<br />
               <span className="muted-heading">for Aviation Leasing</span>
             </h2>
-          </div>
-          <div className="editorial-copy reveal">
-            <p className="section-description">
-              Incorporated on 16 July 2026 under Corporate Identification Number {COMPANY_CIN}, {LEGAL_NAME} is constituted as a private limited company anchored in Gujarat International Finance Tec-City (GIFT City), Gandhinagar.
-            </p>
-            <p className="section-description">
-              Our Memorandum of Association sets out corporate objectives spanning aircraft leasing, acquisition, asset management, and related ownership or participation structures, while our Letter of Approval in GIFT SEZ identifies aircraft operating lease as our permitted operation subject to applicable regulatory conditions.
-            </p>
+            <div className="editorial-copy">
+              <p className="section-description">
+                {LEGAL_NAME} was incorporated in Gujarat on 16 July 2026 under the Companies Act, 2013 (CIN {COMPANY_CIN}) as a private limited company domiciled within GIFT Special Economic Zone.
+              </p>
+              <p className="section-description">
+                This corporate profile sets out verified statutory records from the Ministry of Corporate Affairs (MCA), the electronic Memorandum of Association (e-MOA), and the company&apos;s GIFT SEZ Letter of Approval without extrapolating unverified fleet, client, or historical claims.
+              </p>
+            </div>
             <div className="subpage-inline-links">
               <Button asChild variant="navigation">
                 <Link to="/our-approach">
@@ -67,18 +68,65 @@ function AboutPage() {
               </Button>
               <Button asChild variant="navigation">
                 <Link to="/gift-city">
-                  Explore GIFT City <ArrowUpRight />
+                  GIFT City &amp; LoA <ArrowUpRight />
                 </Link>
               </Button>
             </div>
           </div>
+
+          <div className="about-dossier-grid reveal" aria-label="Verified Corporate Identity Summary">
+            {ABOUT_IDENTITY_DOSSIER.map((item) => (
+              <article key={item.label} className="dossier-tile">
+                <span className="dossier-label">{item.label}</span>
+                <strong className="dossier-value">{item.value}</strong>
+                <p className="dossier-detail">{item.detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="moa-objectives" className="subpage-band page-width">
+        <div className="section-topline reveal">
+          <p className="eyebrow">Electronic Memorandum of Association (e-MOA)</p>
+          <span className="section-number">02</span>
+        </div>
+        <div className="scope-header reveal">
+          <h2>
+            Constitutional<br />
+            <span className="muted-heading">Business Objectives</span>
+          </h2>
+          <p className="scope-intro">
+            The clauses below summarise core corporate objects stated in the company&apos;s e-MOA. Operating lease for aircraft is presently permitted under the GIFT SEZ Letter of Approval; broader asset or financing objects remain subject to requisite regulatory permissions.
+          </p>
+        </div>
+
+        <div className="subpage-cards-grid subpage-cards-grid--two reveal">
+          {MOA_OBJECTIVE_CLAUSES.map((clause) => (
+            <article key={clause.code} className="subpage-card">
+              <div className="subpage-card-head">
+                <span className="scope-code">{clause.code}</span>
+                <span
+                  className={
+                    clause.code === "01"
+                      ? "scope-status scope-status--authorised"
+                      : "scope-status"
+                  }
+                >
+                  {clause.status}
+                </span>
+              </div>
+              <h3>{clause.title}</h3>
+              <p>{clause.summary}</p>
+            </article>
+          ))}
         </div>
       </section>
 
       <section id="corporate-particulars" className="corporate-section page-width">
         <div className="section-topline reveal">
           <p className="eyebrow">Statutory Identity &amp; Records</p>
-          <span className="section-number">02</span>
+          <span className="section-number">03</span>
         </div>
         <div className="corporate-layout">
           <div className="corporate-heading reveal">
@@ -89,6 +137,13 @@ function AboutPage() {
             <p className="corporate-note">
               Official corporate identification records and statutory seat of {LEGAL_NAME}. Personal subscriber identification numbers are intentionally omitted from public disclosures.
             </p>
+            <div className="mt-4">
+              <Button asChild variant="navigation">
+                <Link to="/gift-city">
+                  GIFT City &amp; LoA Details <ArrowUpRight />
+                </Link>
+              </Button>
+            </div>
           </div>
           <div className="corporate-stack">
             <dl className="corporate-list reveal">

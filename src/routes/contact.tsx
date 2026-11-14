@@ -139,6 +139,45 @@ function ContactPage() {
               <ContactForm prefilledSubject={prefilled} initialSubject={searchSubject} />
             </div>
           </div>
+
+          <div className="contact-scope-strip" aria-label="Enquiry Scope and Regulatory Context">
+            <p className="eyebrow">Scope of Institutional Enquiries</p>
+            <div className="contact-scope-grid">
+              <article className="contact-scope-item">
+                <h3>Operating Lease Enquiries</h3>
+                <p>
+                  Share airline or lessor counterparty details regarding aircraft operating lease requirements conducted under our GIFT SEZ Letter of Approval.
+                </p>
+                <div className="mt-3">
+                  <Link to="/aircraft-leasing" className="home-preview-link">
+                    Aircraft Leasing <ArrowUpRight size={13} aria-hidden="true" />
+                  </Link>
+                </div>
+              </article>
+              <article className="contact-scope-item">
+                <h3>Verified Document Disclosures</h3>
+                <p>
+                  Requests for the Certificate of Incorporation, Memorandum of Association, or Letter of Approval are reviewed against institutional credentials, excluding personal identification numbers.
+                </p>
+                <div className="mt-3">
+                  <Link to="/about" className="home-preview-link">
+                    Statutory Records <ArrowUpRight size={13} aria-hidden="true" />
+                  </Link>
+                </div>
+              </article>
+              <article className="contact-scope-item">
+                <h3>Regulatory Scope Boundary</h3>
+                <p>
+                  Operating lease for aircraft remains subject to regulatory conditions stated in the GIFT SEZ Letter of Approval; broader e-MOA objects require separate approvals where applicable.
+                </p>
+                <div className="mt-3">
+                  <Link to="/gift-city" className="home-preview-link">
+                    GIFT City &amp; LoA <ArrowUpRight size={13} aria-hidden="true" />
+                  </Link>
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
       </section>
     </SiteShell>

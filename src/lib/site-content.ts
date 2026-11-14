@@ -491,3 +491,330 @@ export const GIFT_CITY_ADVANTAGES = [
   },
 ] as const;
 
+export type HomePagePreview = {
+  code: string;
+  title: string;
+  to: PublicRoutePath;
+  tag: string;
+  summary: string;
+  ctaLabel: string;
+};
+
+export const HOME_PAGE_PREVIEWS: readonly HomePagePreview[] = [
+  {
+    code: "01",
+    title: "About Us",
+    to: "/about",
+    tag: "Statutory Identity",
+    summary:
+      "MCA incorporation record (CIN U66190GJ2026PTC180823), e-MOA corporate objects, and controlled access to statutory documents.",
+    ctaLabel: "Company Profile",
+  },
+  {
+    code: "02",
+    title: "Aircraft Leasing",
+    to: "/aircraft-leasing",
+    tag: "Permitted Under LoA",
+    summary:
+      "Authorised aircraft operating lease activity, commercial considerations, structured lease workflow, and regulatory boundaries.",
+    ctaLabel: "Operating Leases",
+  },
+  {
+    code: "03",
+    title: "Aviation Assets",
+    to: "/aviation-assets",
+    tag: "e-MOA Asset Scope",
+    summary:
+      "Aircraft, helicopters, propulsion engines, and ownership structures contemplated in the Memorandum of Association.",
+    ctaLabel: "Asset Objectives",
+  },
+  {
+    code: "04",
+    title: "Our Approach",
+    to: "/our-approach",
+    tag: "Structured Process",
+    summary:
+      "Step-by-step evaluation across statutory alignment, asset governance, ring-fenced documentation, and counterparty clarity.",
+    ctaLabel: "View Process",
+  },
+  {
+    code: "05",
+    title: "GIFT City",
+    to: "/gift-city",
+    tag: "GIFT SEZ Jurisdiction",
+    summary:
+      "Gandhinagar registered office details, IFSC institutional framework, and GIFT SEZ Letter of Approval conditions.",
+    ctaLabel: "Jurisdiction Details",
+  },
+  {
+    code: "06",
+    title: "Contact Us",
+    to: "/contact",
+    tag: "Direct Enquiries",
+    summary:
+      "Direct institutional correspondence, operating lease enquiries, and statutory record verification requests.",
+    ctaLabel: "Send Enquiry",
+  },
+] as const;
+
+export const ABOUT_IDENTITY_DOSSIER = [
+  {
+    label: "Entity Constitution",
+    value: "Private Limited Company",
+    detail: "Incorporated 16 July 2026 under the Companies Act, 2013 (MCA Record).",
+  },
+  {
+    label: "Jurisdiction & SEZ Seat",
+    value: "GIFT SEZ, Gandhinagar",
+    detail: "THE PLATFORM BK11 GIFTSEZ, Gift City, Gujarat — 382050, India.",
+  },
+  {
+    label: "Authorised IFSC Activity",
+    value: "Operating Lease for Aircraft",
+    detail: "Permitted operation identified in the GIFT SEZ / IFSCA Letter of Approval.",
+  },
+  {
+    label: "Constitutional Scope",
+    value: "e-MOA Aviation Mandate",
+    detail: "Broader aircraft, component, management, and ownership clauses subject to approvals.",
+  },
+] as const;
+
+export const MOA_OBJECTIVE_CLAUSES = [
+  {
+    code: "01",
+    status: "Permitted Under LoA",
+    title: "Aircraft Operating Lease Operations",
+    summary:
+      "Core operating activity enabling the company to acquire, hold, and place aircraft under operating lease arrangements in compliance with applicable IFSC rules and conditions.",
+  },
+  {
+    code: "02",
+    status: "Stated e-MOA Object",
+    title: "Multi-Asset Aviation Coverage",
+    summary:
+      "Memorandum objects encompass fixed-wing aircraft, helicopters, aircraft engines, assemblies, and allied aviation equipment for commercial and corporate aviation utility.",
+  },
+  {
+    code: "03",
+    status: "Stated e-MOA Object · Subject to Approvals",
+    title: "Aviation Asset Financing & Structuring",
+    summary:
+      "Constitutional provisions allow evaluating and entering into aircraft financing and capital arrangements where permitted under prevailing IFSC and RBI/SEZ regulations.",
+  },
+  {
+    code: "04",
+    status: "Stated e-MOA Object · Subject to Approvals",
+    title: "SPV, Co-Ownership & Participation Models",
+    summary:
+      "Company objects contemplate holding or participating in aviation assets through Special Purpose Vehicles (SPVs), co-ownership frameworks, or fractional arrangements subject to regulatory compliance.",
+  },
+] as const;
+
+export const OPERATING_LEASE_MECHANICS = [
+  {
+    code: "01",
+    title: "Ownership & Operational Separation",
+    summary:
+      "Legal title to the aircraft remains separated from day-to-day operational control, allowing airline operators to deploy capacity under fixed contractual lease covenants.",
+  },
+  {
+    code: "02",
+    title: "Lease Tenor & Utilization Structure",
+    summary:
+      "Lease terms align with aircraft mission profile, projected flight-hour utilization, and fixed monthly rental schedules agreed prior to delivery.",
+  },
+  {
+    code: "03",
+    title: "Maintenance & Airworthiness Covenants",
+    summary:
+      "Written maintenance reserve provisions, airworthiness directive compliance obligations, and hull/liability insurance minimums protect the underlying asset condition.",
+  },
+  {
+    code: "04",
+    title: "Redelivery & Remarketing Standards",
+    summary:
+      "Clear physical inspection criteria, engine performance thresholds, and full technical record traceability govern end-of-lease redelivery.",
+  },
+] as const;
+
+export const LEASING_PROCESS_STAGES = [
+  {
+    step: "01",
+    title: "Requirement & Specification Review",
+    detail: "Evaluate lessee route profile, airframe category, configuration, and proposed lease horizon.",
+  },
+  {
+    step: "02",
+    title: "Commercial Term Sheet",
+    detail: "Establish baseline commercial parameters covering tenor, security deposits, rent structure, and maintenance terms.",
+  },
+  {
+    step: "03",
+    title: "Technical & Regulatory Documentation",
+    detail: "Coordinate airworthiness records, CAPE/IDERA registration filings, insurance certificates, and IFSC/DGCA clearances.",
+  },
+  {
+    step: "04",
+    title: "Delivery & Lease Administration",
+    detail: "Execute formal delivery protocols, monitor ongoing compliance covenants, and maintain statutory records in GIFT SEZ.",
+  },
+  {
+    step: "05",
+    title: "Redelivery & Asset Transition",
+    detail: "Verify return condition compliance, complete technical reconciliation, and prepare the aircraft for subsequent placement.",
+  },
+] as const;
+
+export const ASSET_LIFECYCLE_OBJECTIVES = [
+  {
+    code: "01",
+    status: "e-MOA Objective",
+    title: "Asset Acquisition & Holding",
+    summary:
+      "Evaluating and purchasing new or pre-owned aircraft, helicopters, engines, and aviation components for corporate holding.",
+  },
+  {
+    code: "02",
+    status: "Operating Lease Permitted Under LoA",
+    title: "Operating Lease Placement",
+    summary:
+      "Placing aircraft on operating leases with domestic or international operators strictly within GIFT SEZ Letter of Approval parameters.",
+  },
+  {
+    code: "03",
+    status: "e-MOA Objective",
+    title: "Lifecycle Asset Management",
+    summary:
+      "Overseeing technical records, scheduled maintenance events, configuration upgrades, and residual value preservation across holding periods.",
+  },
+  {
+    code: "04",
+    status: "e-MOA Objective · Subject to Approvals",
+    title: "Aviation Asset Financing Objectives",
+    summary:
+      "Supporting asset acquisition through structured debt, vendor credit, or permitted IFSC financing mechanisms where separately authorised.",
+  },
+] as const;
+
+export const OWNERSHIP_STRUCTURES = [
+  {
+    code: "01",
+    status: "Subject to Regulatory Compliance",
+    title: "Special Purpose Vehicles (SPVs)",
+    summary:
+      "Dedicated asset-holding entities structured to isolate title, lease contracts, and lender security interests for single aircraft or multi-unit portfolios.",
+  },
+  {
+    code: "02",
+    status: "Subject to Regulatory Compliance",
+    title: "Co-Ownership Frameworks",
+    summary:
+      "Joint title and cost-sharing frameworks contemplated under the Memorandum of Association to align multiple institutional participants around specific aviation assets.",
+  },
+  {
+    code: "03",
+    status: "Stated e-MOA Object · Separate Consents Required",
+    title: "Structured & Fractional Participation Models",
+    summary:
+      "Fractional and structured participation arrangements described in the e-MOA remain prospective corporate objectives requiring specific regulatory permissions and without any implied yield or return.",
+  },
+] as const;
+
+export const APPROACH_PROCESS_STEPS = [
+  {
+    step: "01",
+    title: "Regulatory & Constitutional Alignment",
+    summary: "Verify each prospective transaction against GIFT SEZ Letter of Approval scope and e-MOA boundaries.",
+    criteria: [
+      "LoA activity verification",
+      "IFSCA / SEZ condition compliance",
+      "Clear separation of prospective objects",
+    ],
+  },
+  {
+    step: "02",
+    title: "Asset & Counterparty Evaluation",
+    summary: "Conduct disciplined technical review of the airframe or engine alongside lessee operational standing.",
+    criteria: [
+      "Airframe & engine pedigree",
+      "Lessee operating history",
+      "Maintenance program compatibility",
+    ],
+  },
+  {
+    step: "03",
+    title: "Ring-Fenced Structuring & Documentation",
+    summary: "Establish clear legal title, insurance covenants, registration protections, and reporting schedules.",
+    criteria: [
+      "Contractual lease precision",
+      "Hull & liability coverage",
+      "Cape Town / jurisdictional filings",
+    ],
+  },
+  {
+    step: "04",
+    title: "Ongoing Stewardship & Redelivery Discipline",
+    summary: "Maintain systematic record-keeping across active leases and enforce transparent return conditions.",
+    criteria: [
+      "Utilization & reserve tracking",
+      "Technical log continuity",
+      "Redelivery inspection readiness",
+    ],
+  },
+] as const;
+
+export const APPROACH_GOVERNANCE_COLUMNS = [
+  {
+    code: "A",
+    title: "Approach to Aviation Assets",
+    points: [
+      "Focus on commercial viability and technical documentation integrity.",
+      "Preserve traceability across airframe, engine, and component logs.",
+      "Recognise regulatory distinctions across aircraft vs. ancillary assets.",
+    ],
+  },
+  {
+    code: "B",
+    title: "Approach to Leasing Arrangements",
+    points: [
+      "Align operating lease terms with realistic operator fleet cycles.",
+      "Specify maintenance reserve and insurance obligations unambiguously.",
+      "Conduct leasing strictly within permitted GIFT SEZ LoA parameters.",
+    ],
+  },
+  {
+    code: "C",
+    title: "Approach to Business Relationships",
+    points: [
+      "Direct institutional communication without unverified intermediaries.",
+      "Controlled sharing of corporate documents with legitimate counterparties.",
+      "Zero overstatement of current operational scale or regulatory scope.",
+    ],
+  },
+] as const;
+
+export const LOA_REGULATORY_DOSSIER = [
+  {
+    label: "Approved SEZ Unit",
+    value: "CPA Aviation Leasing Capital IFSC Private Limited",
+    detail: "Constituted as a unit within Gujarat International Finance Tec-City (GIFT SEZ).",
+  },
+  {
+    label: "GIFT SEZ Location",
+    value: "THE PLATFORM BK11 GIFTSEZ",
+    detail: "U.71 S 1-4 GRD FLR 11T2, Gift City, Gandhi Nagar, Gujarat, India — 382050.",
+  },
+  {
+    label: "Permitted Activity under LoA",
+    value: "Operating Lease for Aircraft",
+    detail: "Specific authorised operation identified under the company's Letter of Approval.",
+  },
+  {
+    label: "Mandatory Regulatory Condition",
+    value: "Subject to Stated Conditions",
+    detail: "All operations remain strictly subject to the regulatory conditions set out in the Letter of Approval and applicable IFSC/SEZ law.",
+  },
+] as const;
+
+
