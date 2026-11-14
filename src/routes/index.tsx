@@ -16,13 +16,11 @@ import {
   ResponsivePicture,
   SiteShell,
 } from "@/components/SiteLayout";
-import { COMPANY_CIN, CORPORATE_EMAIL, LEGAL_NAME, buildPageHead } from "@/lib/seo";
+import { CORPORATE_EMAIL, LEGAL_NAME, buildPageHead } from "@/lib/seo";
 import {
   AIRCRAFT_ASSETS_VISUAL,
   GUJARAT_SCENES,
-  HOME_PAGE_PREVIEWS,
   LEASING_AIRCRAFT_VISUAL,
-  REGISTERED_OFFICE_ADDRESS,
   flightFilm,
   flightStill,
 } from "@/lib/site-content";
@@ -613,96 +611,6 @@ function Index() {
             <Link className="contact-email" to="/contact">
               Dedicated Contact Page
             </Link>
-          </div>
-        </div>
-      </section>
-
-      <section id="corporate-info" className="corporate-section page-width">
-        <div className="section-topline reveal">
-          <p className="eyebrow">Corporate Identity &amp; Directory</p>
-          <span className="section-number">06</span>
-        </div>
-
-        <div className="corporate-summary-grid">
-          <div className="corporate-heading reveal">
-            <h2>
-              Registered Foundation<br />
-              <span className="muted-heading">&amp; Dedicated Pages</span>
-            </h2>
-            <p className="corporate-note">
-              Statutory corporate particulars, official document disclosures, and detailed regulatory materials are organised across dedicated sections of this website.
-            </p>
-            <div className="mt-4">
-              <Button asChild variant="navigation">
-                <Link to="/about">
-                  Full Corporate Profile <ArrowUpRight />
-                </Link>
-              </Button>
-            </div>
-          </div>
-
-          <div className="corporate-summary-box reveal">
-            <p className="eyebrow">Verified MCA &amp; GIFT SEZ Snapshot</p>
-            <h3>{LEGAL_NAME}</h3>
-            <p className="section-description">
-              Private Limited Company anchored in GIFT City IFSC, Gandhinagar. Operating lease for aircraft is conducted under the GIFT SEZ Letter of Approval, subject to stated regulatory conditions; broader Memorandum objects remain subject to requisite permissions.
-            </p>
-            <div className="corporate-summary-pills">
-              <div className="corporate-summary-pill">
-                <span>Corporate Identification Number</span>
-                <strong>{COMPANY_CIN}</strong>
-              </div>
-              <div className="corporate-summary-pill">
-                <span>Incorporation</span>
-                <strong>16 July 2026 · Private Limited (IFSC)</strong>
-              </div>
-              <div className="corporate-summary-pill">
-                <span>Permitted Activity (LoA)</span>
-                <strong>Operating Lease for Aircraft</strong>
-              </div>
-              <div className="corporate-summary-pill">
-                <span>Registered Office</span>
-                <strong>{REGISTERED_OFFICE_ADDRESS}</strong>
-              </div>
-              <div className="corporate-summary-pill">
-                <span>Official Email</span>
-                <strong>
-                  <a href={`mailto:${CORPORATE_EMAIL}`}>{CORPORATE_EMAIL}</a>
-                </strong>
-              </div>
-              <div className="corporate-summary-pill">
-                <span>Telephone</span>
-                <strong>
-                  <a href="tel:+918527712949">+91 85277 12949</a>
-                </strong>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="home-directory-block reveal" aria-labelledby="home-directory-heading">
-          <div className="home-directory-header">
-            <p className="eyebrow">Site Architecture</p>
-            <h3 id="home-directory-heading">
-              Explore <span className="muted-heading">Dedicated Sections</span>
-            </h3>
-          </div>
-          <div className="home-preview-grid">
-            {HOME_PAGE_PREVIEWS.map((preview) => (
-              <Link key={preview.to} to={preview.to} className="home-preview-card">
-                <div>
-                  <div className="home-preview-meta">
-                    <span className="scope-code">{preview.code}</span>
-                    <span className="home-preview-tag">{preview.tag}</span>
-                  </div>
-                  <h4>{preview.title}</h4>
-                  <p>{preview.summary}</p>
-                </div>
-                <span className="home-preview-link">
-                  {preview.ctaLabel} <ArrowUpRight size={14} aria-hidden="true" />
-                </span>
-              </Link>
-            ))}
           </div>
         </div>
       </section>
