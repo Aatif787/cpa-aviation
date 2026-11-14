@@ -16,7 +16,7 @@ import {
   ResponsivePicture,
   SiteShell,
 } from "@/components/SiteLayout";
-import { CORPORATE_EMAIL, LEGAL_NAME, buildPageHead } from "@/lib/seo";
+import { LEGAL_NAME, buildPageHead } from "@/lib/seo";
 import {
   AIRCRAFT_ASSETS_VISUAL,
   GUJARAT_SCENES,
@@ -56,8 +56,6 @@ function Index() {
   const [cityIndex, setCityIndex] = useState(0);
   const [cityPaused, setCityPaused] = useState(false);
   const [cityInView, setCityInView] = useState(false);
-  const [contactVisible, setContactVisible] = useState(false);
-  const [contactInView, setContactInView] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -109,29 +107,9 @@ function Index() {
       cityObserver.observe(cityEl);
     }
 
-    const contactEl = document.getElementById("contact");
-    let contactObserver: IntersectionObserver | undefined;
-    if (contactEl && typeof IntersectionObserver !== "undefined") {
-      contactObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            setContactInView(entry.isIntersecting);
-            if (entry.isIntersecting) setContactVisible(true);
-          });
-        },
-        { threshold: 0.05 },
-      );
-      contactObserver.observe(contactEl);
-    }
-
-    if (window.location.hash === "#contact") {
-      setContactVisible(true);
-    }
-
     return () => {
       heroObserver?.disconnect();
       cityObserver?.disconnect();
-      contactObserver?.disconnect();
       media.removeEventListener("change", updateMotion);
       desktopQuery.removeEventListener("change", updateMotion);
       nav.connection?.removeEventListener?.("change", updateMotion);
@@ -468,121 +446,96 @@ function Index() {
         </div>
       </section>
 
-      <section id="gift-city" className="city-section page-width">
-        <div className="section-topline reveal">
-          <p className="eyebrow">GIFT City &amp; Gujarat</p>
-          <span className="section-number">05</span>
-        </div>
-        <div className="city-overview-grid">
-          <div className="city-copy-panel reveal" data-liquid-text>
-            <div key={activeScene.code} className="city-copy-stage">
-              <h2>
-                {activeScene.headingTop}<br />
-                <span className="muted-heading">{activeScene.headingAccent}</span>
-              </h2>
-              <div className="editorial-copy">
-                {activeScene.paragraphs.map((text) => (
-                  <p key={text} className="section-description">
-                    {text}
-                  </p>
-                ))}
-              </div>
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="location-tag">
-                  <Building2 size={15} /> {activeScene.location}
-                </div>
-                <Button asChild variant="navigation">
-                  <Link to="/gift-city">
-                    Explore GIFT City IFSC <ArrowUpRight />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+      <section id="gift-city" className="city-section city-sky-section">
+        <CharterSkyBackdrop activeInView={cityInView} reducedMotion={reducedMotion} />
+        <div className="page-width city-sky-content">
+          <div className="section-topline reveal">
+            <p className="eyebrow">GIFT City &amp; Gujarat</p>
+            <span className="section-number">05</span>
           </div>
-          <figure
-            className="m-0 city-visual-stack"
-            data-liquid="city"
-            onMouseEnter={() => setCityPaused(true)}
-            onMouseLeave={() => setCityPaused(false)}
-          >
-            <span className="liquid-frame">
-              <span className="city-deck liquid-media">
-                <span className="city-deck-track">
-                  {GUJARAT_SCENES.map((scene, index) => {
-                    const offset = (index - cityIndex + GUJARAT_SCENES.length) % GUJARAT_SCENES.length;
-                    return (
-                      <button
-                        key={scene.code}
-                        type="button"
-                        className="city-deck-card"
-                        data-pos={offset}
-                        onClick={() =>
-                          setCityIndex(offset === 0 ? (cityIndex + 1) % GUJARAT_SCENES.length : index)
-                        }
-                        aria-label={
-                          offset === 0 ? `${scene.label} — show next view` : `Show ${scene.label}`
-                        }
-                      >
-                        <span className="city-deck-photo">
-                          <picture>
-                            <source
-                              srcSet={scene.avifSrcSet}
-                              sizes="(max-width: 700px) 90vw, 48vw"
-                              type="image/avif"
-                            />
-                            <source
-                              srcSet={scene.webpSrcSet}
-                              sizes="(max-width: 700px) 90vw, 48vw"
-                              type="image/webp"
-                            />
-                            <img
-                              src={scene.image}
-                              alt={scene.alt}
-                              width={scene.width}
-                              height={scene.height}
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </picture>
-                        </span>
-                      </button>
-                    );
-                  })}
+          <div className="city-glass-shell">
+            <div className="city-overview-grid">
+              <div className="city-copy-panel city-copy-panel--glass reveal" data-liquid-text>
+                <div key={activeScene.code} className="city-copy-stage">
+                  <h2>
+                    {activeScene.headingTop}<br />
+                    <span className="muted-heading">{activeScene.headingAccent}</span>
+                  </h2>
+                  <div className="editorial-copy">
+                    {activeScene.paragraphs.map((text) => (
+                      <p key={text} className="section-description">
+                        {text}
+                      </p>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <div className="location-tag">
+                      <Building2 size={15} /> {activeScene.location}
+                    </div>
+                    <Button asChild variant="navigation">
+                      <Link to="/gift-city">
+                        Explore GIFT City IFSC <ArrowUpRight />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <figure
+                className="m-0 city-visual-stack"
+                data-liquid="city"
+                onMouseEnter={() => setCityPaused(true)}
+                onMouseLeave={() => setCityPaused(false)}
+              >
+                <span className="liquid-frame">
+                  <span className="city-deck liquid-media">
+                    <span className="city-deck-track">
+                      {GUJARAT_SCENES.map((scene, index) => {
+                        const offset = (index - cityIndex + GUJARAT_SCENES.length) % GUJARAT_SCENES.length;
+                        return (
+                          <button
+                            key={scene.code}
+                            type="button"
+                            className="city-deck-card"
+                            data-pos={offset}
+                            onClick={() =>
+                              setCityIndex(offset === 0 ? (cityIndex + 1) % GUJARAT_SCENES.length : index)
+                            }
+                            aria-label={
+                              offset === 0 ? `${scene.label} — show next view` : `Show ${scene.label}`
+                            }
+                          >
+                            <span className="city-deck-photo">
+                              <picture>
+                                <source
+                                  srcSet={scene.avifSrcSet}
+                                  sizes="(max-width: 700px) 90vw, 48vw"
+                                  type="image/avif"
+                                />
+                                <source
+                                  srcSet={scene.webpSrcSet}
+                                  sizes="(max-width: 700px) 90vw, 48vw"
+                                  type="image/webp"
+                                />
+                                <img
+                                  src={scene.image}
+                                  alt={scene.alt}
+                                  width={scene.width}
+                                  height={scene.height}
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                              </picture>
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </span>
+                  </span>
+                  <span className="liquid-ribbon" aria-hidden="true" />
+                  <span className="liquid-sweep" aria-hidden="true" />
                 </span>
-              </span>
-              <span className="liquid-ribbon" aria-hidden="true" />
-              <span className="liquid-sweep" aria-hidden="true" />
-            </span>
-          </figure>
-        </div>
-      </section>
-
-      <section id="contact" className={contactVisible ? "contact-section is-contact-visible" : "contact-section"}>
-        <CharterSkyBackdrop activeInView={contactInView} reducedMotion={reducedMotion} />
-        <div className="contact-content page-width">
-          <p className="eyebrow">
-            <span className="contact-pulse-dot" aria-hidden="true" />
-            Contact
-          </p>
-          <h2 className="contact-reveal-up">
-            Discuss an Aviation<br />
-            <span className="muted-heading">Leasing Enquiry</span>
-          </h2>
-          <p className="contact-intro contact-reveal-right">
-            For business enquiries, aircraft operating lease discussions, or verified corporate document requests, please contact {LEGAL_NAME}.
-          </p>
-          <div className="contact-direct">
-            <a className="contact-email" href={`mailto:${CORPORATE_EMAIL}`}>
-              {CORPORATE_EMAIL}
-            </a>
-            <span aria-hidden="true">·</span>
-            <a className="contact-email whitespace-nowrap" href="tel:+918527712949">
-              +91 85277 12949
-            </a>
-            <span aria-hidden="true">·</span>
-            <Link className="contact-email" to="/contact">
-              Dedicated Contact Page
-            </Link>
+              </figure>
+            </div>
           </div>
         </div>
       </section>
