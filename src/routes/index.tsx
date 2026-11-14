@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -24,10 +24,6 @@ import {
   flightFilm,
   flightStill,
 } from "@/lib/site-content";
-
-const LazyContactForm = lazy(() =>
-  import("@/components/ContactForm").then((m) => ({ default: m.ContactForm })),
-);
 
 export const Route = createFileRoute("/")({
   head: () => {
@@ -62,7 +58,6 @@ function Index() {
   const [cityInView, setCityInView] = useState(false);
   const [contactVisible, setContactVisible] = useState(false);
   const [contactInView, setContactInView] = useState(false);
-  const [contactFormReady, setContactFormReady] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -116,7 +111,6 @@ function Index() {
 
     const contactEl = document.getElementById("contact");
     let contactObserver: IntersectionObserver | undefined;
-    let contactFormObserver: IntersectionObserver | undefined;
     if (contactEl && typeof IntersectionObserver !== "undefined") {
       contactObserver = new IntersectionObserver(
         (entries) => {
@@ -128,31 +122,16 @@ function Index() {
         { threshold: 0.05 },
       );
       contactObserver.observe(contactEl);
-
-      contactFormObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setContactFormReady(true);
-              contactFormObserver?.disconnect();
-            }
-          });
-        },
-        { rootMargin: "550px 0px" },
-      );
-      contactFormObserver.observe(contactEl);
     }
 
     if (window.location.hash === "#contact") {
       setContactVisible(true);
-      setContactFormReady(true);
     }
 
     return () => {
       heroObserver?.disconnect();
       cityObserver?.disconnect();
       contactObserver?.disconnect();
-      contactFormObserver?.disconnect();
       media.removeEventListener("change", updateMotion);
       desktopQuery.removeEventListener("change", updateMotion);
       nav.connection?.removeEventListener?.("change", updateMotion);
@@ -592,13 +571,6 @@ function Index() {
           <p className="contact-intro contact-reveal-right">
             For business enquiries, aircraft operating lease discussions, or verified corporate document requests, please contact {LEGAL_NAME}.
           </p>
-          {contactFormReady ? (
-            <Suspense fallback={<div className="contact-form contact-form-skeleton" aria-hidden="true" />}>
-              <LazyContactForm />
-            </Suspense>
-          ) : (
-            <div className="contact-form contact-form-skeleton" aria-hidden="true" />
-          )}
           <div className="contact-direct">
             <a className="contact-email" href={`mailto:${CORPORATE_EMAIL}`}>
               {CORPORATE_EMAIL}
