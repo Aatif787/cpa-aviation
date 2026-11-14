@@ -145,8 +145,8 @@ function AboutPage() {
               </Button>
             </div>
           </div>
-          <div className="corporate-stack">
-            <dl className="corporate-list reveal">
+          <div className="corporate-ledger-card reveal">
+            <dl className="corporate-list">
               {CORPORATE_PARTICULARS.map((item) => (
                 <div key={item.label} className="corporate-row">
                   <dt>{item.label}</dt>
@@ -165,69 +165,71 @@ function AboutPage() {
                 </div>
               ))}
             </dl>
-
-            <div id="regulatory-scope" className="regulatory-panel reveal" aria-labelledby="about-regulatory-heading">
-              <div className="regulatory-panel-header">
-                <p id="about-regulatory-heading" className="eyebrow">
-                  <ShieldCheck size={12} className="inline mr-1.5" aria-hidden="true" />
-                  Regulatory Scope Distinction
-                </p>
-              </div>
-              <div className="regulatory-grid">
-                <article className="regulatory-card">
-                  <span className="regulatory-kicker regulatory-kicker--loa">Letter of Approval (LoA)</span>
-                  <h3>Permitted Operating Activity</h3>
-                  <p>
-                    Operating lease for aircraft, conducted subject to the terms and applicable regulatory conditions set out in the company&apos;s GIFT SEZ Letter of Approval.
-                  </p>
-                </article>
-                <article className="regulatory-card">
-                  <span className="regulatory-kicker">Memorandum of Association (MoA)</span>
-                  <h3>Stated Corporate Objectives</h3>
-                  <p>
-                    Broader stated objects cover aircraft, helicopter and engine leasing, aviation asset management, aviation asset financing, and SPV or co-ownership participation structures. Objectives outside aircraft operating lease remain subject to requisite regulatory approvals prior to commencement.
-                  </p>
-                </article>
-              </div>
-            </div>
-
-            <div id="official-documents" className="documents-panel reveal" aria-labelledby="about-docs-heading">
-              <div className="documents-header">
-                <p id="about-docs-heading" className="eyebrow">Official Corporate Documents</p>
-                <span className="documents-privacy-note">
-                  <Lock size={12} aria-hidden="true" /> Controlled counterparty access
-                </span>
-              </div>
-              <ul className="documents-list">
-                {CORPORATE_DOCUMENTS.map((doc) => (
-                  <li key={doc.code} className="document-row">
-                    <div className="document-meta">
-                      <span className="document-code">{doc.code}</span>
-                      <div>
-                        <h3 className="document-title">
-                          <FileText size={14} aria-hidden="true" />
-                          <span>{doc.title}</span>
-                        </h3>
-                        <p className="document-ref">{doc.reference}</p>
-                        <p className="document-summary">{doc.summary}</p>
-                      </div>
-                    </div>
-                    <Button asChild variant="navigation" className="document-request-btn">
-                      <Link
-                        to="/contact"
-                        search={{ subject: `Document Access Request: ${doc.title}` }}
-                      >
-                        Request Access <ArrowUpRight />
-                      </Link>
-                    </Button>
-                  </li>
-                ))}
-              </ul>
-              <p className="documents-footnote">
-                Statutory corporate documents are shared upon verified institutional request; confidential subscriber details and personal identification numbers are excluded.
-              </p>
-            </div>
           </div>
+        </div>
+
+        <div id="regulatory-scope" className="regulatory-panel reveal" aria-labelledby="about-regulatory-heading">
+          <div className="regulatory-panel-header">
+            <p id="about-regulatory-heading" className="eyebrow">
+              <ShieldCheck size={13} aria-hidden="true" />
+              Regulatory Scope Distinction
+            </p>
+            <span className="documents-privacy-note">GIFT SEZ Authority &amp; Constitutional Objects</span>
+          </div>
+          <div className="regulatory-grid">
+            <article className="regulatory-card regulatory-card--loa">
+              <span className="regulatory-kicker regulatory-kicker--loa">Letter of Approval (LoA)</span>
+              <h3>Permitted Operating Activity</h3>
+              <p>
+                Operating lease for aircraft, conducted subject to the terms and applicable regulatory conditions set out in the company&apos;s GIFT SEZ Letter of Approval.
+              </p>
+            </article>
+            <article className="regulatory-card">
+              <span className="regulatory-kicker">Memorandum of Association (MoA)</span>
+              <h3>Stated Corporate Objectives</h3>
+              <p>
+                Broader stated objects cover aircraft, helicopter and engine leasing, aviation asset management, aviation asset financing, and SPV or co-ownership participation structures. Objectives outside aircraft operating lease remain subject to requisite regulatory approvals prior to commencement.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div id="official-documents" className="documents-panel reveal" aria-labelledby="about-docs-heading">
+          <div className="documents-header">
+            <p id="about-docs-heading" className="eyebrow">Official Corporate Documents</p>
+            <span className="documents-privacy-note">
+              <Lock size={12} aria-hidden="true" /> Controlled counterparty access
+            </span>
+          </div>
+          <ul className="documents-list">
+            {CORPORATE_DOCUMENTS.map((doc) => (
+              <li key={doc.code} className="document-row">
+                <div className="document-card-head">
+                  <span className="document-code">{doc.code}</span>
+                  <span className="document-ref">{doc.reference}</span>
+                </div>
+                <h3 className="document-title">
+                  <FileText size={15} aria-hidden="true" />
+                  <span>{doc.title}</span>
+                </h3>
+                <p className="document-summary">{doc.summary}</p>
+                <div className="document-card-foot">
+                  <span className="document-access-label">Verified Institutional Request</span>
+                  <Button asChild variant="navigation" className="document-request-btn">
+                    <Link
+                      to="/contact"
+                      search={{ subject: `Document Access Request: ${doc.title}` }}
+                    >
+                      Request Access <ArrowUpRight />
+                    </Link>
+                  </Button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className="documents-footnote">
+            Statutory corporate documents are shared upon verified institutional request; confidential subscriber details and personal identification numbers are excluded.
+          </p>
         </div>
       </section>
     </SiteShell>

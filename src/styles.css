@@ -645,7 +645,7 @@ h2 {
 .corporate-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(28px, 5vw, 72px);
+  gap: clamp(24px, 4.5vw, 64px);
   align-items: start;
 }
 .corporate-heading h2 { margin: 0 0 14px; font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem); }
@@ -656,9 +656,16 @@ h2 {
   line-height: 1.8;
   max-width: 380px;
 }
+.corporate-ledger-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--secondary) 42%, var(--background));
+  padding: clamp(6px, 1.2vw, 12px) clamp(18px, 2.8vw, 30px);
+  min-width: 0;
+}
 .corporate-list {
   margin: 0;
-  border-top: 1px solid var(--border);
+  border-top: 0;
 }
 .corporate-row {
   display: grid;
@@ -667,6 +674,7 @@ h2 {
   padding: clamp(14px, 2vw, 18px) 0;
   border-bottom: 1px solid var(--border);
 }
+.corporate-row:last-child { border-bottom: 0; }
 .corporate-row dt {
   font-size: 10px;
   letter-spacing: .16em;
@@ -682,27 +690,35 @@ h2 {
 }
 .corporate-row dd a { color: var(--accent); text-decoration: none; }
 .corporate-row dd a:hover { text-decoration: underline; }
-.corporate-stack {
+.regulatory-panel {
+  margin-top: clamp(36px, 5vw, 56px);
+  border-top: 1px solid var(--border);
+  padding-top: clamp(28px, 3.5vw, 40px);
+}
+.regulatory-panel-header {
   display: flex;
   flex-direction: column;
-  gap: clamp(28px, 4vw, 44px);
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: clamp(18px, 2.4vw, 24px);
 }
-.regulatory-panel {
-  border-top: 1px solid var(--border);
-  padding-top: clamp(24px, 3vw, 32px);
-}
-.regulatory-panel-header .eyebrow { margin-bottom: clamp(16px, 2vw, 22px); }
+.regulatory-panel-header .eyebrow { margin: 0; }
 .regulatory-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(16px, 2.2vw, 22px);
 }
 .regulatory-card {
-  padding: clamp(18px, 2.4vw, 24px);
+  padding: clamp(22px, 2.8vw, 30px);
   border: 1px solid var(--border);
   border-radius: 6px;
   background: color-mix(in oklab, var(--secondary) 46%, var(--background));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
 }
+.regulatory-card--loa { border-top: 2px solid var(--accent); }
 .regulatory-kicker {
   display: inline-block;
   font-size: 10px;
@@ -727,15 +743,16 @@ h2 {
   color: var(--muted-foreground);
 }
 .documents-panel {
+  margin-top: clamp(36px, 5vw, 56px);
   border-top: 1px solid var(--border);
-  padding-top: clamp(24px, 3vw, 32px);
+  padding-top: clamp(28px, 3.5vw, 40px);
 }
 .documents-header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  margin-bottom: clamp(14px, 2vw, 20px);
+  margin-bottom: clamp(18px, 2.4vw, 24px);
 }
 .documents-header .eyebrow { margin: 0; }
 .documents-privacy-note {
@@ -750,21 +767,28 @@ h2 {
   list-style: none;
   padding: 0;
   margin: 0;
-  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2.2vw, 22px);
 }
 .document-row {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: clamp(16px, 2vw, 20px) 0;
-  border-bottom: 1px solid var(--border);
+  gap: 10px;
+  padding: clamp(20px, 2.6vw, 26px);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--secondary) 36%, var(--background));
+  min-width: 0;
+  transition: border-color .28s;
 }
-.document-meta {
+.document-row:hover { border-color: color-mix(in oklab, var(--accent) 45%, transparent); }
+.document-card-head {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 12px;
 }
 .document-code {
   font-size: 11px;
@@ -774,41 +798,58 @@ h2 {
 }
 .document-title {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 0.4vw + 0.95rem, 1.35rem);
+  font-size: clamp(1.2rem, 0.45vw + 1rem, 1.4rem);
   font-weight: 400;
-  margin: 0 0 4px;
+  margin: 2px 0 0;
   color: var(--foreground);
 }
 .document-title svg {
   flex-shrink: 0;
-  margin-top: 4px;
+  color: var(--accent);
 }
 .document-ref {
-  margin: 0 0 4px;
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.document-summary {
+  margin: 0;
+  font-size: clamp(0.825rem, 0.2vw + 0.76rem, 0.9rem);
+  line-height: 1.68;
+  color: var(--muted-foreground);
+  flex: 1;
+}
+.document-card-foot {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+.document-access-label {
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.document-request-btn {
+  flex-shrink: 0;
   font-size: 11px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--accent);
 }
-.document-summary {
-  margin: 0;
-  font-size: clamp(0.8125rem, 0.2vw + 0.75rem, 0.875rem);
-  line-height: 1.65;
-  color: var(--muted-foreground);
-}
-.document-request-btn {
-  align-self: flex-start;
-  flex-shrink: 0;
-  font-size: 11px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
 .documents-footnote {
-  margin: 14px 0 0;
+  margin: 16px 0 0;
   font-size: 11px;
   line-height: 1.7;
   color: var(--muted-foreground);
@@ -1179,11 +1220,11 @@ footer {
 
 @media (min-width: 768px) {
   .corporate-row {
-    grid-template-columns: clamp(190px, 28%, 260px) 1fr;
+    grid-template-columns: clamp(220px, 36%, 285px) 1fr;
     gap: 24px;
     align-items: baseline;
   }
-  .regulatory-grid { grid-template-columns: 1fr 1fr; }
+  .regulatory-panel-header,
   .documents-header {
     flex-direction: row;
     flex-wrap: wrap;
@@ -1191,20 +1232,8 @@ footer {
     justify-content: space-between;
     gap: 10px 18px;
   }
-  .document-row {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-  }
-  .document-meta {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 16px;
-    width: auto;
-  }
-  .document-code { padding-top: 3px; }
-  .document-request-btn { align-self: center; }
+  .regulatory-grid,
+  .documents-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .contact-section.is-contact-visible .contact-reveal-right {
     animation: revealRightDesktop 0.9s var(--ease-spring) both;
   }
