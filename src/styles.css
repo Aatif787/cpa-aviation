@@ -335,7 +335,7 @@ h2 {
 .overview-image {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2.45 / 1;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -2143,16 +2143,16 @@ footer {
 .overview-video-frame {
   box-shadow:
     inset 0 0 0 1px rgba(255, 252, 245, 0.26),
-    0 24px 56px -18px rgba(18, 22, 28, 0.26);
-  background: #0c1118;
+    0 24px 56px -18px rgba(18, 22, 28, 0.22);
+  background: transparent;
 }
 .overview-motion-stage {
   display: block;
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2.45 / 1;
   overflow: hidden;
-  background: #0c1118;
+  background: transparent;
 }
 .overview-video-poster {
   position: absolute;
@@ -2163,18 +2163,19 @@ footer {
   object-position: center;
 }
 .overview-video {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 0;
   z-index: 1;
   display: block;
   width: 100%;
-  height: 100%;
-  aspect-ratio: 16 / 9;
+  height: 138.5%;
   object-fit: cover;
   object-position: center;
   pointer-events: none;
   user-select: none;
   filter: contrast(1.07) saturate(1.08) brightness(1.02);
-  transform: translateZ(0);
+  transform: translate3d(0, -50%, 0);
   backface-visibility: hidden;
 }
 video.overview-video::-webkit-media-controls,
