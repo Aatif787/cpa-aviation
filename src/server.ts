@@ -140,11 +140,32 @@ async function enhanceHtmlSeoResponse(
     if (!/property=["']og:url["']/i.test(html)) {
       headAdditions.push(`<meta property="og:url" content="${canonicalUrl}" />`);
     }
-    if (!/property=["']og:image["']/i.test(html)) {
-      headAdditions.push(`<meta property="og:image" content="${origin}${HERO_POSTER_PATH}" />`);
+    const absolutePosterUrl = `${origin}${HERO_POSTER_PATH}`;
+    if (/property=["']og:image["']/i.test(html)) {
+      html = html
+        .replace(
+          /(<meta\b[^>]*property=["']og:image["'][^>]*content=["'])(\/[^"']*)(["'][^>]*>)/gi,
+          `$1${origin}$2$3`,
+        )
+        .replace(
+          /(<meta\b[^>]*content=["'])(\/[^"']*)(["'][^>]*property=["']og:image["'][^>]*>)/gi,
+          `$1${origin}$2$3`,
+        );
+    } else {
+      headAdditions.push(`<meta property="og:image" content="${absolutePosterUrl}" />`);
     }
-    if (!/name=["']twitter:image["']/i.test(html)) {
-      headAdditions.push(`<meta name="twitter:image" content="${origin}${HERO_POSTER_PATH}" />`);
+    if (/name=["']twitter:image["']/i.test(html)) {
+      html = html
+        .replace(
+          /(<meta\b[^>]*name=["']twitter:image["'][^>]*content=["'])(\/[^"']*)(["'][^>]*>)/gi,
+          `$1${origin}$2$3`,
+        )
+        .replace(
+          /(<meta\b[^>]*content=["'])(\/[^"']*)(["'][^>]*name=["']twitter:image["'][^>]*>)/gi,
+          `$1${origin}$2$3`,
+        );
+    } else {
+      headAdditions.push(`<meta name="twitter:image" content="${absolutePosterUrl}" />`);
     }
     if (verificationToken && !/name=["']google-site-verification["']/i.test(html)) {
       headAdditions.push(
