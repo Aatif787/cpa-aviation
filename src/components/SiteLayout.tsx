@@ -170,13 +170,13 @@ export function FlightPathSvg() {
           <stop offset="1" className="fp-halo-edge" />
         </radialGradient>
       </defs>
-      <path className="fp-track" d="M-40 372 C160 364 250 190 470 198 C690 206 700 356 900 330 C1040 312 1120 150 1240 92" />
-      <path className="fp-draw" d="M-40 372 C160 364 250 190 470 198 C690 206 700 356 900 330 C1040 312 1120 150 1240 92" />
-      <g className="fp-marker" transform="translate(470 198)">
+      <path className="fp-track" d="M-40 290 C150 282 250 132 470 138 C690 144 720 220 900 196 C1050 176 1120 98 1240 58" />
+      <path className="fp-draw" d="M-40 290 C150 282 250 132 470 138 C690 144 720 220 900 196 C1050 176 1120 98 1240 58" />
+      <g className="fp-marker" transform="translate(470 138)">
         <circle className="fp-halo" r="22" />
         <circle className="fp-glow" r="3.5" />
       </g>
-      <g className="fp-plane" transform="translate(470 198) rotate(-3)">
+      <g className="fp-plane" transform="translate(470 138) rotate(1.5)">
         <path d="M16 0 C11 -2.4 5 -3 -2 -3 L-9 -10 L-12.5 -10 L-8.5 -3 L-16 -3 L-16 3 L-8.5 3 L-12.5 10 L-9 10 L-2 3 C5 3 11 2.4 16 0 Z" />
       </g>
     </svg>
