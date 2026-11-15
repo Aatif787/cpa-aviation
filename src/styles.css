@@ -36,21 +36,26 @@
 }
 
 :root {
-  --background: #faf9f6;
-  --foreground: #1e1b18;
-  --primary: #1e1b18;
-  --primary-foreground: #faf9f6;
-  --secondary: #f1eee7;
-  --muted-foreground: #554f47;
-  --accent: #a3752c;
-  --lime: #8a7352;
-  --violet: #c9b898;
+  --background: #F5F0E6;
+  --foreground: #24212B;
+  --primary: #24212B;
+  --primary-foreground: #FFFCF6;
+  --secondary: #EBE4F0;
+  --muted-foreground: #585166;
+  --accent: #C5AD83;
+  --lime: #81709F;
+  --violet: #B9A8D0;
+  --lavender-soft: #B9A8D0;
+  --lavender-muted: #A995C5;
+  --lavender-deep: #81709F;
+  --ivory: #FFFCF6;
+  --soft-white: #FFFFFF;
   --destructive: #b42318;
-  --border: rgb(30 27 24 / 14%);
-  --film-shade: rgb(30 27 24 / 38%);
-  --film-deep: rgb(24 20 16 / 84%);
-  --overlay: rgb(24 20 16 / 82%);
-  --aircraft-sky: #f5f3ee;
+  --border: rgb(129 112 159 / 20%);
+  --film-shade: rgb(36 33 43 / 40%);
+  --film-deep: rgb(36 33 43 / 84%);
+  --overlay: rgb(36 33 43 / 82%);
+  --aircraft-sky: #F5F0E6;
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -157,16 +162,22 @@ footer .wordmark-logo {
 .navigation-button:hover, .navigation-button.active { color: var(--accent); }
 
 .aviation-button {
-  background: var(--accent);
-  color: var(--primary-foreground);
+  background: var(--foreground);
+  color: var(--ivory);
   min-height: clamp(44px, 4.5vw, 48px);
   border-radius: 2px;
   padding: 0 clamp(16px, 2vw, 24px);
   font-size: clamp(11px, 0.25vw + 10.5px, 12px);
   font-weight: 500;
-  transition: background .3s, transform .3s;
+  border: 1px solid rgb(197 173 131 / 38%);
+  box-shadow: 0 10px 24px -14px rgb(129 112 159 / 45%);
+  transition: background .3s, border-color .3s, transform .3s, box-shadow .3s;
 }
-.aviation-button:hover { background: var(--foreground); }
+.aviation-button:hover {
+  background: var(--lavender-deep);
+  border-color: var(--accent);
+  box-shadow: 0 14px 28px -14px rgb(129 112 159 / 58%);
+}
 .cinematic-button {
   background: transparent;
   color: var(--foreground);
@@ -380,17 +391,62 @@ h2 {
 }
 .editorial-copy .section-description { margin-bottom: 0; }
 
-/* ---------- aircraft operating lease section (warm alabaster / champagne gold) ---------- */
+/* ---------- aircraft operating lease section (deep lavender & charcoal luxury band) ---------- */
 .leasing-section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: color-mix(in oklab, var(--secondary) 28%, var(--background));
+  --background: #362D47;
+  --foreground: #F5F0E6;
+  --muted-foreground: #DED5EB;
+  --accent: #C5AD83;
+  --violet: #B9A8D0;
+  --border: rgb(185 168 208 / 26%);
+  background: linear-gradient(155deg, #24212B 0%, #3E3552 44%, #61527E 80%, #81709F 100%);
   color: var(--foreground);
   padding-block: clamp(64px, 8.5vw, 118px);
 }
+.leasing-section::before,
+.leasing-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: clamp(24px, 3.6vw, 48px);
+  pointer-events: none;
+  z-index: 0;
+}
+.leasing-section::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(245, 240, 230, .22), transparent);
+}
+.leasing-section::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(245, 240, 230, .22), transparent);
+}
+.leasing-section > * {
+  position: relative;
+  z-index: 1;
+}
 .leasing-section .section-topline::before {
-  background: linear-gradient(90deg, var(--lime), var(--accent), var(--violet));
+  background: linear-gradient(90deg, var(--lavender-soft), var(--accent), var(--ivory));
+}
+.leasing-section .aviation-button {
+  background: var(--ivory);
+  color: #24212B;
+  border-color: rgb(197 173 131 / 55%);
+}
+.leasing-section .aviation-button:hover {
+  background: var(--accent);
+  color: #24212B;
+}
+.leasing-section .mechanic-card,
+.leasing-section .process-stage-card {
+  background: rgba(255, 252, 246, .08);
+  border-color: rgb(185 168 208 / 28%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 18px 42px -20px rgb(20 16 28 / 45%);
 }
 .leasing-grid {
   display: grid;
@@ -399,8 +455,9 @@ h2 {
   align-items: center;
 }
 .leasing-frame {
-  border: 1px solid color-mix(in oklab, var(--accent) 26%, transparent);
-  background: var(--secondary);
+  border: 1px solid rgb(197 173 131 / 38%);
+  background: rgb(36 33 43 / 52%);
+  box-shadow: 0 24px 56px -22px rgb(20 16 28 / 55%);
 }
 .leasing-image {
   width: 100%;
@@ -436,7 +493,10 @@ h2 {
 }
 
 /* ---------- business scope editorial bands (mobile-first) ---------- */
-.focus-section { padding-block: clamp(56px, 8vw, 108px); }
+.focus-section {
+  padding-block: clamp(56px, 8vw, 108px);
+  background: linear-gradient(180deg, rgba(245, 240, 230, 0) 0%, rgba(185, 168, 208, .14) 48%, rgba(245, 240, 230, 0) 100%);
+}
 .focus-heading {
   display: flex;
   align-items: baseline;
@@ -584,11 +644,11 @@ h2 {
   height: 100%;
   padding: clamp(5px, 0.7vw, 8px);
   border-radius: clamp(16px, 2vw, 22px);
-  background: #fffefb;
-  border: 1px solid color-mix(in oklab, var(--border) 95%, white);
+  background: var(--ivory);
+  border: 1px solid rgb(169 149 197 / 34%);
   box-shadow:
-    0 24px 52px -20px rgba(30, 27, 24, .22),
-    0 6px 18px -6px rgba(30, 27, 24, .08);
+    0 24px 52px -20px rgb(129 112 159 / 24%),
+    0 6px 18px -6px rgb(36 33 43 / 8%);
   cursor: pointer;
   appearance: none;
   display: block;
@@ -737,9 +797,10 @@ h2 {
 }
 .regulatory-card {
   padding: clamp(22px, 2.8vw, 30px);
-  border: 1px solid var(--border);
+  border: 1px solid rgb(169 149 197 / 28%);
   border-radius: 6px;
-  background: color-mix(in oklab, var(--secondary) 46%, var(--background));
+  background: linear-gradient(160deg, var(--ivory) 0%, color-mix(in oklab, var(--lavender-soft) 14%, var(--background)) 100%);
+  box-shadow: 0 16px 38px -18px rgb(129 112 159 / 18%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1189,7 +1250,9 @@ h2 {
 
 /* ---------- footer (mobile-first) ---------- */
 footer {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgb(129 112 159 / 24%);
+  background: linear-gradient(180deg, rgba(245, 240, 230, .72) 0%, rgba(185, 168, 208, .22) 100%);
+  box-shadow: inset 0 1px 0 rgb(197 173 131 / 32%);
   padding: clamp(40px, 5vw, 56px) 0 clamp(22px, 3vw, 28px);
 }
 .footer-grid {
@@ -1369,14 +1432,14 @@ footer {
 .atmo-sunwash {
   position: absolute;
   inset: -25% -15%;
-  background: radial-gradient(62% 48% at 72% 24%, rgba(255, 252, 245, .52), color-mix(in oklab, var(--accent) 5%, transparent) 48%, transparent 78%);
+  background: radial-gradient(62% 48% at 72% 24%, rgba(255, 252, 246, .68), rgba(197, 173, 131, .08) 48%, transparent 78%);
   opacity: .9;
 }
 .atmo-cool-haze {
   position: absolute;
   inset: -20% -15%;
-  background: radial-gradient(58% 52% at 24% 68%, rgba(255, 253, 249, .58), transparent 74%);
-  opacity: .84;
+  background: radial-gradient(58% 52% at 24% 68%, rgba(185, 168, 208, .18), rgba(255, 252, 246, .42) 48%, transparent 76%);
+  opacity: .88;
 }
 
 .hero-atmosphere {
@@ -1640,6 +1703,9 @@ footer {
 .subpage-band {
   padding-block: clamp(52px, 7vw, 96px);
 }
+.subpage-band:nth-of-type(even) {
+  background: linear-gradient(180deg, rgba(245, 240, 230, 0) 0%, rgba(185, 168, 208, .14) 50%, rgba(245, 240, 230, 0) 100%);
+}
 .subpage-cards-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -1647,15 +1713,16 @@ footer {
   margin-top: clamp(24px, 3vw, 36px);
 }
 .subpage-card {
-  border: 1px solid var(--border);
+  border: 1px solid rgb(169 149 197 / 28%);
   border-radius: 6px;
   padding: clamp(22px, 3vw, 30px);
-  background: color-mix(in oklab, var(--secondary) 36%, var(--background));
+  background: linear-gradient(160deg, var(--ivory) 0%, color-mix(in oklab, var(--lavender-soft) 12%, var(--background)) 100%);
+  box-shadow: 0 16px 38px -18px rgb(129 112 159 / 18%);
   display: flex;
   flex-direction: column;
   gap: 10px;
   min-width: 0;
-  transition: border-color .3s, transform .3s;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
 }
 .subpage-card:hover {
   border-color: color-mix(in oklab, var(--accent) 45%, transparent);
@@ -1982,9 +2049,10 @@ footer {
 .loa-dossier-card,
 .mechanic-card {
   padding: clamp(18px, 2.2vw, 24px);
-  border: 1px solid var(--border);
+  border: 1px solid rgb(169 149 197 / 28%);
   border-radius: 6px;
-  background: color-mix(in oklab, var(--secondary) 46%, var(--background));
+  background: linear-gradient(160deg, var(--ivory) 0%, color-mix(in oklab, var(--lavender-soft) 14%, var(--background)) 100%);
+  box-shadow: 0 14px 32px -18px rgb(129 112 159 / 16%);
   min-width: 0;
 }
 .dossier-label {
@@ -2033,10 +2101,11 @@ footer {
 }
 .process-stage-card {
   padding: clamp(18px, 2.2vw, 24px);
-  border: 1px solid var(--border);
-  border-top: 2px solid color-mix(in oklab, var(--accent) 70%, transparent);
+  border: 1px solid rgb(169 149 197 / 28%);
+  border-top: 2px solid color-mix(in oklab, var(--accent) 82%, transparent);
   border-radius: 6px;
-  background: var(--background);
+  background: var(--ivory);
+  box-shadow: 0 14px 32px -18px rgb(129 112 159 / 16%);
   min-width: 0;
 }
 .process-step-badge {
