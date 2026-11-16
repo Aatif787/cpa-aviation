@@ -123,41 +123,39 @@ function Index() {
       setVideoReady(false);
       return;
     }
-    const win = window as Window & {
-      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
-      cancelIdleCallback?: (id: number) => void;
-    };
-    let cancelled = false;
-    let idleId: number | undefined;
-    let timerId: number | undefined;
-    const activate = () => {
-      if (!cancelled) setVideoReady(true);
-    };
-    const schedule = () => {
-      if (cancelled) return;
-      idleId = win.requestIdleCallback
-        ? win.requestIdleCallback(activate, { timeout: 1400 })
-        : undefined;
-      timerId = window.setTimeout(activate, 1100);
-    };
-    if (document.readyState === "complete") schedule();
-    else window.addEventListener("load", schedule, { once: true });
+    const rafId = window.requestAnimationFrame(() => {
+      setVideoReady(true);
+    });
     return () => {
-      cancelled = true;
-      window.removeEventListener("load", schedule);
-      if (idleId !== undefined && win.cancelIdleCallback) win.cancelIdleCallback(idleId);
-      if (timerId !== undefined) window.clearTimeout(timerId);
+      window.cancelAnimationFrame(rafId);
     };
   }, [desktopVideo, reducedMotion]);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    if (playing && !reducedMotion && desktopVideo && heroInView) {
-      video.play().catch(() => setPlaying(false));
-    } else {
-      video.pause();
-    }
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.loop = true;
+
+    const tryPlay = () => {
+      if (playing && !reducedMotion && desktopVideo && heroInView && document.visibilityState !== "hidden") {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    };
+
+    tryPlay();
+    video.addEventListener("loadeddata", tryPlay);
+    video.addEventListener("canplay", tryPlay);
+    document.addEventListener("visibilitychange", tryPlay);
+    return () => {
+      video.removeEventListener("loadeddata", tryPlay);
+      video.removeEventListener("canplay", tryPlay);
+      document.removeEventListener("visibilitychange", tryPlay);
+    };
   }, [playing, reducedMotion, desktopVideo, heroInView, videoReady]);
 
   useEffect(() => {
@@ -331,7 +329,7 @@ function Index() {
                   playsInline
                   disablePictureInPicture
                   disableRemotePlayback
-                  preload="auto"
+                  preload="metadata"
                   width={1920}
                   height={1080}
                   aria-hidden="true"

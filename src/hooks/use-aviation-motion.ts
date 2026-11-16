@@ -441,23 +441,21 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
       };
       let idleId: number | undefined;
       let timerId: number | undefined;
-      const queueAfterLoad = () => {
+      const queueAfterHydration = () => {
         if (started) return;
         if (isSubpage) {
           timerId = window.setTimeout(start, 90);
           return;
         }
         idleId = win.requestIdleCallback
-          ? win.requestIdleCallback(start, { timeout: 1200 })
+          ? win.requestIdleCallback(start, { timeout: 600 })
           : undefined;
-        timerId = window.setTimeout(start, 900);
+        timerId = window.setTimeout(start, 250);
       };
-      if (document.readyState === "complete") queueAfterLoad();
-      else window.addEventListener("load", queueAfterLoad, { once: true });
+      queueAfterHydration();
       const events: (keyof WindowEventMap)[] = ["scroll", "wheel", "touchstart", "pointerdown", "pointermove", "keydown"];
       events.forEach(evt => window.addEventListener(evt, start, { passive: true, once: true }));
       cancelScheduledDepth = () => {
-        window.removeEventListener("load", queueAfterLoad);
         if (idleId !== undefined && win.cancelIdleCallback) win.cancelIdleCallback(idleId);
         if (timerId !== undefined) window.clearTimeout(timerId);
         events.forEach(evt => window.removeEventListener(evt, start));
@@ -574,41 +572,31 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
     });
 
     if (!isSubpage) {
-      const startSlowFlipRotate = () => {
+      Promise.race([
+        document.fonts.ready,
+        new Promise<void>(resolve => { window.setTimeout(resolve, 60); }),
+      ]).then(() => {
         if (disposed) return;
-        document.fonts.ready.then(() => {
+        postLoadTimer = window.setTimeout(() => {
           if (disposed) return;
-          postLoadTimer = window.setTimeout(() => {
-            if (disposed) return;
-            root.querySelectorAll<HTMLElement>("[data-hero-flip]").forEach((element) => {
-              const spin = element.animate(
-                [
-                  { transform: "perspective(1400px) rotateX(0deg)" },
-                  { transform: "perspective(1400px) rotateX(360deg)" },
-                ],
-                {
-                  duration: 4800,
-                  easing: "cubic-bezier(0.45, 0, 0.55, 1)",
-                  fill: "both",
-                  iterations: 1,
-                },
-              );
-              postLoadAnimations.push(spin);
-              spin.finished.then(() => spin.cancel()).catch(() => {});
-            });
-          }, 1400);
-        });
-      };
-
-      if (document.readyState === "complete") {
-        startSlowFlipRotate();
-      } else {
-        onWindowLoad = () => {
-          onWindowLoad = undefined;
-          startSlowFlipRotate();
-        };
-        window.addEventListener("load", onWindowLoad, { once: true });
-      }
+          root.querySelectorAll<HTMLElement>("[data-hero-flip]").forEach((element) => {
+            const spin = element.animate(
+              [
+                { transform: "perspective(1400px) rotateX(0deg)" },
+                { transform: "perspective(1400px) rotateX(360deg)" },
+              ],
+              {
+                duration: 4800,
+                easing: "cubic-bezier(0.45, 0, 0.55, 1)",
+                fill: "both",
+                iterations: 1,
+              },
+            );
+            postLoadAnimations.push(spin);
+            spin.finished.then(() => spin.cancel()).catch(() => {});
+          });
+        }, 1400);
+      });
     }
 
     return () => {
