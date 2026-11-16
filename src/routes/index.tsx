@@ -226,11 +226,12 @@ function Index() {
             <video
               ref={videoRef}
               className="hero-media"
+              src={flightFilm.url}
               autoPlay
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="auto"
               aria-hidden="true"
             >
               <source src={flightFilm.url} type="video/mp4" />
