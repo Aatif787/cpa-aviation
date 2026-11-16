@@ -541,23 +541,48 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
     }
 
     const postLoadAnimations: Animation[] = [];
-    let postLoadTimer: number | undefined;
-    let onWindowLoad: (() => void) | undefined;
 
+    const releaseAnimation = (animation: Animation) => {
+      const target = (animation.effect as KeyframeEffect | null)?.target as HTMLElement | null;
+      animation.cancel();
+      if (!target) return;
+      target.style.transform = "";
+      target.style.clipPath = "";
+      target.style.opacity = "";
+    };
     const finish = () => {
-      if (postLoadTimer !== undefined) {
-        window.clearTimeout(postLoadTimer);
-        postLoadTimer = undefined;
-      }
-      if (onWindowLoad) {
-        window.removeEventListener("load", onWindowLoad);
-        onWindowLoad = undefined;
-      }
-      animations.forEach(animation => { animation.finish(); animation.cancel(); });
-      postLoadAnimations.forEach(animation => { animation.finish(); animation.cancel(); });
+      animations.forEach(releaseAnimation);
+      postLoadAnimations.forEach(releaseAnimation);
+    };
+    const startHeadingFlip = () => {
+      if (disposed || isSubpage) return;
+      root.querySelectorAll<HTMLElement>("[data-hero-flip]").forEach((element) => {
+        const spin = element.animate(
+          [
+            { transform: "perspective(1400px) rotateX(0deg)", offset: 0 },
+            { transform: "perspective(1400px) rotateX(180deg)", offset: 0.5 },
+            { transform: "perspective(1400px) rotateX(360deg)", offset: 1 },
+          ],
+          {
+            duration: 4200,
+            easing: "cubic-bezier(0.33, 0.18, 0.67, 0.82)",
+            fill: "none",
+            iterations: 1,
+          },
+        );
+        postLoadAnimations.push(spin);
+        spin.finished.then(() => releaseAnimation(spin)).catch(() => {});
+      });
     };
     const onPreferenceChange = () => { if (preference.matches) { disposed = true; finish(); } };
-    const onResize = () => { disposed = true; finish(); };
+    let lastWidth = window.innerWidth;
+    const onResize = () => {
+      const width = window.innerWidth;
+      if (Math.abs(width - lastWidth) < 48) return;
+      lastWidth = width;
+      disposed = true;
+      finish();
+    };
     preference.addEventListener("change", onPreferenceChange);
     window.addEventListener("resize", onResize);
     Promise.race([
@@ -567,45 +592,17 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
       if (disposed) return;
       animations.forEach(animation => animation.play());
       Promise.all(animations.map(animation => animation.finished)).then(() => {
-        animations.forEach(animation => animation.cancel());
-      }).catch(() => { /* Cancellation restores the unanimated composition. */ });
-    });
-
-    if (!isSubpage) {
-      Promise.race([
-        document.fonts.ready,
-        new Promise<void>(resolve => { window.setTimeout(resolve, 60); }),
-      ]).then(() => {
-        if (disposed) return;
-        postLoadTimer = window.setTimeout(() => {
-          if (disposed) return;
-          root.querySelectorAll<HTMLElement>("[data-hero-flip]").forEach((element) => {
-            const spin = element.animate(
-              [
-                { transform: "perspective(1400px) rotateX(0deg)" },
-                { transform: "perspective(1400px) rotateX(360deg)" },
-              ],
-              {
-                duration: 4800,
-                easing: "cubic-bezier(0.45, 0, 0.55, 1)",
-                fill: "both",
-                iterations: 1,
-              },
-            );
-            postLoadAnimations.push(spin);
-            spin.finished.then(() => spin.cancel()).catch(() => {});
-          });
-        }, 1400);
+        animations.forEach(releaseAnimation);
+        startHeadingFlip();
+      }).catch(() => {
+        animations.forEach(releaseAnimation);
       });
-    }
+    });
 
     return () => {
       cleanupInteractions();
       disposed = true;
-      if (postLoadTimer !== undefined) window.clearTimeout(postLoadTimer);
-      if (onWindowLoad) window.removeEventListener("load", onWindowLoad);
-      animations.forEach(animation => animation.cancel());
-      postLoadAnimations.forEach(animation => animation.cancel());
+      finish();
       preference.removeEventListener("change", onPreferenceChange);
       window.removeEventListener("resize", onResize);
     };
