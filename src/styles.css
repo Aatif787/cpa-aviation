@@ -89,7 +89,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 }
 .site-header.is-scrolled,
 .site-header.site-header--solid,
-.site-header:has(.mobile-menu) {
+.site-header:has(.mobile-menu),
+.site-header:has(.parent-panel) {
   background: color-mix(in oklab, var(--background) 94%, transparent);
   backdrop-filter: blur(8px);
   border-color: var(--border);
@@ -117,7 +118,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 footer .wordmark-logo {
   height: clamp(64px, 7vw, 84px);
 }
-.desktop-nav { display: none; align-items: center; gap: clamp(16px, 2vw, 28px); white-space: nowrap; }
+.desktop-nav { display: none; align-items: center; gap: clamp(14px, 1.6vw, 24px); white-space: nowrap; }
+.desktop-nav-actions { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .mobile-toggle { display: inline-flex; min-width: 44px; min-height: 44px; }
 .mobile-menu {
   position: absolute;
@@ -133,7 +135,17 @@ footer .wordmark-logo {
   border-bottom: 1px solid var(--border);
   animation: menu-enter .35s cubic-bezier(.2,.8,.2,1) both;
 }
+.mobile-menu-actions {
+  display: grid;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
 @keyframes menu-enter { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes panel-enter {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 .navigation-button {
   color: var(--foreground);
@@ -193,13 +205,202 @@ footer .wordmark-logo {
 .aviation-button:hover svg, .cinematic-button:hover svg, .navigation-button:hover svg { transform: translate(2px, -2px); }
 .aviation-button:active, .cinematic-button:active { opacity: .85; }
 
-.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .wordmark,
-.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .navigation-button,
-.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .cinematic-button { color: var(--foreground); }
-.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .cinematic-button { border-color: var(--border); }
-.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .cinematic-button:hover { color: var(--accent); }
-.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .brand-subtitle { color: var(--muted-foreground); }
-.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .logo-mark { color: var(--accent); }
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .wordmark,
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .navigation-button,
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .cinematic-button { color: var(--foreground); }
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .cinematic-button { border-color: var(--border); }
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .cinematic-button:hover { color: var(--accent); }
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .brand-subtitle { color: var(--muted-foreground); }
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .logo-mark { color: var(--accent); }
+
+/* ---------- parent company navbar toggle & overview panel ---------- */
+.parent-company-button,
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .cinematic-button.parent-company-button {
+  background: rgba(255, 252, 246, .78);
+  color: var(--foreground);
+  border: 1px solid color-mix(in oklab, var(--accent) 62%, var(--border));
+  min-height: clamp(44px, 4.5vw, 48px);
+  padding: 0 clamp(14px, 1.6vw, 20px);
+  border-radius: 2px;
+  font-size: clamp(11px, 0.25vw + 10.5px, 12px);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: background .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
+}
+.parent-company-button:hover,
+.parent-company-button:focus-visible,
+.parent-company-button.is-open,
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .cinematic-button.parent-company-button:hover,
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .cinematic-button.parent-company-button:focus-visible,
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)):not(:has(.parent-panel)) .cinematic-button.parent-company-button.is-open {
+  background: var(--foreground);
+  color: var(--ivory);
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px -14px rgb(36 33 43 / 42%);
+}
+.parent-company-button svg.parent-company-chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform .3s var(--ease-spring);
+}
+.parent-company-button:hover svg.parent-company-chevron {
+  transform: translateY(1px);
+}
+.parent-company-button.is-open svg.parent-company-chevron,
+.parent-company-button.is-open:hover svg.parent-company-chevron {
+  transform: rotate(180deg);
+}
+.mobile-menu .parent-company-button {
+  width: 100%;
+  min-height: 44px;
+  justify-content: space-between;
+}
+
+.parent-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 25;
+  padding-top: 12px;
+  pointer-events: none;
+  animation: panel-enter .28s var(--ease-spring) both;
+}
+.parent-panel-card {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+  padding: clamp(26px, 3.2vw, 38px) clamp(28px, 3.8vw, 44px);
+  background: linear-gradient(160deg, rgba(255, 252, 246, .98) 0%, rgba(245, 240, 230, .97) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgb(169 149 197 / 32%);
+  border-top: 2px solid var(--accent);
+  border-radius: 4px;
+  box-shadow:
+    0 28px 60px -22px rgb(36 33 43 / 24%),
+    0 8px 20px -10px rgb(129 112 159 / 18%);
+}
+.parent-panel-body {
+  display: grid;
+  gap: 10px;
+  max-width: 720px;
+}
+.parent-panel-eyebrow {
+  margin: 0;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.parent-panel-heading-group {
+  display: grid;
+  gap: 4px;
+}
+.parent-panel-name {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+}
+.parent-panel-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw, 2.05rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--foreground);
+}
+.parent-panel-overview {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--foreground);
+}
+.parent-panel-rule {
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  margin: 4px 0 2px;
+}
+.parent-panel-supporting {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+.parent-panel-aside {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-left: clamp(20px, 3vw, 44px);
+  border-left: 1px solid rgb(197 173 131 / 38%);
+  min-height: 112px;
+}
+.parent-panel-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 22px;
+  border-radius: 2px;
+  border: 1px solid color-mix(in oklab, var(--accent) 72%, var(--border));
+  background: var(--foreground);
+  color: var(--ivory);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 12px 26px -14px rgb(36 33 43 / 42%);
+  transition: background .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
+}
+.parent-panel-cta:hover,
+.parent-panel-cta:focus-visible {
+  background: var(--lavender-deep);
+  border-color: var(--accent);
+  color: var(--ivory);
+  box-shadow: 0 16px 32px -14px rgb(129 112 159 / 52%);
+}
+.parent-panel-cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.parent-panel-cta-icon {
+  width: 14px;
+  height: 14px;
+  transition: transform .3s var(--ease-spring);
+}
+.parent-panel-cta:hover .parent-panel-cta-icon,
+.parent-panel-cta:focus-visible .parent-panel-cta-icon {
+  transform: translate(2px, -2px);
+}
+
+.mobile-parent-panel {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 4px;
+  border: 1px solid rgb(169 149 197 / 32%);
+  border-top: 2px solid var(--accent);
+  background: linear-gradient(160deg, var(--ivory) 0%, var(--background) 100%);
+  animation: panel-enter .25s var(--ease-spring) both;
+}
+.mobile-parent-panel .parent-panel-headline {
+  font-size: 1.25rem;
+}
+.mobile-parent-panel .parent-panel-overview {
+  font-size: 13.5px;
+}
+.mobile-parent-panel .parent-panel-cta {
+  margin-top: 6px;
+  width: 100%;
+}
 
 /* ---------- fluid typography ---------- */
 h1, h2, h3, p { margin-top: 0; }

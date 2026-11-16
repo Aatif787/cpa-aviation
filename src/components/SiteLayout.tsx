@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Suspense, lazy, type ReactNode, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChevronRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronRight, ExternalLink, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAviationMotion } from "@/hooks/use-aviation-motion";
 import type { PublicRoutePath } from "@/lib/seo";
@@ -271,14 +271,42 @@ export function SiteShell({
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [menuOpen, setMenuOpen] = useState(false);
+  const [parentPanelOpen, setParentPanelOpen] = useState(false);
+  const [mobileParentOpen, setMobileParentOpen] = useState(false);
   const [legal, setLegal] = useState<"privacy" | "terms" | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const parentToggleRef = useRef<HTMLButtonElement>(null);
 
   useAviationMotion(rootRef, routeKey);
 
   useEffect(() => {
     setMenuOpen(false);
+    setParentPanelOpen(false);
+    setMobileParentOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!parentPanelOpen) return;
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target as Node | null;
+      if (headerRef.current && target && !headerRef.current.contains(target)) {
+        setParentPanelOpen(false);
+      }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setParentPanelOpen(false);
+        parentToggleRef.current?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [parentPanelOpen]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -359,22 +387,35 @@ export function SiteShell({
         <div className="atmo-cool-haze" data-atmo-haze />
       </div>
 
-      <header className={`site-header${overHeroHeader ? "" : " site-header--solid"}`}>
+      <header ref={headerRef} className={`site-header${overHeroHeader ? "" : " site-header--solid"}`}>
         <div className="page-width header-inner">
-          <Wordmark onClick={() => setMenuOpen(false)} />
+          <Wordmark
+            onClick={() => {
+              setMenuOpen(false);
+              setParentPanelOpen(false);
+            }}
+          />
           <nav aria-label="Main navigation" className="desktop-nav">
             {navLinks}
-            <Button
-              asChild
-              variant={routeKey === "/contact" ? "aviation" : "cinematic"}
-            >
-              <Link
-                to="/contact"
-                aria-current={routeKey === "/contact" ? "page" : undefined}
+            <div className="desktop-nav-actions">
+              <Button asChild variant={routeKey === "/contact" ? "aviation" : "cinematic"}>
+                <Link to="/contact" aria-current={routeKey === "/contact" ? "page" : undefined}>
+                  Contact Us <ArrowUpRight />
+                </Link>
+              </Button>
+              <Button
+                ref={parentToggleRef}
+                type="button"
+                variant="cinematic"
+                className={`parent-company-button${parentPanelOpen ? " is-open" : ""}`}
+                aria-expanded={parentPanelOpen}
+                aria-controls="parent-company-panel"
+                onClick={() => setParentPanelOpen((prev) => !prev)}
               >
-                Contact Us <ArrowUpRight />
-              </Link>
-            </Button>
+                Parent Company
+                <ChevronDown className="parent-company-chevron" aria-hidden="true" />
+              </Button>
+            </div>
           </nav>
           <Button
             variant="navigation"
@@ -383,24 +424,99 @@ export function SiteShell({
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
-            onClick={() => setMenuOpen((prev) => !prev)}
+            onClick={() => {
+              setMenuOpen((prev) => !prev);
+              setParentPanelOpen(false);
+            }}
           >
             {menuOpen ? <X /> : <Menu />}
           </Button>
         </div>
 
+        {parentPanelOpen && (
+          <section id="parent-company-panel" className="parent-panel" aria-label="Parent company overview">
+            <div className="page-width">
+              <div className="parent-panel-card">
+                <div className="parent-panel-body">
+                  <p className="parent-panel-eyebrow">PARENT COMPANY</p>
+                  <div className="parent-panel-heading-group">
+                    <p className="parent-panel-name">C P Arora Private Limited</p>
+                    <h2 className="parent-panel-headline">Building the Foundations of Progress.</h2>
+                  </div>
+                  <p className="parent-panel-overview">
+                    C P Arora Private Limited is an infrastructure company with experience across highways, airport
+                    infrastructure and urban development.
+                  </p>
+                  <div className="parent-panel-rule" aria-hidden="true" />
+                  <p className="parent-panel-supporting">
+                    The parent company behind CPA Aviation Leasing Capital IFSC Private Limited.
+                  </p>
+                </div>
+                <div className="parent-panel-aside">
+                  <a
+                    href="https://cparora.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="parent-panel-cta"
+                  >
+                    <span>Visit Official Website</span>
+                    <ExternalLink className="parent-panel-cta-icon" aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {menuOpen && (
           <nav id="mobile-navigation" className="mobile-menu" aria-label="Mobile navigation">
             {navLinks}
-            <Button asChild variant="aviation">
-              <Link
-                to="/contact"
-                aria-current={routeKey === "/contact" ? "page" : undefined}
-                onClick={() => setMenuOpen(false)}
+            <div className="mobile-menu-actions">
+              <Button asChild variant="aviation">
+                <Link
+                  to="/contact"
+                  aria-current={routeKey === "/contact" ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Contact Us <ArrowUpRight />
+                </Link>
+              </Button>
+              <Button
+                type="button"
+                variant="cinematic"
+                className={`parent-company-button${mobileParentOpen ? " is-open" : ""}`}
+                aria-expanded={mobileParentOpen}
+                aria-controls="mobile-parent-company-panel"
+                onClick={() => setMobileParentOpen((prev) => !prev)}
               >
-                Contact Us <ArrowUpRight />
-              </Link>
-            </Button>
+                Parent Company
+                <ChevronDown className="parent-company-chevron" aria-hidden="true" />
+              </Button>
+              {mobileParentOpen && (
+                <div id="mobile-parent-company-panel" className="mobile-parent-panel">
+                  <p className="parent-panel-eyebrow">PARENT COMPANY</p>
+                  <p className="parent-panel-name">C P Arora Private Limited</p>
+                  <p className="parent-panel-headline">Building the Foundations of Progress.</p>
+                  <p className="parent-panel-overview">
+                    C P Arora Private Limited is an infrastructure company with experience across highways, airport
+                    infrastructure and urban development.
+                  </p>
+                  <div className="parent-panel-rule" aria-hidden="true" />
+                  <p className="parent-panel-supporting">
+                    The parent company behind CPA Aviation Leasing Capital IFSC Private Limited.
+                  </p>
+                  <a
+                    href="https://cparora.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="parent-panel-cta"
+                  >
+                    <span>Visit Official Website</span>
+                    <ExternalLink className="parent-panel-cta-icon" aria-hidden="true" />
+                  </a>
+                </div>
+              )}
+            </div>
           </nav>
         )}
       </header>
