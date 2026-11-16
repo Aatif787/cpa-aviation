@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Suspense, lazy, type ReactNode, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChevronRight, ExternalLink, Menu, X } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAviationMotion } from "@/hooks/use-aviation-motion";
 import type { PublicRoutePath } from "@/lib/seo";
@@ -364,18 +364,17 @@ export function SiteShell({
           <Wordmark onClick={() => setMenuOpen(false)} />
           <nav aria-label="Main navigation" className="desktop-nav">
             {navLinks}
-            <div className="desktop-nav-actions">
-              <Button asChild variant={routeKey === "/contact" ? "aviation" : "cinematic"}>
-                <Link to="/contact" aria-current={routeKey === "/contact" ? "page" : undefined}>
-                  Contact Us <ArrowUpRight />
-                </Link>
-              </Button>
-              <Button asChild variant="cinematic" className="parent-company-button">
-                <a href="https://cparora.vercel.app/" target="_blank" rel="noopener noreferrer">
-                  Parent Company <ExternalLink aria-hidden="true" />
-                </a>
-              </Button>
-            </div>
+            <Button
+              asChild
+              variant={routeKey === "/contact" ? "aviation" : "cinematic"}
+            >
+              <Link
+                to="/contact"
+                aria-current={routeKey === "/contact" ? "page" : undefined}
+              >
+                Contact Us <ArrowUpRight />
+              </Link>
+            </Button>
           </nav>
           <Button
             variant="navigation"
@@ -393,27 +392,15 @@ export function SiteShell({
         {menuOpen && (
           <nav id="mobile-navigation" className="mobile-menu" aria-label="Mobile navigation">
             {navLinks}
-            <div className="mobile-menu-actions">
-              <Button asChild variant="aviation">
-                <Link
-                  to="/contact"
-                  aria-current={routeKey === "/contact" ? "page" : undefined}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Contact Us <ArrowUpRight />
-                </Link>
-              </Button>
-              <Button asChild variant="cinematic" className="parent-company-button">
-                <a
-                  href="https://cparora.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Parent Company <ExternalLink aria-hidden="true" />
-                </a>
-              </Button>
-            </div>
+            <Button asChild variant="aviation">
+              <Link
+                to="/contact"
+                aria-current={routeKey === "/contact" ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                Contact Us <ArrowUpRight />
+              </Link>
+            </Button>
           </nav>
         )}
       </header>
