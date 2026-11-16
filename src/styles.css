@@ -117,7 +117,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 footer .wordmark-logo {
   height: clamp(64px, 7vw, 84px);
 }
-.desktop-nav { display: none; align-items: center; gap: clamp(16px, 2vw, 28px); white-space: nowrap; }
+.desktop-nav { display: none; align-items: center; gap: clamp(14px, 1.6vw, 24px); white-space: nowrap; }
+.desktop-nav-actions { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .mobile-toggle { display: inline-flex; min-width: 44px; min-height: 44px; }
 .mobile-menu {
   position: absolute;
@@ -132,6 +133,12 @@ footer .wordmark-logo {
   gap: clamp(18px, 4vw, 25px);
   border-bottom: 1px solid var(--border);
   animation: menu-enter .35s cubic-bezier(.2,.8,.2,1) both;
+}
+.mobile-menu-actions {
+  display: grid;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
 }
 @keyframes menu-enter { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -189,15 +196,49 @@ footer .wordmark-logo {
   transition: background .3s, border-color .3s, color .3s;
 }
 .cinematic-button:hover { background: var(--secondary); border-color: var(--accent); color: var(--accent); }
-.aviation-button svg, .cinematic-button svg, .navigation-button svg { transition: transform .3s cubic-bezier(.2,.8,.2,1); }
-.aviation-button:hover svg, .cinematic-button:hover svg, .navigation-button:hover svg { transform: translate(2px, -2px); }
-.aviation-button:active, .cinematic-button:active { opacity: .85; }
+.parent-company-button {
+  background: rgba(255, 252, 246, .72);
+  color: var(--foreground);
+  border: 1px solid color-mix(in oklab, var(--accent) 62%, var(--border));
+  min-height: clamp(44px, 4.5vw, 48px);
+  padding: 0 clamp(14px, 1.6vw, 20px);
+  border-radius: 2px;
+  font-size: clamp(11px, 0.25vw + 10.5px, 12px);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: background .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
+}
+.parent-company-button:hover,
+.parent-company-button:focus-visible {
+  background: var(--foreground);
+  color: var(--ivory);
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px -14px rgb(36 33 43 / 45%);
+}
+.aviation-button svg, .cinematic-button svg, .navigation-button svg, .parent-company-button svg { transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+.aviation-button:hover svg, .cinematic-button:hover svg, .navigation-button:hover svg, .parent-company-button:hover svg, .parent-company-button:focus-visible svg { transform: translate(2px, -2px); }
+.aviation-button:active, .cinematic-button:active, .parent-company-button:active { opacity: .85; }
 
 .site-header:not(.is-scrolled):not(:has(.mobile-menu)) .wordmark,
 .site-header:not(.is-scrolled):not(:has(.mobile-menu)) .navigation-button,
 .site-header:not(.is-scrolled):not(:has(.mobile-menu)) .cinematic-button { color: var(--foreground); }
 .site-header:not(.is-scrolled):not(:has(.mobile-menu)) .cinematic-button { border-color: var(--border); }
 .site-header:not(.is-scrolled):not(:has(.mobile-menu)) .cinematic-button:hover { color: var(--accent); }
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .cinematic-button.parent-company-button {
+  color: var(--foreground);
+  border-color: color-mix(in oklab, var(--accent) 62%, var(--border));
+}
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .cinematic-button.parent-company-button:hover,
+.site-header:not(.is-scrolled):not(:has(.mobile-menu)) .cinematic-button.parent-company-button:focus-visible {
+  background: var(--foreground);
+  color: var(--ivory);
+  border-color: var(--accent);
+}
+.mobile-menu .parent-company-button {
+  width: 100%;
+  min-height: 44px;
+  justify-content: center;
+}
 .site-header:not(.is-scrolled):not(:has(.mobile-menu)) .brand-subtitle { color: var(--muted-foreground); }
 .site-header:not(.is-scrolled):not(:has(.mobile-menu)) .logo-mark { color: var(--accent); }
 
