@@ -130,23 +130,68 @@ export function BlueprintSvg() {
           <stop offset=".5" className="bp-sheen-core" />
           <stop offset="1" className="bp-sheen-edge" />
         </linearGradient>
+        <radialGradient id="bp-beacon-pulse" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
+          <stop offset="28%" stopColor="#FFECA8" stopOpacity="0.8" />
+          <stop offset="65%" stopColor="#E6CA65" stopOpacity="0.38" />
+          <stop offset="100%" stopColor="#E6CA65" stopOpacity="0" />
+        </radialGradient>
       </defs>
+      {/* Structural airframe contours & blueprint stations */}
       <path className="bp-line" d="M1100 310 C1052 282 986 272 892 272 L340 272 C252 272 178 284 132 296 L132 324 C178 336 252 348 340 348 L892 348 C986 348 1052 338 1100 310 Z" />
       <path className="bp-line" d="M648 272 L420 96 L378 102 L498 272 Z" />
       <path className="bp-line" d="M648 348 L420 524 L378 518 L498 348 Z" />
       <path className="bp-line" d="M246 288 L152 198 L122 204 L192 288 Z" />
       <path className="bp-line" d="M246 336 L152 426 L122 420 L192 336 Z" />
       <path className="bp-line" d="M286 312 L150 306 L150 318 Z" />
+      {/* Cockpit canopy & wing spar rib lines */}
+      <path className="bp-line" d="M1024 294 C1042 304 1042 316 1024 326" />
+      <path className="bp-line" d="M572 272 L412 136" />
+      <path className="bp-line" d="M572 348 L412 484" />
       <ellipse className="bp-line" cx="258" cy="268" rx="46" ry="13" />
       <ellipse className="bp-line" cx="258" cy="352" rx="46" ry="13" />
+      {/* Aerodynamic datum & station grid axes */}
       <path className="bp-axis" d="M96 310 L1140 310" />
       <path className="bp-axis" d="M399 96 L399 524" />
+      <path className="bp-axis" d="M498 272 L498 348" />
+      <path className="bp-axis" d="M648 272 L648 348" />
+      <path className="bp-axis" d="M892 272 L892 348" />
+      {/* Blueprint measurement and wingtip target marks */}
       <path className="bp-mark" d="M385 96 L413 96" />
       <path className="bp-mark" d="M385 524 L413 524" />
       <circle className="bp-mark" cx="1100" cy="310" r="8" />
       <path className="bp-mark" d="M132 310 L104 310" />
       <path className="bp-mark" d="M132 296 L132 276" />
       <path className="bp-mark" d="M132 324 L132 344" />
+      {/* 1-second blinking aviation beacon and strobe lights */}
+      <g className="bp-beacons">
+        {/* Dorsal fuselage anti-collision beacon */}
+        <g className="bp-beacon-group" style={{ transformOrigin: '399px 310px' }}>
+          <circle className="bp-beacon-halo" cx="399" cy="310" r="24" fill="url(#bp-beacon-pulse)" />
+          <circle className="bp-beacon" cx="399" cy="310" r="5" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+        </g>
+        {/* Port (Upper) wingtip strobe / navigation light */}
+        <g className="bp-beacon-group" style={{ transformOrigin: '420px 96px' }}>
+          <circle className="bp-beacon-halo" cx="420" cy="96" r="20" fill="url(#bp-beacon-pulse)" />
+          <circle className="bp-beacon" cx="420" cy="96" r="4.5" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+        </g>
+        {/* Starboard (Lower) wingtip strobe / navigation light */}
+        <g className="bp-beacon-group" style={{ transformOrigin: '420px 524px' }}>
+          <circle className="bp-beacon-halo" cx="420" cy="524" r="20" fill="url(#bp-beacon-pulse)" />
+          <circle className="bp-beacon" cx="420" cy="524" r="4.5" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+        </g>
+        {/* Tail white strobe beacon */}
+        <g className="bp-beacon-group" style={{ transformOrigin: '132px 310px' }}>
+          <circle className="bp-beacon-halo" cx="132" cy="310" r="18" fill="url(#bp-beacon-pulse)" />
+          <circle className="bp-beacon" cx="132" cy="310" r="4" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+        </g>
+        {/* Forward nose marker light */}
+        <g className="bp-beacon-group" style={{ transformOrigin: '1100px 310px' }}>
+          <circle className="bp-beacon-halo" cx="1100" cy="310" r="20" fill="url(#bp-beacon-pulse)" />
+          <circle className="bp-beacon" cx="1100" cy="310" r="4.5" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+        </g>
+      </g>
+      {/* Light sweep pass */}
       <g className="bp-sheen">
         <path d="M1100 310 C1052 282 986 272 892 272 L340 272 C252 272 178 284 132 296 L132 324 C178 336 252 348 340 348 L892 348 C986 348 1052 338 1100 310 Z" />
         <path d="M648 272 L420 96 L378 102 L498 272 Z" />

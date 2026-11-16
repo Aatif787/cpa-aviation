@@ -122,7 +122,7 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
           /* ---------- blueprint outline drawn through light, replayed on every entry ---------- */
           Array.from(root.querySelectorAll<SVGSVGElement>(".blueprint")).forEach(svg => {
             const lines = Array.from(svg.querySelectorAll<SVGGeometryElement>(".bp-line"));
-            const marks = Array.from(svg.querySelectorAll<SVGGeometryElement>(".bp-axis, .bp-mark"));
+            const marks = Array.from(svg.querySelectorAll<SVGElement>(".bp-axis, .bp-mark, .bp-beacons"));
             const sheen = svg.querySelector<SVGGElement>(".bp-sheen");
             const sheenGrad = svg.querySelector<SVGLinearGradientElement>("#bp-sheen-grad");
             lines.forEach(line => {
