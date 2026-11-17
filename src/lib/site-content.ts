@@ -94,11 +94,15 @@ import cpaLogoWebp from "@/assets/cpa-aviation-leasing-capital-logo.webp";
 import cpaLogo160Webp from "@/assets/cpa-aviation-leasing-capital-logo-160w.webp";
 import cpaLogoPng from "@/assets/cpa-aviation-leasing-capital-logo.png";
 
-import flightFilm from "@/assets/white-aircraft-flight.mp4.asset.json";
-import flightStill from "@/assets/white-aircraft-still.jpg.asset.json";
 import type { PublicRoutePath } from "@/lib/seo";
 
-export { flightFilm, flightStill };
+export const flightFilm = {
+  url: "/media/white-aircraft-flight.mp4",
+} as const;
+
+export const flightStill = {
+  url: "/media/white-aircraft-still.jpg",
+} as const;
 
 export const OVERVIEW_AIRCRAFT_FILM_URL = "/media/G700_edit_v2_1080p.mp4" as const;
 
