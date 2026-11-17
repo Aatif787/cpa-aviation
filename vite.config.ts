@@ -20,8 +20,10 @@ export default defineConfig(({ command }) => ({
     }),
     command === "build" &&
       nitro({
-        // Builds a standalone Node server (.output/server/index.mjs) for VPS hosting.
-        preset: process.env["NITRO_PRESET"] || "node-server",
+        // Default: standalone Node server (.output/server/index.mjs) for VPS hosting.
+        // On Vercel (VERCEL=1 is set during builds), emit the Vercel Build Output API
+        // (.vercel/output) so Vercel serves the SSR function and static assets.
+        preset: process.env["NITRO_PRESET"] || (process.env["VERCEL"] ? "vercel" : "node-server"),
       }),
     viteReact(),
   ].filter(Boolean),

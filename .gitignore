@@ -32,3 +32,6 @@ dist-ssr
 
 # Old Cloudflare build cache (safe to delete)
 .wrangler/
+
+# Vercel build output
+.vercel
