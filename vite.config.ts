@@ -10,7 +10,13 @@ export default defineConfig(({ command }) => ({
     tailwindcss(),
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart({
-      server: { entry: "server" },
+      router: {
+        entry: "frontend/router",
+        routesDirectory: "frontend/routes",
+        generatedRouteTree: "frontend/routeTree.gen.ts",
+      },
+      start: { entry: "backend/start" },
+      server: { entry: "backend/server" },
     }),
     command === "build" &&
       nitro({
