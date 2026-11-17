@@ -219,10 +219,96 @@ export type NavItem = {
 export const NAVIGATION_ITEMS: readonly NavItem[] = [
   { label: "Home", to: "/", sectionId: "top" },
   { label: "About Us", to: "/about", sectionId: "about" },
+  { label: "Leadership", to: "/leadership", sectionId: "leadership" },
   { label: "Aircraft Leasing", to: "/aircraft-leasing", sectionId: "leasing" },
   { label: "Aviation Assets", to: "/aviation-assets", sectionId: "business-scope" },
   { label: "Our Approach", to: "/our-approach", sectionId: "approach" },
   { label: "GIFT City", to: "/gift-city", sectionId: "gift-city" },
+] as const;
+
+export interface LeadershipProfile {
+  id: string;
+  name: string;
+  designation: string;
+  description: string;
+  imageSrc: string;
+  imageWebp: string;
+  monogram: string;
+  isFeatured?: boolean;
+}
+
+export const LEADERSHIP_PROFILES: readonly LeadershipProfile[] = [
+  {
+    id: "karun-arora",
+    name: "Mr. Karun Arora",
+    designation: "CHAIRMAN & MANAGING DIRECTOR",
+    description:
+      "Brings more than 30 years of experience in aviation infrastructure and leads strategy, compliance and growth across CPA Aviations.",
+    imageSrc: "/leadership/karun-arora.jpg",
+    imageWebp: "/leadership/karun-arora.webp",
+    monogram: "KA",
+    isFeatured: true,
+  },
+  {
+    id: "puneet-munjal",
+    name: "Mr. Puneet Munjal",
+    designation: "JOINT MANAGING DIRECTOR",
+    description:
+      "Leads business development and operational planning, supporting partnerships and expansion across CPA's aviation operations.",
+    imageSrc: "/leadership/puneet-munjal.jpg",
+    imageWebp: "/leadership/puneet-munjal.webp",
+    monogram: "PM",
+  },
+  {
+    id: "bhupesh-joshi",
+    name: "Mr. Bhupesh Joshi",
+    designation: "DIRECTOR & CHIEF EXECUTIVE OFFICER",
+    description:
+      "Brings technical and operational insight across aviation services and logistics, supporting efficient execution and service reliability.",
+    imageSrc: "/leadership/bhupesh-joshi.jpg",
+    imageWebp: "/leadership/bhupesh-joshi.webp",
+    monogram: "BJ",
+  },
+  {
+    id: "manoj-kumar",
+    name: "Mr. Manoj Kumar",
+    designation: "PRESIDENT, INTERNATIONAL & CORPORATE AFFAIRS",
+    description:
+      "Leads international engagement and global partnerships, strengthening institutional relations and regulatory coordination.",
+    imageSrc: "/leadership/manoj-kumar.jpg",
+    imageWebp: "/leadership/manoj-kumar.webp",
+    monogram: "MK",
+  },
+  {
+    id: "ashish-aggarwal",
+    name: "Mr. Ashish Aggarwal",
+    designation: "COMPANY SECRETARY & LEGAL HEAD",
+    description:
+      "Leads strategic planning and regulatory alignment, strengthening governance and compliance frameworks.",
+    imageSrc: "/leadership/ashish-aggarwal.jpg",
+    imageWebp: "/leadership/ashish-aggarwal.webp",
+    monogram: "AA",
+  },
+  {
+    id: "angel-thomas",
+    name: "Angel Thomas",
+    designation: "HEAD, AIRPORT OPERATIONS",
+    description:
+      "Oversees operational management and project execution across airport and aviation infrastructure operations.",
+    imageSrc: "/leadership/angel-thomas.jpg",
+    imageWebp: "/leadership/angel-thomas.webp",
+    monogram: "AT",
+  },
+  {
+    id: "misha-singh",
+    name: "Misha Singh",
+    designation: "MANAGER OPERATIONS",
+    description:
+      "Skilled at optimizing fleet utilization, coordinating with airport teams and streamlining operational workflows to minimise downtime across commercial and charter aviation.",
+    imageSrc: "/leadership/misha-singh.jpg",
+    imageWebp: "/leadership/misha-singh.webp",
+    monogram: "MS",
+  },
 ] as const;
 
 export const FOOTER_NAVIGATION: readonly NavItem[] = [
@@ -644,27 +730,32 @@ export const LEASING_PROCESS_STAGES = [
   {
     step: "01",
     title: "Requirement & Specification Review",
-    detail: "Evaluate lessee route profile, airframe category, configuration, and proposed lease horizon.",
+    detail:
+      "Evaluate lessee route profile, airframe category, configuration, and proposed lease horizon.",
   },
   {
     step: "02",
     title: "Commercial Term Sheet",
-    detail: "Establish baseline commercial parameters covering tenor, security deposits, rent structure, and maintenance terms.",
+    detail:
+      "Establish baseline commercial parameters covering tenor, security deposits, rent structure, and maintenance terms.",
   },
   {
     step: "03",
     title: "Technical & Regulatory Documentation",
-    detail: "Coordinate airworthiness records, CAPE/IDERA registration filings, insurance certificates, and IFSC/DGCA clearances.",
+    detail:
+      "Coordinate airworthiness records, CAPE/IDERA registration filings, insurance certificates, and IFSC/DGCA clearances.",
   },
   {
     step: "04",
     title: "Delivery & Lease Administration",
-    detail: "Execute formal delivery protocols, monitor ongoing compliance covenants, and maintain statutory records in GIFT SEZ.",
+    detail:
+      "Execute formal delivery protocols, monitor ongoing compliance covenants, and maintain statutory records in GIFT SEZ.",
   },
   {
     step: "05",
     title: "Redelivery & Asset Transition",
-    detail: "Verify return condition compliance, complete technical reconciliation, and prepare the aircraft for subsequent placement.",
+    detail:
+      "Verify return condition compliance, complete technical reconciliation, and prepare the aircraft for subsequent placement.",
   },
 ] as const;
 
@@ -727,7 +818,8 @@ export const APPROACH_PROCESS_STEPS = [
   {
     step: "01",
     title: "Regulatory & Constitutional Alignment",
-    summary: "Verify each prospective transaction against GIFT SEZ Letter of Approval scope and e-MOA boundaries.",
+    summary:
+      "Verify each prospective transaction against GIFT SEZ Letter of Approval scope and e-MOA boundaries.",
     criteria: [
       "LoA activity verification",
       "IFSCA / SEZ condition compliance",
@@ -737,7 +829,8 @@ export const APPROACH_PROCESS_STEPS = [
   {
     step: "02",
     title: "Asset & Counterparty Evaluation",
-    summary: "Conduct disciplined technical review of the airframe or engine alongside lessee operational standing.",
+    summary:
+      "Conduct disciplined technical review of the airframe or engine alongside lessee operational standing.",
     criteria: [
       "Airframe & engine pedigree",
       "Lessee operating history",
@@ -747,7 +840,8 @@ export const APPROACH_PROCESS_STEPS = [
   {
     step: "03",
     title: "Ring-Fenced Structuring & Documentation",
-    summary: "Establish clear legal title, insurance covenants, registration protections, and reporting schedules.",
+    summary:
+      "Establish clear legal title, insurance covenants, registration protections, and reporting schedules.",
     criteria: [
       "Contractual lease precision",
       "Hull & liability coverage",
@@ -757,7 +851,8 @@ export const APPROACH_PROCESS_STEPS = [
   {
     step: "04",
     title: "Ongoing Stewardship & Redelivery Discipline",
-    summary: "Maintain systematic record-keeping across active leases and enforce transparent return conditions.",
+    summary:
+      "Maintain systematic record-keeping across active leases and enforce transparent return conditions.",
     criteria: [
       "Utilization & reserve tracking",
       "Technical log continuity",
@@ -815,8 +910,7 @@ export const LOA_REGULATORY_DOSSIER = [
   {
     label: "Mandatory Regulatory Condition",
     value: "Subject to Stated Conditions",
-    detail: "All operations remain strictly subject to the regulatory conditions set out in the Letter of Approval and applicable IFSC/SEZ law.",
+    detail:
+      "All operations remain strictly subject to the regulatory conditions set out in the Letter of Approval and applicable IFSC/SEZ law.",
   },
 ] as const;
-
-

@@ -15,6 +15,7 @@ import { Route as AircraftLeasingRouteImport } from './routes/aircraft-leasing'
 import { Route as AviationAssetsRouteImport } from './routes/aviation-assets'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as GiftCityRouteImport } from './routes/gift-city'
+import { Route as LeadershipRouteImport } from './routes/leadership'
 import { Route as OurApproachRouteImport } from './routes/our-approach'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const GiftCityRoute = GiftCityRouteImport.update({
   path: '/gift-city',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LeadershipRoute = LeadershipRouteImport.update({
+  id: '/leadership',
+  path: '/leadership',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OurApproachRoute = OurApproachRouteImport.update({
   id: '/our-approach',
   path: '/our-approach',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/aviation-assets': typeof AviationAssetsRoute
   '/contact': typeof ContactRoute
   '/gift-city': typeof GiftCityRoute
+  '/leadership': typeof LeadershipRoute
   '/our-approach': typeof OurApproachRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/aviation-assets': typeof AviationAssetsRoute
   '/contact': typeof ContactRoute
   '/gift-city': typeof GiftCityRoute
+  '/leadership': typeof LeadershipRoute
   '/our-approach': typeof OurApproachRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/aviation-assets': typeof AviationAssetsRoute
   '/contact': typeof ContactRoute
   '/gift-city': typeof GiftCityRoute
+  '/leadership': typeof LeadershipRoute
   '/our-approach': typeof OurApproachRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/aviation-assets'
     | '/contact'
     | '/gift-city'
+    | '/leadership'
     | '/our-approach'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/aviation-assets'
     | '/contact'
     | '/gift-city'
+    | '/leadership'
     | '/our-approach'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/aviation-assets'
     | '/contact'
     | '/gift-city'
+    | '/leadership'
     | '/our-approach'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   AviationAssetsRoute: typeof AviationAssetsRoute
   ContactRoute: typeof ContactRoute
   GiftCityRoute: typeof GiftCityRoute
+  LeadershipRoute: typeof LeadershipRoute
   OurApproachRoute: typeof OurApproachRoute
 }
 
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GiftCityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/leadership': {
+      id: '/leadership'
+      path: '/leadership'
+      fullPath: '/leadership'
+      preLoaderRoute: typeof LeadershipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/our-approach': {
       id: '/our-approach'
       path: '/our-approach'
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   AviationAssetsRoute: AviationAssetsRoute,
   ContactRoute: ContactRoute,
   GiftCityRoute: GiftCityRoute,
+  LeadershipRoute: LeadershipRoute,
   OurApproachRoute: OurApproachRoute,
 }
 export const routeTree = rootRouteImport

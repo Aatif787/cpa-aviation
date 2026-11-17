@@ -2498,6 +2498,185 @@ footer {
   color: var(--muted-foreground);
 }
 
+/* ---------- dedicated leadership page roster styling ---------- */
+.leadership-section {
+  padding-bottom: clamp(64px, 8.5vw, 120px);
+}
+.leadership-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 36%) 1fr;
+  gap: clamp(20px, 2.5vw, 32px);
+  align-items: stretch;
+}
+
+/* Featured Profile: Chairman & Managing Director (Midnight Navy) */
+.leadership-featured-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(165deg, #0A121F 0%, #0E182A 50%, #142238 100%);
+  border: 1px solid rgba(197, 173, 131, 0.32);
+  border-radius: clamp(16px, 1.8vw, 24px);
+  padding: clamp(28px, 3.2vw, 44px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 0 16px 40px -12px rgba(10, 18, 31, 0.45);
+}
+.featured-card-decor {
+  position: absolute;
+  right: -36px;
+  bottom: -36px;
+  width: 280px;
+  height: 280px;
+  pointer-events: none;
+  z-index: 0;
+}
+.featured-card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.2vw, 28px);
+  height: 100%;
+}
+.featured-card-text {
+  display: flex;
+  flex-direction: column;
+}
+.featured-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 2.4vw, 2.5rem);
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 1.15;
+  margin: 0 0 8px;
+  letter-spacing: -0.015em;
+}
+.featured-designation {
+  font-size: clamp(10.5px, 0.2vw + 10px, 11.5px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  margin: 0 0 18px;
+}
+.featured-description {
+  font-size: clamp(13.5px, 0.2vw + 13px, 15px);
+  line-height: 1.68;
+  color: #D1C7BD;
+  margin: 0;
+}
+
+/* Two-Column Team Grid (Warm Cream) */
+.leadership-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 1.8vw, 24px);
+}
+.leadership-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(14px, 1.6vw, 20px);
+  background: #FCFAF6;
+  border: 1px solid rgba(197, 173, 131, 0.28);
+  border-radius: clamp(14px, 1.4vw, 18px);
+  padding: clamp(20px, 2vw, 26px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.leadership-card:hover {
+  border-color: rgba(197, 173, 131, 0.58);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 18, 31, 0.07);
+}
+.leadership-card-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.leadership-card-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 1.28vw, 1.35rem);
+  font-weight: 500;
+  color: #121722;
+  line-height: 1.2;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+.leadership-card-designation {
+  font-size: clamp(9.5px, 0.18vw + 9.5px, 10.5px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #A48344;
+  margin: 0 0 10px;
+}
+.leadership-card-description {
+  font-size: clamp(12.5px, 0.15vw + 12px, 13.5px);
+  line-height: 1.55;
+  color: #4A5364;
+  margin: 0;
+}
+
+/* Portrait Avatars */
+.leadership-avatar-frame {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid var(--accent);
+  background: #0E1826;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+}
+.leadership-avatar--lg {
+  width: clamp(88px, 9vw, 104px);
+  height: clamp(88px, 9vw, 104px);
+  border-width: 2px;
+}
+.leadership-avatar--md {
+  width: clamp(62px, 6vw, 70px);
+  height: clamp(62px, 6vw, 70px);
+}
+.leadership-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  display: block;
+}
+.leadership-avatar-fallback {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1080px) {
+  .leadership-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .leadership-grid {
+    grid-template-columns: 1fr;
+  }
+  .leadership-card {
+    gap: 14px;
+    padding: 18px 16px;
+  }
+  .leadership-featured-card {
+    padding: 24px 20px;
+  }
+}
+
 @media (min-width: 640px) {
   .about-dossier-grid,
   .loa-dossier-grid,

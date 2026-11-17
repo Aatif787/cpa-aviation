@@ -16,6 +16,7 @@ export const SITEMAP_LASTMOD = "2026-11-14";
 export const PUBLIC_ROUTES = [
   "/",
   "/about",
+  "/leadership",
   "/aircraft-leasing",
   "/aviation-assets",
   "/our-approach",
@@ -55,6 +56,17 @@ export const PAGE_SEO: Record<PublicRoutePath, PageSeoConfig> = {
     ogImageAlt:
       "Corporate overview of CPA Aviation Leasing Capital IFSC Private Limited in GIFT City, Gujarat",
     breadcrumbLabel: "About Us",
+    priority: "0.85",
+  },
+  "/leadership": {
+    path: "/leadership",
+    title: "Leadership | CPA Aviation Leasing Capital IFSC Private Limited",
+    description:
+      "Executive leadership and management profiles of CPA Aviation Leasing Capital IFSC Private Limited, led by Chairman & Managing Director Mr. Karun Arora.",
+    ogImage: HERO_POSTER_PATH,
+    ogImageAlt:
+      "Executive leadership of CPA Aviation Leasing Capital IFSC Private Limited in GIFT City",
+    breadcrumbLabel: "Leadership",
     priority: "0.85",
   },
   "/aircraft-leasing": {
@@ -107,8 +119,7 @@ export const PAGE_SEO: Record<PublicRoutePath, PageSeoConfig> = {
     description:
       "Contact CPA Aviation Leasing Capital IFSC Private Limited at our registered office in GIFT SEZ, Gandhinagar, Gujarat for aircraft operating lease and corporate enquiries.",
     ogImage: HERO_POSTER_PATH,
-    ogImageAlt:
-      "Contact CPA Aviation Leasing Capital IFSC Private Limited in GIFT City, Gujarat",
+    ogImageAlt: "Contact CPA Aviation Leasing Capital IFSC Private Limited in GIFT City, Gujarat",
     breadcrumbLabel: "Contact Us",
     priority: "0.85",
   },
