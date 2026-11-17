@@ -270,7 +270,7 @@ function Index() {
                 <span className="hero-heading-flip" data-hero-flip="primary">CPA Aviation</span>
               </span>
               <span className="hero-heading-line">
-                <span className="hero-racing-title hero-heading-flip" data-hero-flip="secondary">Leasing Capital</span>
+                <span className="hero-racing-title hero-heading-flip" data-hero-flip="secondary">Leasing Capital IFSC</span>
               </span>
             </h1>
             <p className="hero-description">
