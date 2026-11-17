@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
-import { ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { contactSchema, submitEnquiry } from "@/lib/contact.functions";
+import { CONTACT_EMAIL, buildEnquiryMailto, contactSchema } from "@/lib/contact";
 
 type ContactField = "name" | "company" | "email" | "subject" | "message";
 
@@ -12,18 +11,15 @@ type ContactFormProps = {
 };
 
 export function ContactForm({ prefilledSubject, initialSubject }: ContactFormProps) {
-  const send = useServerFn(submitEnquiry);
-  const loadedAtRef = useRef<number>(Date.now());
   const [form, setForm] = useState({
     name: "",
     company: "",
     email: "",
     subject: initialSubject ?? "",
     message: "",
-    website: "",
   });
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<ContactField, string>>>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sent">("idle");
   const [error, setError] = useState<string | null>(null);
 
   const clearFieldError = (key: ContactField) => {
@@ -36,10 +32,6 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
   };
 
   useEffect(() => {
-    loadedAtRef.current = Date.now();
-  }, []);
-
-  useEffect(() => {
     const nextSubject = prefilledSubject?.value ?? initialSubject;
     if (!nextSubject) return;
     setStatus("idle");
@@ -48,18 +40,18 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
     setForm(f => ({ ...f, subject: nextSubject }));
   }, [prefilledSubject, initialSubject]);
 
-  const set = (k: ContactField | "website") => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const set = (k: ContactField) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const val = e.target.value;
     setForm(f => ({ ...f, [k]: val }));
-    if (k !== "website" && fieldErrors[k]) {
+    if (fieldErrors[k]) {
       clearFieldError(k);
     }
     if (error) setError(null);
   };
 
-  async function submit(e: React.FormEvent) {
+  function submit(e: React.FormEvent) {
     e.preventDefault();
-    const parsed = contactSchema.safeParse({ ...form, formLoadedAt: loadedAtRef.current });
+    const parsed = contactSchema.safeParse(form);
     if (!parsed.success) {
       const nextFieldErrors: Partial<Record<ContactField, string>> = {};
       for (const issue of parsed.error.issues) {
@@ -73,26 +65,13 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
       return;
     }
 
-    setStatus("sending");
     setError(null);
     setFieldErrors({});
-    try {
-      const res = await send({ data: parsed.data });
-      if (res.ok) {
-        setStatus("sent");
-        setForm({ name: "", company: "", email: "", subject: "", message: "", website: "" });
-      } else {
-        setStatus("idle");
-        setError(res.error);
-      }
-    } catch {
-      setStatus("idle");
-      setError("Your enquiry could not be submitted right now. Please email cpaaviationleasing@gmail.com or call +91 85277 12949.");
-    }
+    window.location.href = buildEnquiryMailto(parsed.data);
+    setStatus("sent");
   }
 
   function resetForm() {
-    loadedAtRef.current = Date.now();
     setStatus("idle");
     setError(null);
     setFieldErrors({});
@@ -102,24 +81,18 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
     return (
       <div className="contact-form-done-card" role="status">
         <CheckCircle2 className="contact-done-icon" size={20} aria-hidden="true" />
-        <p className="contact-form-done">Thank you. Your enquiry has been recorded by CPA Aviation Leasing Capital IFSC Private Limited.</p>
+        <p className="contact-form-done">Your enquiry is ready in your email app. Please press send there to deliver it to CPA Aviation Leasing Capital IFSC Private Limited.</p>
         <p className="contact-done-sub">
-          For urgent corporate or statutory correspondence, you may also write directly to{" "}
-          <a href="mailto:cpaaviationleasing@gmail.com">cpaaviationleasing@gmail.com</a>.
+          If no email app opened, write directly to{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
         </p>
-        <Button type="button" variant="navigation" onClick={resetForm}>Submit another enquiry</Button>
+        <Button type="button" variant="navigation" onClick={resetForm}>Edit enquiry</Button>
       </div>
     );
   }
 
   return (
     <form className="contact-form" onSubmit={submit} noValidate>
-      <div className="contact-honeypot" aria-hidden="true">
-        <label>
-          <span>Leave this field blank</span>
-          <input name="website" type="text" value={form.website} onChange={set("website")} tabIndex={-1} autoComplete="off" />
-        </label>
-      </div>
       <div className="contact-form-row">
         <label>
           <span>Full Name <abbr title="Required">*</abbr></span>
@@ -197,8 +170,8 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
         {fieldErrors.message && <span id="contact-error-message" className="contact-field-error">{fieldErrors.message}</span>}
       </label>
       {error && <p className="contact-form-alert" role="alert">{error}</p>}
-      <Button type="submit" variant="aviation" className="contact-submit-btn" disabled={status === "sending"}>
-        <span>{status === "sending" ? <><Loader2 className="animate-spin" /> Sending Enquiry</> : <>Submit Enquiry <ArrowUpRight /></>}</span>
+      <Button type="submit" variant="aviation" className="contact-submit-btn">
+        <span>Submit Enquiry <ArrowUpRight /></span>
       </Button>
     </form>
   );

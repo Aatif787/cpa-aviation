@@ -1144,38 +1144,6 @@ h2 {
   color: var(--muted-foreground);
 }
 
-/* ---------- service advisor section (mobile-first) ---------- */
-.advisor-section { padding-block: clamp(64px, 8vw, 110px); }
-.advisor {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(28px, 4.5vw, 56px);
-  margin-top: clamp(24px, 3vw, 40px);
-}
-.advisor-form { display: flex; flex-direction: column; gap: 14px; }
-.advisor-form textarea {
-  width: 100%;
-  resize: vertical;
-  min-height: clamp(130px, 18vw, 160px);
-  padding: clamp(14px, 2vw, 18px);
-  font: inherit;
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--foreground);
-  background: var(--secondary);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-}
-.advisor-form textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.advisor-actions { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
-.advisor-hint { font-size: clamp(12px, 0.25vw + 11px, 13px); color: var(--muted-foreground); }
-.advisor-results { display: flex; flex-direction: column; gap: clamp(16px, 2vw, 22px); }
-.advisor-item { display: flex; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-.advisor-item h3 { font-family: var(--font-display); font-size: clamp(1.3125rem, 0.5vw + 1.1rem, 1.5rem); font-weight: 400; margin-bottom: 6px; }
-.advisor-item p, .advisor-note { color: var(--muted-foreground); line-height: 1.6; font-size: clamp(0.875rem, 0.2vw + 0.8rem, 0.95rem); }
-.advisor-note a { color: var(--accent); }
-.advisor-error { color: var(--destructive); font-size: 14px; }
-
 /* ---------- contact section (full-bleed unboxed crisp sky & aircraft crossfade) ---------- */
 .contact-section {
   text-align: center;
@@ -1373,15 +1341,6 @@ h2 {
   margin: clamp(20px, 3vw, 28px) auto 0;
   text-align: left;
 }
-.contact-honeypot {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
 .contact-form-row { display: grid; grid-template-columns: 1fr; gap: clamp(12px, 1.5vw, 16px); }
 .contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; letter-spacing: .04em; color: var(--muted-foreground); }
 .contact-form abbr[title] { text-decoration: none; color: var(--accent); margin-left: 2px; }
@@ -1554,7 +1513,6 @@ footer {
   .approach-grid { grid-template-columns: 0.9fr 1.1fr; }
   .corporate-layout { grid-template-columns: 0.78fr 1.22fr; }
   .footer-grid { grid-template-columns: 1.1fr 1.15fr 0.75fr; align-items: start; }
-  .advisor { grid-template-columns: 1.1fr 1fr; }
 }
 
 @media (min-width: 1024px) {
@@ -1590,7 +1548,7 @@ footer {
 .liquid-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 /* aircraft blueprint line drawing + scroll-synced flight path */
-.leasing-section, .approach-section, .focus-section, .advisor-section { position: relative; isolation: isolate; overflow: hidden; }
+.leasing-section, .approach-section, .focus-section { position: relative; isolation: isolate; overflow: hidden; }
 .blueprint, .flight-path { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 .blueprint { opacity: .78; }
 .flight-path { opacity: .35; }
@@ -2029,13 +1987,6 @@ footer {
   color: var(--muted-foreground);
   max-width: 56ch;
 }
-.advisor-card {
-  min-height: 220px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--secondary);
-}
-
 /* ---------- dedicated contact page layout ---------- */
 .contact-page-section {
   padding-top: clamp(104px, 11vw, 148px);
@@ -2978,14 +2929,12 @@ video.overview-video::-webkit-media-controls-start-playback-button {
   .focus-section,
   .approach-section,
   .city-section,
-  .advisor-section,
   .subpage-band {
     padding-block: clamp(44px, 8vw, 64px);
   }
   .subpage-hero-actions .aviation-button,
   .subpage-hero-actions .cinematic-button,
-  .subpage-cta-band .aviation-button,
-  .advisor-actions .aviation-button {
+  .subpage-cta-band .aviation-button {
     width: 100%;
     justify-content: center;
   }

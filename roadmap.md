@@ -8,6 +8,6 @@
 - [x] Polish scroll depth, transparent navigation, button interactions, and mobile motion; verify all navigation and reduced-motion behavior.
 - [x] Add the repeating liquid-fill image reveal with wave surface, depth, parallax, light sweep and synced text; verify replay, mobile and reduced motion.
 - [ ] Official-document verification awaits the three referenced documents, which were not uploaded.
-- [ ] Publish approved privacy and terms text when the company supplies it.- [x] AI service finder section (recommends only the three focus areas)
-- [x] Contact form stores enquiries (owner email pending verified domain)
+- [ ] Publish approved privacy and terms text when the company supplies it.
+- [x] Remove Supabase and the AI service finder; the contact form now opens a prefilled email draft.
 - [x] Add the aircraft blueprint line-drawing and the scroll-synced flight path; verify replay, mobile and reduced motion.
