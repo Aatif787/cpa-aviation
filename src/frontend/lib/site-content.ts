@@ -254,16 +254,6 @@ export const LEADERSHIP_PROFILES: readonly LeadershipProfile[] = [
     isFeatured: true,
   },
   {
-    id: "puneet-munjal",
-    name: "Mr. Puneet Munjal",
-    designation: "JOINT MANAGING DIRECTOR",
-    description:
-      "Leads business development and operational planning, supporting partnerships and expansion across CPA's aviation operations.",
-    imageSrc: "/leadership/puneet-munjal.jpg",
-    imageWebp: "/leadership/puneet-munjal.webp",
-    monogram: "PM",
-  },
-  {
     id: "bhupesh-joshi",
     name: "Mr. Bhupesh Joshi",
     designation: "DIRECTOR & CHIEF EXECUTIVE OFFICER",
