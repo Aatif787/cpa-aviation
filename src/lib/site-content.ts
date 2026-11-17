@@ -219,11 +219,11 @@ export type NavItem = {
 export const NAVIGATION_ITEMS: readonly NavItem[] = [
   { label: "Home", to: "/", sectionId: "top" },
   { label: "About Us", to: "/about", sectionId: "about" },
-  { label: "Leadership", to: "/leadership", sectionId: "leadership" },
   { label: "Aircraft Leasing", to: "/aircraft-leasing", sectionId: "leasing" },
   { label: "Aviation Assets", to: "/aviation-assets", sectionId: "business-scope" },
   { label: "Our Approach", to: "/our-approach", sectionId: "approach" },
   { label: "GIFT City", to: "/gift-city", sectionId: "gift-city" },
+  { label: "Leadership", to: "/leadership", sectionId: "leadership" },
 ] as const;
 
 export interface LeadershipProfile {
