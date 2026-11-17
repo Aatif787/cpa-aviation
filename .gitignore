@@ -15,10 +15,9 @@ dist-ssr
 .tanstack/**
 .nitro
 *.local
+.env
+.env.*
 
-# Wrangler / Cloudflare
-.wrangler/
-.dev.vars
 
 # Editor directories and files
 .vscode/*
@@ -30,3 +29,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Old Cloudflare build cache (safe to delete)
+.wrangler/

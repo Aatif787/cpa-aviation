@@ -20,12 +20,8 @@ export default defineConfig(({ command }) => ({
     }),
     command === "build" &&
       nitro({
-        preset:
-          process.env["NITRO_PRESET"] || (process.env["VERCEL"] ? "vercel" : "cloudflare-module"),
-        cloudflare: {
-          nodeCompat: true,
-          deployConfig: true,
-        },
+        // Builds a standalone Node server (.output/server/index.mjs) for VPS hosting.
+        preset: process.env["NITRO_PRESET"] || "node-server",
       }),
     viteReact(),
   ].filter(Boolean),
@@ -37,7 +33,6 @@ export default defineConfig(({ command }) => ({
       ignored: [
         "**/.output/**",
         "**/.nitro/**",
-        "**/.wrangler/**",
         "**/.tanstack/**",
         "**/dist/**",
         "**/dist-ssr/**",

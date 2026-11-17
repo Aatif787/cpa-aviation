@@ -5,6 +5,5 @@
 - Keep opening motion in a hydration-only Web Animations hook using clipped media and transform-based entrances; resizing or reduced-motion changes must restore the unchanged final layout.
 - Load GSAP, ScrollTrigger, and Lenis inside the motion hook after hydration; use separate elements for entrance and scroll transforms, scope cleanup, and disable depth and magnetic effects on touch devices and reduced motion.
 - Drive the repeating liquid-fill reveal from ScrollTrigger enter/leave callbacks on marked visual frames, drawing the wavy boundary with a computed clip-path; reset only once the frame has fully left the viewport, keep it out of the opening film, and leave images unclipped when motion is reduced.
-- AI service suggestions live in a server-only module and may only choose from the site's fixed focus-area list; prompt forbids invented claims.
-- Contact enquiries are inserted server-side with the admin client into a locked table (no public read/insert policies).
+- The site has no third-party backend services: the contact form validates in the browser and opens a prefilled mailto: draft to the company inbox; do not reintroduce databases or AI APIs without approval.
 - Keep the aircraft blueprint and flight path as inline decorative SVG (aria-hidden, pointer-events none, painted behind section content) animated only by the motion hook's GSAP/ScrollTrigger code, and render them fully drawn and static when motion is reduced.

@@ -1,6 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
-import { Suspense, lazy } from "react";
 import { Button } from "@/components/ui/button";
 import {
   BlueprintSvg,
@@ -16,10 +15,6 @@ import {
   APPROACH_PROCESS_STEPS,
   GIFT_CITY_AERIAL_VISUAL,
 } from "@/lib/site-content";
-
-const LazyServiceAdvisor = lazy(() =>
-  import("@/components/ServiceAdvisor").then((m) => ({ default: m.ServiceAdvisor })),
-);
 
 export const Route = createFileRoute("/our-approach")({
   head: () => buildPageHead("/our-approach"),
@@ -132,26 +127,6 @@ function OurApproachPage() {
               <p>{pillar.summary}</p>
             </article>
           ))}
-        </div>
-      </section>
-
-      <section id="focus-advisor" className="advisor-section page-width">
-        <div className="section-topline reveal">
-          <p className="eyebrow">Focus Area Alignment</p>
-        </div>
-        <div className="scope-header reveal">
-          <h2>
-            Explore Focus<br />
-            <span className="muted-heading">Area Alignment</span>
-          </h2>
-          <p className="scope-intro">
-            Describe your aviation leasing or asset requirement below to map it against our fixed corporate focus areas (informational guidance only; not an offer or financial advice).
-          </p>
-        </div>
-        <div className="reveal">
-          <Suspense fallback={<div className="advisor-card" aria-hidden="true" />}>
-            <LazyServiceAdvisor />
-          </Suspense>
         </div>
         <div className="subpage-inline-links mt-6 reveal">
           <Button asChild variant="navigation">
