@@ -38,21 +38,29 @@ function readEnvValue(env: unknown, key: string): string | undefined {
 
 function maybeRedirectSeoPaths(request: Request): Response | null {
   const url = new URL(request.url);
+  const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
   const forwardedProto = request.headers
     .get("x-forwarded-proto")
     ?.split(",")[0]
     ?.trim()
     .toLowerCase();
 
-  if (!isLocalHost(url.hostname) && (url.protocol === "http:" || forwardedProto === "http")) {
-    const httpsUrl = new URL(url.toString());
-    httpsUrl.protocol = "https:";
-    return Response.redirect(httpsUrl.toString(), 301);
+  const effectiveHost = forwardedHost || url.host;
+  const effectiveHostname = forwardedHost
+    ? (effectiveHost.split(":")[0] ?? url.hostname)
+    : url.hostname;
+  const effectiveProto = forwardedProto || url.protocol.replace(":", "");
+
+  if (!isLocalHost(effectiveHostname) && effectiveProto === "http") {
+    const targetUrl = new URL(url.pathname + url.search, `https://${effectiveHost}`);
+    return Response.redirect(targetUrl.toString(), 301);
   }
+
+  const origin = `${effectiveProto === "https" ? "https" : "http"}://${effectiveHost}`;
 
   const lowerPath = url.pathname.toLowerCase();
   if (lowerPath === "/index.html" || lowerPath === "/index" || lowerPath === "/home") {
-    const target = new URL("/", url.origin);
+    const target = new URL("/", origin);
     target.search = url.search;
     return Response.redirect(target.toString(), 301);
   }
@@ -62,7 +70,7 @@ function maybeRedirectSeoPaths(request: Request): Response | null {
     url.pathname.endsWith("/") &&
     !url.pathname.startsWith("/_serverFn")
   ) {
-    const target = new URL(url.pathname.slice(0, -1) + url.search, url.origin);
+    const target = new URL(url.pathname.slice(0, -1) + url.search, origin);
     return Response.redirect(target.toString(), 301);
   }
 
@@ -227,6 +235,7 @@ export default {
         request.url,
         readEnvValue(env, "SITE_URL") ?? readEnvValue(env, "VITE_SITE_URL"),
         request.headers.get("x-forwarded-proto"),
+        request.headers.get("x-forwarded-host"),
       );
 
       if (url.pathname === "/robots.txt") {

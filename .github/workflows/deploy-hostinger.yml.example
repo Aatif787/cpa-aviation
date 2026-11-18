@@ -1,0 +1,39 @@
+# Example GitHub Actions Workflow for automated CD deployment to Hostinger VPS
+# To enable this workflow:
+# 1. Rename this file to deploy-hostinger.yml
+# 2. Add repository secrets in GitHub: Settings > Secrets and variables > Actions:
+#    - HOSTINGER_HOST: your server IP address
+#    - HOSTINGER_USERNAME: your SSH user (e.g. root or deploy)
+#    - HOSTINGER_SSH_KEY: your private SSH key
+#    - HOSTINGER_PORT: 22 (optional, default 22)
+#    - HOSTINGER_APP_PATH: /var/www/cpa-aviation
+
+name: Deploy to Hostinger VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Hostinger VPS
+    runs-on: ubuntu-latest
+    if: github.repository == 'CPA-aviation/cpa-aviation'
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT || 22 }}
+          script: |
+            set -e
+            cd ${{ secrets.HOSTINGER_APP_PATH || '/var/www/cpa-aviation' }}
+            git pull origin main
+            npm ci --omit=dev
+            npm run build
+            pm2 reload ecosystem.config.cjs || pm2 start ecosystem.config.cjs
+            pm2 save
