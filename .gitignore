@@ -32,3 +32,10 @@ dist-ssr
 
 # Old Cloudflare build cache (safe to delete)
 .wrangler/
+
+# Vercel build output
+.vercel
+
+# Local tool / deprecation flag artifacts
+0.26.0
+

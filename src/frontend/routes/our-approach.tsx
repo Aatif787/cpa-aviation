@@ -35,7 +35,9 @@ function OurApproachPage() {
                 Clarity in <span className="muted-heading">Every Structure</span>
               </h1>
               <p className="lead-description">
-                Structured evaluation across statutory alignment, aircraft technical diligence, ring-fenced lease documentation, and direct institutional correspondence from GIFT City SEZ.
+                Structured evaluation across statutory alignment, aircraft technical diligence,
+                ring-fenced lease documentation, and direct institutional correspondence from GIFT
+                City SEZ.
               </p>
             </div>
             <div className="subpage-hero-visual">
@@ -59,11 +61,15 @@ function OurApproachPage() {
           </div>
           <div className="scope-header reveal">
             <h2>
-              Four-Stage Approach<br />
+              Four-Stage Approach
+              <br />
               <span className="muted-heading">Framework</span>
             </h2>
             <p className="scope-intro">
-              An illustrative governance methodology guiding how prospective aircraft operating lease engagements are assessed and documented within IFSC rules. This outline describes our evaluation standard rather than an established track record of past transactions.
+              An illustrative governance methodology guiding how prospective aircraft operating
+              lease engagements are assessed and documented within IFSC rules. This outline
+              describes our evaluation standard rather than an established track record of past
+              transactions.
             </p>
           </div>
 
@@ -91,16 +97,21 @@ function OurApproachPage() {
         <div className="approach-grid">
           <div className="reveal">
             <h2>
-              Disciplined Ownership<br />
+              Disciplined Ownership
+              <br />
               <span className="muted-heading">&amp; Business Conduct</span>
             </h2>
           </div>
           <div className="editorial-copy reveal">
             <p className="section-description">
-              Our stated corporate objectives contemplate Special Purpose Vehicles (SPVs), co-ownership frameworks, and structured aviation asset arrangements tailored to cross-border leasing rules in GIFT SEZ.
+              Our stated corporate objectives contemplate Special Purpose Vehicles (SPVs),
+              co-ownership frameworks, and structured aviation asset arrangements tailored to
+              cross-border leasing rules in GIFT SEZ.
             </p>
             <p className="section-description">
-              Every prospective engagement maintains strict transparency between presently authorised aircraft operating lease operations under our Letter of Approval and broader Memorandum objects.
+              Every prospective engagement maintains strict transparency between presently
+              authorised aircraft operating lease operations under our Letter of Approval and
+              broader Memorandum objects.
             </p>
           </div>
         </div>
@@ -144,4 +155,3 @@ function OurApproachPage() {
     </SiteShell>
   );
 }
-

@@ -47,9 +47,8 @@ describe("SEO utilities", () => {
     for (const routePath of PUBLIC_ROUTES) {
       const head = buildPageHead(routePath, "https://cpaaviation.in");
       const titleEntry = head.meta.find((m) => "title" in m) as { title: string } | undefined;
-      const descEntry = head.meta.find(
-        (m) => "name" in m && m.name === "description",
-      ) as { content: string } | undefined;
+      const descEntry = head.meta.find((m) => "name" in m && m.name === "description") as
+        { content: string } | undefined;
 
       expect(titleEntry?.title).toBe(PAGE_SEO[routePath].title);
       expect(descEntry?.content).toBe(PAGE_SEO[routePath].description);

@@ -11,8 +11,9 @@ const liquidPolygon = (level: number, ampPx: number, heightPx: number, phase: nu
   const points: string[] = [];
   for (let index = 0; index <= WAVE_STEPS; index += 1) {
     const t = index / WAVE_STEPS;
-    const swell = Math.sin(t * Math.PI * 2 * WAVE_CYCLES + phase) * .64
-      + Math.sin(t * Math.PI * 2 * WAVE_CYCLES * 1.62 - phase * 1.4) * .36;
+    const swell =
+      Math.sin(t * Math.PI * 2 * WAVE_CYCLES + phase) * 0.64 +
+      Math.sin(t * Math.PI * 2 * WAVE_CYCLES * 1.62 - phase * 1.4) * 0.36;
     const y = Math.max(0, Math.min(100, level * 100 + swell * amp));
     points.push(`${(t * 100).toFixed(2)}% ${y.toFixed(2)}%`);
   }
@@ -37,14 +38,16 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
-    const isSubpage = Boolean(root.querySelector(".subpage-hero")) || !root.querySelector(".hero-film-reveal");
+    const isSubpage =
+      Boolean(root.querySelector(".subpage-hero")) || !root.querySelector(".hero-film-reveal");
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const header = root.querySelector<HTMLElement>(".site-header");
     const updateHeader = () => header?.classList.toggle("is-scrolled", window.scrollY > 32);
     updateHeader();
     window.addEventListener("scroll", updateHeader, { passive: true });
     const onEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") root.querySelector<HTMLButtonElement>('.mobile-toggle[aria-expanded="true"]')?.click();
+      if (event.key === "Escape")
+        root.querySelector<HTMLButtonElement>('.mobile-toggle[aria-expanded="true"]')?.click();
     };
     window.addEventListener("keydown", onEscape);
 
@@ -53,8 +56,10 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
     const heroElement = root.querySelector<HTMLElement>(".hero");
     let heroAtmoObserver: IntersectionObserver | undefined;
     if (heroAtmosphere && heroElement && typeof IntersectionObserver !== "undefined") {
-      heroAtmoObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => heroAtmosphere.classList.toggle("is-atmo-visible", entry.isIntersecting));
+      heroAtmoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) =>
+          heroAtmosphere.classList.toggle("is-atmo-visible", entry.isIntersecting),
+        );
       });
       heroAtmoObserver.observe(heroElement);
     }
@@ -77,7 +82,12 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
         if (generation !== depthGeneration) return;
         gsap.registerPlugin(ScrollTrigger);
         const lenis = LenisModule
-          ? new LenisModule.default({ autoRaf: true, anchors: true, duration: 1.05, smoothWheel: true })
+          ? new LenisModule.default({
+              autoRaf: true,
+              anchors: true,
+              duration: 1.05,
+              smoothWheel: true,
+            })
           : null;
         lenis?.on("scroll", ScrollTrigger.update);
         const matchMedia = gsap.matchMedia();
@@ -85,9 +95,26 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
         const context = gsap.context(() => {
           matchMedia.add("(min-width: 701px)", () => {
             // foreground/background separation: image layer and copy drift at different rates
-            root.querySelectorAll<HTMLElement>('[data-liquid="overview"] .liquid-frame, [data-liquid="leasing"] .liquid-frame, [data-liquid="city"] .liquid-frame').forEach(frame => {
-              gsap.fromTo(frame, { yPercent: 2.6 }, { yPercent: -2.6, ease: "none", scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: 1.2 } });
-            });
+            root
+              .querySelectorAll<HTMLElement>(
+                '[data-liquid="overview"] .liquid-frame, [data-liquid="leasing"] .liquid-frame, [data-liquid="city"] .liquid-frame',
+              )
+              .forEach((frame) => {
+                gsap.fromTo(
+                  frame,
+                  { yPercent: 2.6 },
+                  {
+                    yPercent: -2.6,
+                    ease: "none",
+                    scrollTrigger: {
+                      trigger: frame,
+                      start: "top bottom",
+                      end: "bottom top",
+                      scrub: 1.2,
+                    },
+                  },
+                );
+              });
           });
 
           /* ---------- scroll-responsive atmospheric cloud depth & lighting (desktop fine-pointer only) ---------- */
@@ -99,59 +126,95 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
               "frame-far": { y: 5, x: -2 },
               "frame-near": { y: 11, x: -5 },
             };
-            root.querySelectorAll<HTMLElement>("[data-atmo-depth]").forEach(layer => {
+            root.querySelectorAll<HTMLElement>("[data-atmo-depth]").forEach((layer) => {
               const kind = layer.dataset["atmoDepth"] ?? "far";
               const spec = depthSpecs[kind] ?? defaultDepth;
               const trigger = layer.closest("section") ?? layer;
-              gsap.fromTo(layer, { yPercent: -spec.y * .45, xPercent: 0 }, {
-                yPercent: spec.y, xPercent: spec.x, ease: "none",
-                scrollTrigger: { trigger, start: "top bottom", end: "bottom top", scrub: 1.3 },
-              });
+              gsap.fromTo(
+                layer,
+                { yPercent: -spec.y * 0.45, xPercent: 0 },
+                {
+                  yPercent: spec.y,
+                  xPercent: spec.x,
+                  ease: "none",
+                  scrollTrigger: { trigger, start: "top bottom", end: "bottom top", scrub: 1.3 },
+                },
+              );
             });
 
             const heroLight = root.querySelector<HTMLElement>("[data-atmo-light]");
             const heroSection = root.querySelector<HTMLElement>(".hero");
             if (heroLight && heroSection) {
-              gsap.fromTo(heroLight, { yPercent: 0, xPercent: 0, opacity: 1 }, {
-                yPercent: 14, xPercent: -4, opacity: .9, ease: "none",
-                scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 1.2 },
-              });
+              gsap.fromTo(
+                heroLight,
+                { yPercent: 0, xPercent: 0, opacity: 1 },
+                {
+                  yPercent: 14,
+                  xPercent: -4,
+                  opacity: 0.9,
+                  ease: "none",
+                  scrollTrigger: {
+                    trigger: heroSection,
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: 1.2,
+                  },
+                },
+              );
             }
           });
 
           /* ---------- blueprint outline drawn through light, replayed on every entry ---------- */
-          Array.from(root.querySelectorAll<SVGSVGElement>(".blueprint")).forEach(svg => {
+          Array.from(root.querySelectorAll<SVGSVGElement>(".blueprint")).forEach((svg) => {
             const lines = Array.from(svg.querySelectorAll<SVGGeometryElement>(".bp-line"));
-            const marks = Array.from(svg.querySelectorAll<SVGElement>(".bp-axis, .bp-mark, .bp-beacons"));
+            const marks = Array.from(
+              svg.querySelectorAll<SVGElement>(".bp-axis, .bp-mark, .bp-beacons"),
+            );
             const sheen = svg.querySelector<SVGGElement>(".bp-sheen");
             const sheenGrad = svg.querySelector<SVGLinearGradientElement>("#bp-sheen-grad");
-            lines.forEach(line => {
+            lines.forEach((line) => {
               const length = line.getTotalLength();
               line.style.strokeDasharray = `${length}`;
               line.style.strokeDashoffset = `${length}`;
             });
-            marks.forEach(mark => gsap.set(mark, { opacity: 0 }));
-            const timeline = gsap.timeline({ paused: true })
-              .to(lines, { strokeDashoffset: 0, duration: 1.7, ease: "power2.inOut", stagger: .11 })
-              .to(marks, { opacity: 1, duration: .6, stagger: .06 }, "-=.55");
+            marks.forEach((mark) => gsap.set(mark, { opacity: 0 }));
+            const timeline = gsap
+              .timeline({ paused: true })
+              .to(lines, {
+                strokeDashoffset: 0,
+                duration: 1.7,
+                ease: "power2.inOut",
+                stagger: 0.11,
+              })
+              .to(marks, { opacity: 1, duration: 0.6, stagger: 0.06 }, "-=.55");
             if (sheen && sheenGrad) {
               timeline
-                .to(sheen, { opacity: 1, duration: .25 }, ">-.15")
-                .fromTo(sheenGrad, { attr: { x1: -460, x2: -140 } }, { attr: { x1: 1520, x2: 1840 }, duration: 1.4, ease: "power1.inOut" }, "<")
-                .to(sheen, { opacity: 0, duration: .5 });
+                .to(sheen, { opacity: 1, duration: 0.25 }, ">-.15")
+                .fromTo(
+                  sheenGrad,
+                  { attr: { x1: -460, x2: -140 } },
+                  { attr: { x1: 1520, x2: 1840 }, duration: 1.4, ease: "power1.inOut" },
+                  "<",
+                )
+                .to(sheen, { opacity: 0, duration: 0.5 });
             }
             const trigger = ScrollTrigger.create({
-              trigger: svg, start: "top bottom", end: "bottom top",
+              trigger: svg,
+              start: "top bottom",
+              end: "bottom top",
               onEnter: () => timeline.restart(),
               onEnterBack: () => timeline.restart(),
               onLeave: () => timeline.pause(0),
               onLeaveBack: () => timeline.pause(0),
             });
-            cleanups.push(() => { trigger.kill(); timeline.kill(); });
+            cleanups.push(() => {
+              trigger.kill();
+              timeline.kill();
+            });
           });
 
           /* ---------- flight path drawn in sync with scrolling ---------- */
-          Array.from(root.querySelectorAll<SVGSVGElement>(".flight-path")).forEach(svg => {
+          Array.from(root.querySelectorAll<SVGSVGElement>(".flight-path")).forEach((svg) => {
             const draw = svg.querySelector<SVGPathElement>(".fp-draw");
             const plane = svg.querySelector<SVGGElement>(".fp-plane");
             const marker = svg.querySelector<SVGGElement>(".fp-marker");
@@ -167,23 +230,41 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
               const point = draw.getPointAtLength(at);
               const ahead = draw.getPointAtLength(Math.min(length, at + 2));
               const behind = draw.getPointAtLength(Math.max(0, at - 2));
-              const angle = Math.atan2(ahead.y - behind.y, ahead.x - behind.x) * 180 / Math.PI;
-              plane.setAttribute("transform", `translate(${point.x.toFixed(2)} ${point.y.toFixed(2)}) rotate(${angle.toFixed(2)})`);
-              marker.setAttribute("transform", `translate(${point.x.toFixed(2)} ${point.y.toFixed(2)})`);
+              const angle = (Math.atan2(ahead.y - behind.y, ahead.x - behind.x) * 180) / Math.PI;
+              plane.setAttribute(
+                "transform",
+                `translate(${point.x.toFixed(2)} ${point.y.toFixed(2)}) rotate(${angle.toFixed(2)})`,
+              );
+              marker.setAttribute(
+                "transform",
+                `translate(${point.x.toFixed(2)} ${point.y.toFixed(2)})`,
+              );
               draw.style.strokeDashoffset = `${(length - at).toFixed(2)}`;
             };
             place();
             const trigger = ScrollTrigger.create({
-              trigger: svg, start: "top bottom", end: "bottom top", scrub: 1.1,
-              onUpdate: self => { state.progress = self.progress; place(); },
-              onLeave: () => { state.progress = 0; place(); },
-              onLeaveBack: () => { state.progress = 0; place(); },
+              trigger: svg,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.1,
+              onUpdate: (self) => {
+                state.progress = self.progress;
+                place();
+              },
+              onLeave: () => {
+                state.progress = 0;
+                place();
+              },
+              onLeaveBack: () => {
+                state.progress = 0;
+                place();
+              },
             });
             cleanups.push(() => trigger.kill());
           });
 
           /* ---------- continuous open-sky charter cruise across contact clouds ---------- */
-          Array.from(root.querySelectorAll<SVGSVGElement>(".contact-charter")).forEach(svg => {
+          Array.from(root.querySelectorAll<SVGSVGElement>(".contact-charter")).forEach((svg) => {
             const route = svg.querySelector<SVGPathElement>(".cc-route");
             const trail = svg.querySelector<SVGPathElement>(".cc-trail");
             const plane = svg.querySelector<SVGGElement>(".cc-plane");
@@ -197,15 +278,25 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
               const point = route.getPointAtLength(at);
               const ahead = route.getPointAtLength(Math.min(length, at + 2));
               const behind = route.getPointAtLength(Math.max(0, at - 2));
-              const angle = Math.atan2(ahead.y - behind.y, ahead.x - behind.x) * 180 / Math.PI;
-              plane.setAttribute("transform", `translate(${point.x.toFixed(2)} ${point.y.toFixed(2)}) rotate(${angle.toFixed(2)})`);
+              const angle = (Math.atan2(ahead.y - behind.y, ahead.x - behind.x) * 180) / Math.PI;
+              plane.setAttribute(
+                "transform",
+                `translate(${point.x.toFixed(2)} ${point.y.toFixed(2)}) rotate(${angle.toFixed(2)})`,
+              );
               trail.style.strokeDashoffset = `${(wake - at).toFixed(2)}`;
             };
             cruise();
             const tween = gsap.fromTo(
               state,
               { progress: 0 },
-              { progress: 1, duration: 18, ease: "none", repeat: -1, onUpdate: cruise, paused: true },
+              {
+                progress: 1,
+                duration: 18,
+                ease: "none",
+                repeat: -1,
+                onUpdate: cruise,
+                paused: true,
+              },
             );
             tween.progress(0.28);
             const trigger = ScrollTrigger.create({
@@ -217,84 +308,120 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
               onLeave: () => tween.pause(),
               onLeaveBack: () => tween.pause(),
             });
-            cleanups.push(() => { trigger.kill(); tween.kill(); });
+            cleanups.push(() => {
+              trigger.kill();
+              tween.kill();
+            });
           });
         }, root);
         const listeners: (() => void)[] = [];
         if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-          root.querySelectorAll<HTMLElement>(".aviation-button, .cinematic-button").forEach(button => {
-            const move = (event: PointerEvent) => {
-              const box = button.getBoundingClientRect();
-              gsap.to(button, { x: (event.clientX - box.left - box.width / 2) * .045, y: (event.clientY - box.top - box.height / 2) * .07, duration: .35, overwrite: true });
-            };
-            const reset = () => gsap.to(button, { x: 0, y: 0, duration: .45, overwrite: true });
-            button.addEventListener("pointermove", move);
-            button.addEventListener("pointerleave", reset);
-            button.addEventListener("blur", reset);
-            listeners.push(() => {
-              button.removeEventListener("pointermove", move);
-              button.removeEventListener("pointerleave", reset);
-              button.removeEventListener("blur", reset);
-              gsap.killTweensOf(button);
-              gsap.set(button, { clearProps: "transform" });
+          root
+            .querySelectorAll<HTMLElement>(".aviation-button, .cinematic-button")
+            .forEach((button) => {
+              const move = (event: PointerEvent) => {
+                const box = button.getBoundingClientRect();
+                gsap.to(button, {
+                  x: (event.clientX - box.left - box.width / 2) * 0.045,
+                  y: (event.clientY - box.top - box.height / 2) * 0.07,
+                  duration: 0.35,
+                  overwrite: true,
+                });
+              };
+              const reset = () => gsap.to(button, { x: 0, y: 0, duration: 0.45, overwrite: true });
+              button.addEventListener("pointermove", move);
+              button.addEventListener("pointerleave", reset);
+              button.addEventListener("blur", reset);
+              listeners.push(() => {
+                button.removeEventListener("pointermove", move);
+                button.removeEventListener("pointerleave", reset);
+                button.removeEventListener("blur", reset);
+                gsap.killTweensOf(button);
+                gsap.set(button, { clearProps: "transform" });
+              });
             });
-          });
         }
 
         if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-          root.querySelectorAll<HTMLElement>('[data-liquid="overview"], [data-liquid="leasing"]').forEach(figure => {
-            figure.classList.add("cine-hover");
-            const move = (event: PointerEvent) => {
-              const box = figure.getBoundingClientRect();
-              const x = (event.clientX - box.left) / box.width - .5, y = (event.clientY - box.top) / box.height - .5;
-              gsap.to(figure, { rotateY: x * 3, rotateX: -y * 2.4, scale: 1.015, transformPerspective: 1400, duration: .7, ease: "power2.out", overwrite: true });
-            };
-            const leave = () => gsap.to(figure, { rotateY: 0, rotateX: 0, scale: 1, duration: .9, ease: "power3.out", overwrite: true });
-            figure.addEventListener("pointermove", move);
-            figure.addEventListener("pointerleave", leave);
-            listeners.push(() => {
-              figure.removeEventListener("pointermove", move);
-              figure.removeEventListener("pointerleave", leave);
-              figure.classList.remove("cine-hover");
-              gsap.killTweensOf(figure);
-              gsap.set(figure, { clearProps: "transform" });
+          root
+            .querySelectorAll<HTMLElement>('[data-liquid="overview"], [data-liquid="leasing"]')
+            .forEach((figure) => {
+              figure.classList.add("cine-hover");
+              const move = (event: PointerEvent) => {
+                const box = figure.getBoundingClientRect();
+                const x = (event.clientX - box.left) / box.width - 0.5,
+                  y = (event.clientY - box.top) / box.height - 0.5;
+                gsap.to(figure, {
+                  rotateY: x * 3,
+                  rotateX: -y * 2.4,
+                  scale: 1.015,
+                  transformPerspective: 1400,
+                  duration: 0.7,
+                  ease: "power2.out",
+                  overwrite: true,
+                });
+              };
+              const leave = () =>
+                gsap.to(figure, {
+                  rotateY: 0,
+                  rotateX: 0,
+                  scale: 1,
+                  duration: 0.9,
+                  ease: "power3.out",
+                  overwrite: true,
+                });
+              figure.addEventListener("pointermove", move);
+              figure.addEventListener("pointerleave", leave);
+              listeners.push(() => {
+                figure.removeEventListener("pointermove", move);
+                figure.removeEventListener("pointerleave", leave);
+                figure.classList.remove("cine-hover");
+                gsap.killTweensOf(figure);
+                gsap.set(figure, { clearProps: "transform" });
+              });
             });
-          });
         }
 
         /* ---------- liquid fill reveal, replayed on every scroll entry ---------- */
-        const liquids: Liquid[] = Array.from(root.querySelectorAll<HTMLElement>("[data-liquid]")).flatMap(frame => {
+        const liquids: Liquid[] = Array.from(
+          root.querySelectorAll<HTMLElement>("[data-liquid]"),
+        ).flatMap((frame) => {
           const media = frame.querySelector<HTMLElement>(".liquid-media");
           const ribbon = frame.querySelector<HTMLElement>(".liquid-ribbon");
           const sweep = frame.querySelector<HTMLElement>(".liquid-sweep");
           if (!media || !ribbon || !sweep) return [];
-          const text = frame.closest("section")?.querySelector<HTMLElement>("[data-liquid-text]") ?? null;
-          return [{
-            frame,
-            media,
-            ribbon,
-            sweep,
-            text,
-            height: media.getBoundingClientRect().height || 1,
-            state: { fill: 0 },
-            phase: Math.random() * 6.28,
-            running: false,
-            swept: false,
-          }];
+          const text =
+            frame.closest("section")?.querySelector<HTMLElement>("[data-liquid-text]") ?? null;
+          return [
+            {
+              frame,
+              media,
+              ribbon,
+              sweep,
+              text,
+              height: media.getBoundingClientRect().height || 1,
+              state: { fill: 0 },
+              phase: Math.random() * 6.28,
+              running: false,
+              swept: false,
+            },
+          ];
         });
 
-        const liquidResizeObserver = typeof ResizeObserver !== "undefined"
-          ? new ResizeObserver(entries => {
-            entries.forEach(entry => {
-              const target = entry.target as HTMLElement;
-              const match = liquids.find(item => item.media === target);
-              if (match && entry.contentRect.height > 0) match.height = entry.contentRect.height;
-            });
-          })
-          : undefined;
-        liquids.forEach(item => liquidResizeObserver?.observe(item.media));
+        const liquidResizeObserver =
+          typeof ResizeObserver !== "undefined"
+            ? new ResizeObserver((entries) => {
+                entries.forEach((entry) => {
+                  const target = entry.target as HTMLElement;
+                  const match = liquids.find((item) => item.media === target);
+                  if (match && entry.contentRect.height > 0)
+                    match.height = entry.contentRect.height;
+                });
+              })
+            : undefined;
+        liquids.forEach((item) => liquidResizeObserver?.observe(item.media));
         const refreshLiquidHeights = () => {
-          liquids.forEach(item => {
+          liquids.forEach((item) => {
             const measured = item.media.getBoundingClientRect().height;
             if (measured > 0) item.height = measured;
           });
@@ -305,17 +432,17 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
           const height = item.height;
           const fill = Math.max(0, Math.min(1, item.state.fill));
           const swell = Math.sin(Math.PI * fill);
-          const amp = height * .032 * swell;
+          const amp = height * 0.032 * swell;
           const level = 1 - fill;
-          if (fill <= .002) item.media.style.clipPath = "inset(100% 0 0 0)";
-          else if (fill >= .998) item.media.style.clipPath = "none";
+          if (fill <= 0.002) item.media.style.clipPath = "inset(100% 0 0 0)";
+          else if (fill >= 0.998) item.media.style.clipPath = "none";
           else item.media.style.clipPath = liquidPolygon(level, amp, height, item.phase);
 
-          if (fill > .015 && fill < .985 && swell > .04) {
+          if (fill > 0.015 && fill < 0.985 && swell > 0.04) {
             const levelPx = level * height;
             item.ribbon.style.opacity = String(Math.min(1, swell * 1.7));
-            item.ribbon.style.transform = `translate3d(0, ${(levelPx - RIBBON_HEIGHT * .3).toFixed(2)}px, 0)`;
-            item.ribbon.style.clipPath = liquidPolygon(.3, amp, RIBBON_HEIGHT, item.phase);
+            item.ribbon.style.transform = `translate3d(0, ${(levelPx - RIBBON_HEIGHT * 0.3).toFixed(2)}px, 0)`;
+            item.ribbon.style.clipPath = liquidPolygon(0.3, amp, RIBBON_HEIGHT, item.phase);
           } else {
             item.ribbon.style.opacity = "0";
           }
@@ -323,16 +450,22 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
 
         const runSweep = (item: Liquid) => {
           item.sweepTween?.kill();
-          item.sweepTween = gsap.timeline()
-            .fromTo(item.sweep, { xPercent: -62, opacity: 0 }, { opacity: .8, duration: .3, ease: "power1.out" }, 0)
+          item.sweepTween = gsap
+            .timeline()
+            .fromTo(
+              item.sweep,
+              { xPercent: -62, opacity: 0 },
+              { opacity: 0.8, duration: 0.3, ease: "power1.out" },
+              0,
+            )
             .to(item.sweep, { xPercent: 62, duration: 1.15, ease: "power1.in" }, 0)
-            .to(item.sweep, { opacity: 0, duration: .5 }, .68) as unknown as { kill: () => void };
+            .to(item.sweep, { opacity: 0, duration: 0.5 }, 0.68) as unknown as { kill: () => void };
         };
 
         let tickerActive = false;
         const tick = (time: number) => {
           let anyRunning = false;
-          liquids.forEach(item => {
+          liquids.forEach((item) => {
             if (!item.running) return;
             anyRunning = true;
             item.phase = time * 1.35;
@@ -358,13 +491,25 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
           item.frame.classList.add("is-atmo-active");
           startTicker();
           gsap.to(item.state, {
-            fill: 1, duration: 1.35, ease: "power2.inOut",
+            fill: 1,
+            duration: 1.35,
+            ease: "power2.inOut",
             onUpdate: () => {
-              if (item.state.fill >= .7 && !item.swept) { item.swept = true; runSweep(item); }
+              if (item.state.fill >= 0.7 && !item.swept) {
+                item.swept = true;
+                runSweep(item);
+              }
             },
-            onComplete: () => { item.running = false; paint(item); },
+            onComplete: () => {
+              item.running = false;
+              paint(item);
+            },
           });
-          gsap.fromTo(item.media, { scale: 1.1, yPercent: 3 }, { scale: 1, yPercent: 0, duration: 1.65, ease: "power3.out", overwrite: true });
+          gsap.fromTo(
+            item.media,
+            { scale: 1.1, yPercent: 3 },
+            { scale: 1, yPercent: 0, duration: 1.65, ease: "power3.out", overwrite: true },
+          );
         };
 
         const reset = (item: Liquid) => {
@@ -380,20 +525,26 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
           item.sweep.style.opacity = "0";
         };
 
-        liquids.forEach(item => {
+        liquids.forEach((item) => {
           item.media.style.clipPath = "inset(100% 0 0 0)";
           item.ribbon.style.opacity = "0";
           item.sweep.style.opacity = "0";
         });
 
-        const triggers = liquids.map(item => ScrollTrigger.create({
-          trigger: item.frame, start: "top bottom", end: "bottom top",
-          onEnter: () => play(item), onEnterBack: () => play(item),
-          onLeave: () => reset(item), onLeaveBack: () => reset(item),
-        }));
+        const triggers = liquids.map((item) =>
+          ScrollTrigger.create({
+            trigger: item.frame,
+            start: "top bottom",
+            end: "bottom top",
+            onEnter: () => play(item),
+            onEnterBack: () => play(item),
+            onLeave: () => reset(item),
+            onLeaveBack: () => reset(item),
+          }),
+        );
 
         ScrollTrigger.refresh();
-        liquids.forEach(item => {
+        liquids.forEach((item) => {
           if (ScrollTrigger.isInViewport(item.frame) && !item.running && item.state.fill < 0.05) {
             play(item);
           }
@@ -403,24 +554,30 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
           ScrollTrigger.removeEventListener("refreshInit", refreshLiquidHeights);
           tickerActive = false;
           gsap.ticker.remove(tick);
-          cleanups.forEach(cleanup => cleanup());
-          triggers.forEach(trigger => trigger.kill());
-          liquids.forEach(item => {
+          cleanups.forEach((cleanup) => cleanup());
+          triggers.forEach((trigger) => trigger.kill());
+          liquids.forEach((item) => {
             reset(item);
             item.media.style.clipPath = "";
             item.ribbon.style.clipPath = "";
             item.text?.classList.add("is-visible");
             item.frame.classList.add("is-atmo-active");
           });
-          listeners.forEach(cleanup => cleanup());
+          listeners.forEach((cleanup) => cleanup());
           lenis?.destroy();
           matchMedia.revert();
           context.revert();
         };
       } catch {
-        root.querySelectorAll<HTMLElement>("[data-liquid-text]").forEach(text => text.classList.add("is-visible"));
-        root.querySelectorAll<HTMLElement>("[data-liquid]").forEach(frame => frame.classList.add("is-atmo-active"));
-        root.querySelectorAll<HTMLElement>("[data-liquid] .liquid-media").forEach(media => { media.style.clipPath = ""; });
+        root
+          .querySelectorAll<HTMLElement>("[data-liquid-text]")
+          .forEach((text) => text.classList.add("is-visible"));
+        root
+          .querySelectorAll<HTMLElement>("[data-liquid]")
+          .forEach((frame) => frame.classList.add("is-atmo-active"));
+        root.querySelectorAll<HTMLElement>("[data-liquid] .liquid-media").forEach((media) => {
+          media.style.clipPath = "";
+        });
       }
     };
     const scheduleDepth = () => {
@@ -453,12 +610,19 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
         timerId = window.setTimeout(start, 250);
       };
       queueAfterHydration();
-      const events: (keyof WindowEventMap)[] = ["scroll", "wheel", "touchstart", "pointerdown", "pointermove", "keydown"];
-      events.forEach(evt => window.addEventListener(evt, start, { passive: true, once: true }));
+      const events: (keyof WindowEventMap)[] = [
+        "scroll",
+        "wheel",
+        "touchstart",
+        "pointerdown",
+        "pointermove",
+        "keydown",
+      ];
+      events.forEach((evt) => window.addEventListener(evt, start, { passive: true, once: true }));
       cancelScheduledDepth = () => {
         if (idleId !== undefined && win.cancelIdleCallback) win.cancelIdleCallback(idleId);
         if (timerId !== undefined) window.clearTimeout(timerId);
-        events.forEach(evt => window.removeEventListener(evt, start));
+        events.forEach((evt) => window.removeEventListener(evt, start));
       };
     };
     scheduleDepth();
@@ -487,9 +651,12 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
     let disposed = false;
     const animations: Animation[] = [];
     const animate = (selector: string, frames: Keyframe[], delay = 0, duration = 850) => {
-      root.querySelectorAll<HTMLElement>(selector).forEach(element => {
+      root.querySelectorAll<HTMLElement>(selector).forEach((element) => {
         const animation = element.animate(frames, {
-          duration, delay, easing: "cubic-bezier(.2,.8,.2,1)", fill: "both",
+          duration,
+          delay,
+          easing: "cubic-bezier(.2,.8,.2,1)",
+          fill: "both",
         });
         animation.pause();
         animations.push(animation);
@@ -498,33 +665,54 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
 
     const phone = window.matchMedia("(max-width: 700px)").matches;
     if (!isSubpage) {
-      animate(".hero-film-reveal", phone ? [
-        { clipPath: "inset(49.9% 50% round 999px)", offset: 0 },
-        { clipPath: "inset(49.9% 0% round 999px)", offset: .14 },
-        { clipPath: "inset(45% 0% round 999px)", offset: .30 },
-        { clipPath: "inset(22.5% 0% round 180px)", offset: .58 },
-        { clipPath: "inset(0% 0% round 0px)", offset: 1 },
-      ] : [
-        { clipPath: "inset(50% 49.9% round 999px)", offset: 0 },
-        { clipPath: "inset(0% 49.9% round 999px)", offset: .14 },
-        { clipPath: "inset(0% 46% round 999px)", offset: .30 },
-        { clipPath: "inset(0% 28% round 999px)", offset: .58 },
-        { clipPath: "inset(0% 0% round 0px)", offset: 1 },
-      ], 0, phone ? 650 : 1100);
-      animate(".header-inner", [
-        { opacity: 0, transform: "translateY(-35px)" },
-        { opacity: 1, transform: "translateY(0)" },
-      ], 140, 620);
+      animate(
+        ".hero-film-reveal",
+        phone
+          ? [
+              { clipPath: "inset(49.9% 50% round 999px)", offset: 0 },
+              { clipPath: "inset(49.9% 0% round 999px)", offset: 0.14 },
+              { clipPath: "inset(45% 0% round 999px)", offset: 0.3 },
+              { clipPath: "inset(22.5% 0% round 180px)", offset: 0.58 },
+              { clipPath: "inset(0% 0% round 0px)", offset: 1 },
+            ]
+          : [
+              { clipPath: "inset(50% 49.9% round 999px)", offset: 0 },
+              { clipPath: "inset(0% 49.9% round 999px)", offset: 0.14 },
+              { clipPath: "inset(0% 46% round 999px)", offset: 0.3 },
+              { clipPath: "inset(0% 28% round 999px)", offset: 0.58 },
+              { clipPath: "inset(0% 0% round 0px)", offset: 1 },
+            ],
+        0,
+        phone ? 650 : 1100,
+      );
+      animate(
+        ".header-inner",
+        [
+          { opacity: 0, transform: "translateY(-35px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        140,
+        620,
+      );
       [".hero-copy h1", ".hero-description", ".hero-actions"].forEach((selector, index) => {
-        animate(selector, [
-          { opacity: 0, transform: "translateY(28px)", clipPath: "inset(0 0 100% 0)" },
-          { opacity: 1, transform: "translateY(0)", clipPath: "inset(0 0 0% 0)" },
-        ], (phone ? 300 : 420) + index * 110);
+        animate(
+          selector,
+          [
+            { opacity: 0, transform: "translateY(28px)", clipPath: "inset(0 0 100% 0)" },
+            { opacity: 1, transform: "translateY(0)", clipPath: "inset(0 0 0% 0)" },
+          ],
+          (phone ? 300 : 420) + index * 110,
+        );
       });
-      animate(".hero-bottom", [
-        { opacity: 0, transform: "translateY(35px)" },
-        { opacity: 1, transform: "translateY(0)" },
-      ], 680, 620);
+      animate(
+        ".hero-bottom",
+        [
+          { opacity: 0, transform: "translateY(35px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        680,
+        620,
+      );
       animate(".scroll-line", [{ transform: "scaleY(0)" }, { transform: "scaleY(1)" }], 860, 720);
     } else {
       root.querySelectorAll<HTMLElement>(".subpage-hero-copy > *").forEach((element, index) => {
@@ -574,7 +762,12 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
         spin.finished.then(() => releaseAnimation(spin)).catch(() => {});
       });
     };
-    const onPreferenceChange = () => { if (preference.matches) { disposed = true; finish(); } };
+    const onPreferenceChange = () => {
+      if (preference.matches) {
+        disposed = true;
+        finish();
+      }
+    };
     let lastWidth = window.innerWidth;
     const onResize = () => {
       const width = window.innerWidth;
@@ -587,16 +780,20 @@ export function useAviationMotion(rootRef: RefObject<HTMLDivElement | null>, rou
     window.addEventListener("resize", onResize);
     Promise.race([
       document.fonts.ready,
-      new Promise<void>(resolve => { window.setTimeout(resolve, 60); }),
+      new Promise<void>((resolve) => {
+        window.setTimeout(resolve, 60);
+      }),
     ]).then(() => {
       if (disposed) return;
-      animations.forEach(animation => animation.play());
-      Promise.all(animations.map(animation => animation.finished)).then(() => {
-        animations.forEach(releaseAnimation);
-        startHeadingFlip();
-      }).catch(() => {
-        animations.forEach(releaseAnimation);
-      });
+      animations.forEach((animation) => animation.play());
+      Promise.all(animations.map((animation) => animation.finished))
+        .then(() => {
+          animations.forEach(releaseAnimation);
+          startHeadingFlip();
+        })
+        .catch(() => {
+          animations.forEach(releaseAnimation);
+        });
     });
 
     return () => {

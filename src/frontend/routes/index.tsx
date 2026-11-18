@@ -1,13 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import {
-  ArrowDown,
-  ArrowUpRight,
-  Building2,
-  Globe2,
-  Layers3,
-  Plane,
-} from "lucide-react";
+import { ArrowDown, ArrowUpRight, Building2, Globe2, Layers3, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   BlueprintSvg,
@@ -140,7 +133,13 @@ function Index() {
     video.loop = true;
 
     const tryPlay = () => {
-      if (playing && !reducedMotion && desktopVideo && heroInView && document.visibilityState !== "hidden") {
+      if (
+        playing &&
+        !reducedMotion &&
+        desktopVideo &&
+        heroInView &&
+        document.visibilityState !== "hidden"
+      ) {
         video.play().catch(() => {});
       } else {
         video.pause();
@@ -267,14 +266,19 @@ function Index() {
           <div className="hero-copy">
             <h1 className="hero-heading-stage">
               <span className="hero-heading-line">
-                <span className="hero-heading-flip" data-hero-flip="primary">CPA Aviation</span>
+                <span className="hero-heading-flip" data-hero-flip="primary">
+                  CPA Aviation
+                </span>
               </span>
               <span className="hero-heading-line">
-                <span className="hero-racing-title hero-heading-flip" data-hero-flip="secondary">Leasing Capital IFSC</span>
+                <span className="hero-racing-title hero-heading-flip" data-hero-flip="secondary">
+                  Leasing Capital IFSC
+                </span>
               </span>
             </h1>
             <p className="hero-description">
-              {LEGAL_NAME} focuses on aircraft operating lease activities and aviation asset structures from GIFT City, Gujarat.
+              {LEGAL_NAME} focuses on aircraft operating lease activities and aviation asset
+              structures from GIFT City, Gujarat.
             </p>
           </div>
         </div>
@@ -295,15 +299,19 @@ function Index() {
         <div className="overview-grid">
           <div className="reveal" data-liquid-text>
             <h2>
-              A Focused Approach<br />
+              A Focused Approach
+              <br />
               <span className="muted-heading">to Aircraft Leasing</span>
             </h2>
             <div className="editorial-copy">
               <p className="section-description">
-                {LEGAL_NAME} is an aircraft leasing company based in GIFT City, Gujarat, India, structured for aircraft leasing and aviation asset management opportunities through the IFSC framework.
+                {LEGAL_NAME} is an aircraft leasing company based in GIFT City, Gujarat, India,
+                structured for aircraft leasing and aviation asset management opportunities through
+                the IFSC framework.
               </p>
               <p className="section-description">
-                Review our statutory corporate particulars, incorporation record, and regulatory distinction between permitted operating activity and stated corporate objectives.
+                Review our statutory corporate particulars, incorporation record, and regulatory
+                distinction between permitted operating activity and stated corporate objectives.
               </p>
             </div>
             <Button asChild variant="navigation">
@@ -356,7 +364,10 @@ function Index() {
           <div className="leasing-grid">
             <figure className="leasing-figure m-0" data-liquid="leasing">
               <span className="liquid-frame leasing-frame">
-                <ResponsivePicture asset={LEASING_AIRCRAFT_VISUAL} className="leasing-image liquid-media" />
+                <ResponsivePicture
+                  asset={LEASING_AIRCRAFT_VISUAL}
+                  className="leasing-image liquid-media"
+                />
                 <span className="frame-atmosphere" aria-hidden="true">
                   <span className="frame-sunbeam" />
                   <span className="frame-metallic-sheen" />
@@ -367,15 +378,18 @@ function Index() {
             </figure>
             <div className="reveal" data-liquid-text>
               <h2>
-                Aircraft Operating<br />
+                Aircraft Operating
+                <br />
                 <span className="muted-heading">Lease</span>
               </h2>
               <div className="editorial-copy">
                 <p className="section-description">
-                  Aircraft operating leases provide an alternative to outright aircraft ownership, allowing aircraft to be deployed under agreed commercial lease arrangements.
+                  Aircraft operating leases provide an alternative to outright aircraft ownership,
+                  allowing aircraft to be deployed under agreed commercial lease arrangements.
                 </p>
                 <p className="section-description">
-                  {LEGAL_NAME} holds a Letter of Approval identifying operating lease for aircraft as an authorised operation, subject to applicable regulatory conditions.
+                  {LEGAL_NAME} holds a Letter of Approval identifying operating lease for aircraft
+                  as an authorised operation, subject to applicable regulatory conditions.
                 </p>
               </div>
               <div className="leasing-meta">
@@ -398,12 +412,15 @@ function Index() {
         </div>
         <div className="scope-header reveal">
           <h2>
-            Memorandum of Association<br />
+            Memorandum of Association
+            <br />
             <span className="muted-heading">Aviation Assets &amp; Scope</span>
           </h2>
           <div>
             <p className="scope-intro">
-              Summary of objectives stated in the company&apos;s Memorandum of Association. Activities beyond authorised aircraft operating lease remain subject to applicable regulatory approvals.
+              Summary of objectives stated in the company&apos;s Memorandum of Association.
+              Activities beyond authorised aircraft operating lease remain subject to applicable
+              regulatory approvals.
             </p>
             <div className="mt-4">
               <Button asChild variant="navigation">
@@ -422,10 +439,14 @@ function Index() {
             </div>
             <div className="scope-title">
               <h3>Aircraft Leasing &amp; Asset Management</h3>
-              <span className="scope-status scope-status--authorised">Operating lease authorised under LoA</span>
+              <span className="scope-status scope-status--authorised">
+                Operating lease authorised under LoA
+              </span>
             </div>
             <p className="scope-body">
-              Aircraft, helicopters, engines and related aviation assets form part of the company&apos;s stated business objectives, including acquisition, leasing and asset management.
+              Aircraft, helicopters, engines and related aviation assets form part of the
+              company&apos;s stated business objectives, including acquisition, leasing and asset
+              management.
             </p>
           </article>
           <article className="scope-band reveal">
@@ -438,7 +459,8 @@ function Index() {
               <span className="scope-status">Stated MoA object · Subject to approvals</span>
             </div>
             <p className="scope-body">
-              The company&apos;s stated objects include aviation asset financing and related ownership and financing structures.
+              The company&apos;s stated objects include aviation asset financing and related
+              ownership and financing structures.
             </p>
           </article>
           <article className="scope-band reveal">
@@ -451,7 +473,8 @@ function Index() {
               <span className="scope-status">Stated MoA object · Subject to requirements</span>
             </div>
             <p className="scope-body">
-              The company&apos;s stated objectives include SPVs, co-ownership and fractional participation models, subject to applicable regulatory requirements.
+              The company&apos;s stated objectives include SPVs, co-ownership and fractional
+              participation models, subject to applicable regulatory requirements.
             </p>
           </article>
         </div>
@@ -465,13 +488,16 @@ function Index() {
         <div className="approach-grid">
           <div className="reveal">
             <h2>
-              Clarity in<br />
+              Clarity in
+              <br />
               <span className="muted-heading">Every Structure</span>
             </h2>
           </div>
           <div className="editorial-copy reveal">
             <p className="section-description">
-              Aircraft leasing involves more than the aircraft itself. Ownership structures, contractual arrangements, lifecycle asset management and regulatory requirements all play a vital role.
+              Aircraft leasing involves more than the aircraft itself. Ownership structures,
+              contractual arrangements, lifecycle asset management and regulatory requirements all
+              play a vital role.
             </p>
             <div className="subpage-inline-links">
               <Button asChild variant="navigation">
@@ -494,7 +520,8 @@ function Index() {
             <div className="city-copy-panel reveal" data-liquid-text>
               <div key={activeScene.code} className="city-copy-stage">
                 <h2>
-                  {activeScene.headingTop}<br />
+                  {activeScene.headingTop}
+                  <br />
                   <span className="muted-heading">{activeScene.headingAccent}</span>
                 </h2>
                 <div className="editorial-copy">
@@ -526,7 +553,8 @@ function Index() {
                 <span className="city-deck liquid-media">
                   <span className="city-deck-track">
                     {GUJARAT_SCENES.map((scene, index) => {
-                      const offset = (index - cityIndex + GUJARAT_SCENES.length) % GUJARAT_SCENES.length;
+                      const offset =
+                        (index - cityIndex + GUJARAT_SCENES.length) % GUJARAT_SCENES.length;
                       return (
                         <button
                           key={scene.code}
@@ -534,7 +562,9 @@ function Index() {
                           className="city-deck-card"
                           data-pos={offset}
                           onClick={() =>
-                            setCityIndex(offset === 0 ? (cityIndex + 1) % GUJARAT_SCENES.length : index)
+                            setCityIndex(
+                              offset === 0 ? (cityIndex + 1) % GUJARAT_SCENES.length : index,
+                            )
                           }
                           aria-label={
                             offset === 0 ? `${scene.label} — show next view` : `Show ${scene.label}`

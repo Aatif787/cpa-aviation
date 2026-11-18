@@ -91,7 +91,9 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => {
-    const verificationToken = (import.meta.env["VITE_GOOGLE_SITE_VERIFICATION"] as string | undefined)?.trim();
+    const verificationToken = (
+      import.meta.env["VITE_GOOGLE_SITE_VERIFICATION"] as string | undefined
+    )?.trim();
 
     return {
       // Each content route, / included, sets its own head() via buildPageHead().
@@ -101,7 +103,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { title: SEO_TITLE },
         { name: "description", content: SEO_DESCRIPTION },
-        { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+        {
+          name: "robots",
+          content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        },
         { property: "og:title", content: SEO_TITLE },
         { property: "og:description", content: SEO_DESCRIPTION },
         { property: "og:type", content: "website" },
@@ -110,10 +115,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: SEO_TITLE },
         { name: "twitter:description", content: SEO_DESCRIPTION },
-        ...(verificationToken ? [{ name: "google-site-verification", content: verificationToken }] : []),
+        ...(verificationToken
+          ? [{ name: "google-site-verification", content: verificationToken }]
+          : []),
       ],
       links: [
-        { rel: "preload", href: "/fonts/Gambarino-Regular.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+        {
+          rel: "preload",
+          href: "/fonts/Gambarino-Regular.woff2",
+          as: "font",
+          type: "font/woff2",
+          crossOrigin: "anonymous",
+        },
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
         {
@@ -145,7 +158,9 @@ function RootShell({ children }: { children: ReactNode }) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap"
           media="print"
-          onLoad={e => { e.currentTarget.media = "all"; }}
+          onLoad={(e) => {
+            e.currentTarget.media = "all";
+          }}
         />
         <noscript>
           <link

@@ -69,15 +69,13 @@ function GiftCityPage() {
               GIFT City IFSC &amp; <span className="muted-heading">Regulatory Seat</span>
             </h1>
             <p className="lead-description">
-              Located in Gujarat International Finance Tec-City (GIFT SEZ), Gandhinagar — India&apos;s IFSC jurisdiction providing the statutory base and Letter of Approval framework for aircraft operating leasing.
+              Located in Gujarat International Finance Tec-City (GIFT SEZ), Gandhinagar —
+              India&apos;s IFSC jurisdiction providing the statutory base and Letter of Approval
+              framework for aircraft operating leasing.
             </p>
           </div>
           <div className="subpage-hero-visual">
-            <LiquidVisualFrame
-              liquidId="gift-hero"
-              asset={GIFT_CITY_VISUAL}
-              eager
-            />
+            <LiquidVisualFrame liquidId="gift-hero" asset={GIFT_CITY_VISUAL} eager />
           </div>
         </div>
       </section>
@@ -90,7 +88,8 @@ function GiftCityPage() {
           <div className="city-copy-panel reveal" data-liquid-text>
             <div key={activeScene.code} className="city-copy-stage">
               <h2>
-                {activeScene.headingTop}<br />
+                {activeScene.headingTop}
+                <br />
                 <span className="muted-heading">{activeScene.headingAccent}</span>
               </h2>
               <div className="editorial-copy">
@@ -115,7 +114,8 @@ function GiftCityPage() {
               <span className="city-deck liquid-media">
                 <span className="city-deck-track">
                   {GUJARAT_SCENES.map((scene, index) => {
-                    const offset = (index - cityIndex + GUJARAT_SCENES.length) % GUJARAT_SCENES.length;
+                    const offset =
+                      (index - cityIndex + GUJARAT_SCENES.length) % GUJARAT_SCENES.length;
                     return (
                       <button
                         key={scene.code}
@@ -123,12 +123,12 @@ function GiftCityPage() {
                         className="city-deck-card"
                         data-pos={offset}
                         onClick={() =>
-                          setCityIndex(offset === 0 ? (cityIndex + 1) % GUJARAT_SCENES.length : index)
+                          setCityIndex(
+                            offset === 0 ? (cityIndex + 1) % GUJARAT_SCENES.length : index,
+                          )
                         }
                         aria-label={
-                          offset === 0
-                            ? `${scene.label} — show next view`
-                            : `Show ${scene.label}`
+                          offset === 0 ? `${scene.label} — show next view` : `Show ${scene.label}`
                         }
                       >
                         <span className="city-deck-photo">
@@ -172,11 +172,14 @@ function GiftCityPage() {
         </div>
         <div className="scope-header reveal">
           <h2>
-            GIFT SEZ Approval &amp;<br />
+            GIFT SEZ Approval &amp;
+            <br />
             <span className="muted-heading">Regulatory Scope</span>
           </h2>
           <p className="scope-intro">
-            Registered inside GIFT Special Economic Zone, Gandhinagar under India&apos;s International Financial Services Centre regime. The particulars below reflect verified official corporate and SEZ Letter of Approval records.
+            Registered inside GIFT Special Economic Zone, Gandhinagar under India&apos;s
+            International Financial Services Centre regime. The particulars below reflect verified
+            official corporate and SEZ Letter of Approval records.
           </p>
         </div>
 
@@ -190,13 +193,22 @@ function GiftCityPage() {
           ))}
         </div>
 
-        <div className="compliance-callout reveal" role="note" aria-label="Letter of Approval Regulatory Conditions">
+        <div
+          className="compliance-callout reveal"
+          role="note"
+          aria-label="Letter of Approval Regulatory Conditions"
+        >
           <p className="compliance-callout-title">
             <ShieldCheck size={14} aria-hidden="true" />
             Regulatory Condition Governing Approval
           </p>
           <p>
-            The GIFT SEZ Letter of Approval authorises CPA Aviation Leasing Capital IFSC Private Limited for operating lease for aircraft strictly subject to the terms, ongoing compliance obligations, and regulatory conditions stated in the Letter of Approval. Broader business objects listed in the company&apos;s electronic Memorandum of Association remain subject to requisite statutory or IFSCA permissions before undertaking any regulated activity outside that approval.
+            The GIFT SEZ Letter of Approval authorises CPA Aviation Leasing Capital IFSC Private
+            Limited for operating lease for aircraft strictly subject to the terms, ongoing
+            compliance obligations, and regulatory conditions stated in the Letter of Approval.
+            Broader business objects listed in the company&apos;s electronic Memorandum of
+            Association remain subject to requisite statutory or IFSCA permissions before
+            undertaking any regulated activity outside that approval.
           </p>
         </div>
       </section>
@@ -246,4 +258,3 @@ function GiftCityPage() {
     </SiteShell>
   );
 }
-

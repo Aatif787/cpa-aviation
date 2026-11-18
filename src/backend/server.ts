@@ -38,7 +38,11 @@ function readEnvValue(env: unknown, key: string): string | undefined {
 
 function maybeRedirectSeoPaths(request: Request): Response | null {
   const url = new URL(request.url);
-  const forwardedProto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim().toLowerCase();
+  const forwardedProto = request.headers
+    .get("x-forwarded-proto")
+    ?.split(",")[0]
+    ?.trim()
+    .toLowerCase();
 
   if (!isLocalHost(url.hostname) && (url.protocol === "http:" || forwardedProto === "http")) {
     const httpsUrl = new URL(url.toString());
@@ -81,6 +85,8 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
     headers: {
       "content-type": "text/html; charset=utf-8",
       "x-robots-tag": "noindex, nofollow",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
     },
   });
 }
@@ -103,6 +109,8 @@ async function enhanceHtmlSeoResponse(
   const headers = new Headers(response.headers);
   headers.set("x-content-type-options", "nosniff");
   headers.set("referrer-policy", "strict-origin-when-cross-origin");
+  headers.set("x-frame-options", "SAMEORIGIN");
+  headers.set("permissions-policy", "camera=(), microphone=(), geolocation=()");
 
   const contentType = headers.get("content-type") ?? "";
   const contentEncoding = headers.get("content-encoding");
@@ -120,10 +128,7 @@ async function enhanceHtmlSeoResponse(
     const html = await response.text();
     const cleaned = html
       .replace(/<link[^>]+rel=["']canonical["'][^>]*>/gi, "")
-      .replace(
-        /<\/head>/i,
-        `<meta name="robots" content="noindex, nofollow" />\n</head>`,
-      );
+      .replace(/<\/head>/i, `<meta name="robots" content="noindex, nofollow" />\n</head>`);
     return new Response(cleaned, { status: 404, statusText: response.statusText, headers });
   }
 
@@ -177,7 +182,9 @@ async function enhanceHtmlSeoResponse(
       "<",
       "\\u003c",
     );
-    if (/<script id="cpa-structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/i.test(html)) {
+    if (
+      /<script id="cpa-structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/i.test(html)
+    ) {
       html = html.replace(
         /<script id="cpa-structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/i,
         `<script id="cpa-structured-data" type="application/ld+json">${hydratedJsonLd}</script>`,
@@ -192,7 +199,11 @@ async function enhanceHtmlSeoResponse(
       html = html.replace(/<\/head>/i, `${headAdditions.join("\n")}\n</head>`);
     }
 
-    return new Response(html, { status: response.status, statusText: response.statusText, headers });
+    return new Response(html, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
   }
 
   return new Response(response.body, {
@@ -252,6 +263,8 @@ export default {
         headers: {
           "content-type": "text/html; charset=utf-8",
           "x-robots-tag": "noindex, nofollow",
+          "x-content-type-options": "nosniff",
+          "x-frame-options": "SAMEORIGIN",
         },
       });
     }
