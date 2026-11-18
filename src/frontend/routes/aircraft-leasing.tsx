@@ -35,7 +35,10 @@ function AircraftLeasingPage() {
                 Aircraft Operating <span className="muted-heading">Lease</span>
               </h1>
               <p className="lead-description">
-                Under its GIFT SEZ Letter of Approval, {LEGAL_NAME} is authorised to undertake aircraft operating leases — enabling commercial operators to deploy aircraft capacity under fixed-term lease covenants without holding legal title on balance sheet.
+                Under its GIFT SEZ Letter of Approval, {LEGAL_NAME} is authorised to undertake
+                aircraft operating leases — enabling commercial operators to deploy aircraft
+                capacity under fixed-term lease covenants without holding legal title on balance
+                sheet.
               </p>
             </div>
             <div className="subpage-hero-visual">
@@ -58,12 +61,15 @@ function AircraftLeasingPage() {
         <div className="overview-grid">
           <div className="reveal" data-liquid-text>
             <h2>
-              Commercial &amp; Technical<br />
+              Commercial &amp; Technical
+              <br />
               <span className="muted-heading">Lease Architecture</span>
             </h2>
             <div className="editorial-copy">
               <p className="section-description">
-                An operating lease retains aircraft ownership with the lessor entity while granting quiet enjoyment and operational possession to the lessee airline for a defined term, subject to return condition covenants and airworthiness oversight.
+                An operating lease retains aircraft ownership with the lessor entity while granting
+                quiet enjoyment and operational possession to the lessee airline for a defined term,
+                subject to return condition covenants and airworthiness oversight.
               </p>
             </div>
             <div className="lease-mechanics-grid">
@@ -76,10 +82,7 @@ function AircraftLeasingPage() {
               ))}
             </div>
           </div>
-          <LiquidVisualFrame
-            liquidId="overview"
-            asset={LEASING_FLEET_VISUAL}
-          />
+          <LiquidVisualFrame liquidId="overview" asset={LEASING_FLEET_VISUAL} />
         </div>
       </section>
 
@@ -90,11 +93,13 @@ function AircraftLeasingPage() {
           </div>
           <div className="scope-header reveal">
             <h2>
-              Five-Stage Transaction<br />
+              Five-Stage Transaction
+              <br />
               <span className="muted-heading">Lifecycle Model</span>
             </h2>
             <p className="scope-intro">
-              An illustrative summary of standard commercial, technical, and IFSC regulatory stages involved in evaluating and administering an aircraft operating lease.
+              An illustrative summary of standard commercial, technical, and IFSC regulatory stages
+              involved in evaluating and administering an aircraft operating lease.
             </p>
           </div>
           <div className="process-timeline-grid reveal">
@@ -115,17 +120,23 @@ function AircraftLeasingPage() {
         </div>
         <div className="loa-comparison-grid reveal">
           <article className="regulatory-card">
-            <span className="regulatory-kicker regulatory-kicker--loa">Permitted Under Letter of Approval</span>
+            <span className="regulatory-kicker regulatory-kicker--loa">
+              Permitted Under Letter of Approval
+            </span>
             <h3>Operating Lease for Aircraft</h3>
             <p>
-              The company&apos;s GIFT SEZ Letter of Approval specifically identifies operating lease for aircraft as the authorised unit operation, exercisable subject to all statutory and IFSCA regulatory conditions stated in the approval letter.
+              The company&apos;s GIFT SEZ Letter of Approval specifically identifies operating lease
+              for aircraft as the authorised unit operation, exercisable subject to all statutory
+              and IFSCA regulatory conditions stated in the approval letter.
             </p>
           </article>
           <article className="regulatory-card">
             <span className="regulatory-kicker">Broader Stated e-MOA Capacity</span>
             <h3>Additional Aviation Objects</h3>
             <p>
-              Broader e-MOA objects such as helicopters, engine leasing outside bundled aircraft leases, aviation financing structures, and co-ownership or SPV participation models remain outside immediate LoA scope until separately permitted.
+              Broader e-MOA objects such as helicopters, engine leasing outside bundled aircraft
+              leases, aviation financing structures, and co-ownership or SPV participation models
+              remain outside immediate LoA scope until separately permitted.
             </p>
           </article>
         </div>
@@ -156,4 +167,3 @@ function AircraftLeasingPage() {
     </SiteShell>
   );
 }
-

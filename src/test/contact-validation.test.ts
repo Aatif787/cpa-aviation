@@ -33,7 +33,6 @@ describe("contactSchema", () => {
   });
 });
 
-
 describe("buildEnquiryMailto", () => {
   it("addresses the company inbox with the enquiry encoded", () => {
     const href = buildEnquiryMailto({
@@ -44,8 +43,12 @@ describe("buildEnquiryMailto", () => {
       message: "Requesting corporate details for operating lease.",
     });
 
-    expect(href.startsWith("mailto:cpaaviationleasing@gmail.com?subject=Lease%20%26%20finance&body=")).toBe(true);
-    expect(decodeURIComponent(href.split("body=")[1] ?? "")).toContain("Email: aarav@skybridge.example");
+    expect(
+      href.startsWith("mailto:cpaaviationleasing@gmail.com?subject=Lease%20%26%20finance&body="),
+    ).toBe(true);
+    expect(decodeURIComponent(href.split("body=")[1] ?? "")).toContain(
+      "Email: aarav@skybridge.example",
+    );
     expect(href).not.toContain("Company");
   });
 });

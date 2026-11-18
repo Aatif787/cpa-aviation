@@ -35,3 +35,7 @@ dist-ssr
 
 # Vercel build output
 .vercel
+
+# Local tool / deprecation flag artifacts
+0.26.0
+

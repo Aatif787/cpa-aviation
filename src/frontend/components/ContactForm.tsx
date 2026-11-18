@@ -23,7 +23,7 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
   const [error, setError] = useState<string | null>(null);
 
   const clearFieldError = (key: ContactField) => {
-    setFieldErrors(prev => {
+    setFieldErrors((prev) => {
       if (!(key in prev)) return prev;
       const next = { ...prev };
       delete next[key];
@@ -37,17 +37,18 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
     setStatus("idle");
     setError(null);
     clearFieldError("subject");
-    setForm(f => ({ ...f, subject: nextSubject }));
+    setForm((f) => ({ ...f, subject: nextSubject }));
   }, [prefilledSubject, initialSubject]);
 
-  const set = (k: ContactField) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const val = e.target.value;
-    setForm(f => ({ ...f, [k]: val }));
-    if (fieldErrors[k]) {
-      clearFieldError(k);
-    }
-    if (error) setError(null);
-  };
+  const set =
+    (k: ContactField) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const val = e.target.value;
+      setForm((f) => ({ ...f, [k]: val }));
+      if (fieldErrors[k]) {
+        clearFieldError(k);
+      }
+      if (error) setError(null);
+    };
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -56,7 +57,15 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
       const nextFieldErrors: Partial<Record<ContactField, string>> = {};
       for (const issue of parsed.error.issues) {
         const key = issue.path[0];
-        if (typeof key === "string" && !(key in nextFieldErrors) && (key === "name" || key === "company" || key === "email" || key === "subject" || key === "message")) {
+        if (
+          typeof key === "string" &&
+          !(key in nextFieldErrors) &&
+          (key === "name" ||
+            key === "company" ||
+            key === "email" ||
+            key === "subject" ||
+            key === "message")
+        ) {
           nextFieldErrors[key] = issue.message;
         }
       }
@@ -81,12 +90,17 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
     return (
       <div className="contact-form-done-card" role="status">
         <CheckCircle2 className="contact-done-icon" size={20} aria-hidden="true" />
-        <p className="contact-form-done">Your enquiry is ready in your email app. Please press send there to deliver it to CPA Aviation Leasing Capital IFSC Private Limited.</p>
+        <p className="contact-form-done">
+          Your enquiry is ready in your email app. Please press send there to deliver it to CPA
+          Aviation Leasing Capital IFSC Private Limited.
+        </p>
         <p className="contact-done-sub">
           If no email app opened, write directly to{" "}
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
         </p>
-        <Button type="button" variant="navigation" onClick={resetForm}>Edit enquiry</Button>
+        <Button type="button" variant="navigation" onClick={resetForm}>
+          Edit enquiry
+        </Button>
       </div>
     );
   }
@@ -95,7 +109,9 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
     <form className="contact-form" onSubmit={submit} noValidate>
       <div className="contact-form-row">
         <label>
-          <span>Full Name <abbr title="Required">*</abbr></span>
+          <span>
+            Full Name <abbr title="Required">*</abbr>
+          </span>
           <input
             value={form.name}
             onChange={set("name")}
@@ -106,10 +122,16 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
             aria-describedby={fieldErrors.name ? "contact-error-name" : undefined}
             required
           />
-          {fieldErrors.name && <span id="contact-error-name" className="contact-field-error">{fieldErrors.name}</span>}
+          {fieldErrors.name && (
+            <span id="contact-error-name" className="contact-field-error">
+              {fieldErrors.name}
+            </span>
+          )}
         </label>
         <label>
-          <span>Company <em className="contact-optional">(Optional)</em></span>
+          <span>
+            Company <em className="contact-optional">(Optional)</em>
+          </span>
           <input
             value={form.company}
             onChange={set("company")}
@@ -119,12 +141,18 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
             aria-invalid={Boolean(fieldErrors.company)}
             aria-describedby={fieldErrors.company ? "contact-error-company" : undefined}
           />
-          {fieldErrors.company && <span id="contact-error-company" className="contact-field-error">{fieldErrors.company}</span>}
+          {fieldErrors.company && (
+            <span id="contact-error-company" className="contact-field-error">
+              {fieldErrors.company}
+            </span>
+          )}
         </label>
       </div>
       <div className="contact-form-row">
         <label>
-          <span>Business Email <abbr title="Required">*</abbr></span>
+          <span>
+            Business Email <abbr title="Required">*</abbr>
+          </span>
           <input
             type="email"
             value={form.email}
@@ -136,10 +164,16 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
             aria-describedby={fieldErrors.email ? "contact-error-email" : undefined}
             required
           />
-          {fieldErrors.email && <span id="contact-error-email" className="contact-field-error">{fieldErrors.email}</span>}
+          {fieldErrors.email && (
+            <span id="contact-error-email" className="contact-field-error">
+              {fieldErrors.email}
+            </span>
+          )}
         </label>
         <label>
-          <span>Subject <abbr title="Required">*</abbr></span>
+          <span>
+            Subject <abbr title="Required">*</abbr>
+          </span>
           <input
             value={form.subject}
             onChange={set("subject")}
@@ -149,12 +183,18 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
             aria-describedby={fieldErrors.subject ? "contact-error-subject" : undefined}
             required
           />
-          {fieldErrors.subject && <span id="contact-error-subject" className="contact-field-error">{fieldErrors.subject}</span>}
+          {fieldErrors.subject && (
+            <span id="contact-error-subject" className="contact-field-error">
+              {fieldErrors.subject}
+            </span>
+          )}
         </label>
       </div>
       <label>
         <span className="contact-label-split">
-          <span>Message <abbr title="Required">*</abbr></span>
+          <span>
+            Message <abbr title="Required">*</abbr>
+          </span>
           <span className="contact-char-count">{form.message.length} / 1800</span>
         </span>
         <textarea
@@ -167,11 +207,21 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
           aria-describedby={fieldErrors.message ? "contact-error-message" : undefined}
           required
         />
-        {fieldErrors.message && <span id="contact-error-message" className="contact-field-error">{fieldErrors.message}</span>}
+        {fieldErrors.message && (
+          <span id="contact-error-message" className="contact-field-error">
+            {fieldErrors.message}
+          </span>
+        )}
       </label>
-      {error && <p className="contact-form-alert" role="alert">{error}</p>}
+      {error && (
+        <p className="contact-form-alert" role="alert">
+          {error}
+        </p>
+      )}
       <Button type="submit" variant="aviation" className="contact-submit-btn">
-        <span>Submit Enquiry <ArrowUpRight /></span>
+        <span>
+          Submit Enquiry <ArrowUpRight />
+        </span>
       </Button>
     </form>
   );

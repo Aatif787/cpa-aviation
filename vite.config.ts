@@ -32,13 +32,7 @@ export default defineConfig(({ command }) => ({
   },
   server: {
     watch: {
-      ignored: [
-        "**/.output/**",
-        "**/.nitro/**",
-        "**/.tanstack/**",
-        "**/dist/**",
-        "**/dist-ssr/**",
-      ],
+      ignored: ["**/.output/**", "**/.nitro/**", "**/.tanstack/**", "**/dist/**", "**/dist-ssr/**"],
     },
   },
 }));

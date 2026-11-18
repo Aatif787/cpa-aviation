@@ -17,9 +17,7 @@ const QUICK_ENQUIRY_SUBJECTS = [
 export const Route = createFileRoute("/contact")({
   validateSearch: (search: Record<string, unknown>): { subject?: string } => {
     const raw = search["subject"];
-    return typeof raw === "string" && raw.trim().length > 0
-      ? { subject: raw.trim() }
-      : {};
+    return typeof raw === "string" && raw.trim().length > 0 ? { subject: raw.trim() } : {};
   },
   head: () => buildPageHead("/contact"),
   component: ContactPage,
@@ -63,16 +61,21 @@ function ContactPage() {
               Corporate Enquiries
             </p>
             <h1 className="contact-reveal-up">
-              Discuss an Aviation<br />
+              Discuss an Aviation
+              <br />
               <span className="muted-heading">Leasing Enquiry</span>
             </h1>
             <p className="contact-intro contact-reveal-right">
-              For business enquiries, aircraft operating lease discussions, or verified corporate document requests, reach out directly to {LEGAL_NAME} in GIFT City SEZ.
+              For business enquiries, aircraft operating lease discussions, or verified corporate
+              document requests, reach out directly to {LEGAL_NAME} in GIFT City SEZ.
             </p>
           </div>
 
           <div className="contact-page-grid">
-            <aside className="contact-info-panel" aria-label="Registered Office and Corporate Contact">
+            <aside
+              className="contact-info-panel"
+              aria-label="Registered Office and Corporate Contact"
+            >
               <div className="contact-info-card">
                 <p className="eyebrow">Direct Corporate Channels</p>
                 <h2>{LEGAL_NAME}</h2>
@@ -146,7 +149,8 @@ function ContactPage() {
               <article className="contact-scope-item">
                 <h3>Operating Lease Enquiries</h3>
                 <p>
-                  Share airline or lessor counterparty details regarding aircraft operating lease requirements conducted under our GIFT SEZ Letter of Approval.
+                  Share airline or lessor counterparty details regarding aircraft operating lease
+                  requirements conducted under our GIFT SEZ Letter of Approval.
                 </p>
                 <div className="mt-3">
                   <Link to="/aircraft-leasing" className="home-preview-link">
@@ -157,7 +161,9 @@ function ContactPage() {
               <article className="contact-scope-item">
                 <h3>Verified Document Disclosures</h3>
                 <p>
-                  Requests for the Certificate of Incorporation, Memorandum of Association, or Letter of Approval are reviewed against institutional credentials, excluding personal identification numbers.
+                  Requests for the Certificate of Incorporation, Memorandum of Association, or
+                  Letter of Approval are reviewed against institutional credentials, excluding
+                  personal identification numbers.
                 </p>
                 <div className="mt-3">
                   <Link to="/about" className="home-preview-link">
@@ -168,7 +174,9 @@ function ContactPage() {
               <article className="contact-scope-item">
                 <h3>Regulatory Scope Boundary</h3>
                 <p>
-                  Operating lease for aircraft remains subject to regulatory conditions stated in the GIFT SEZ Letter of Approval; broader e-MOA objects require separate approvals where applicable.
+                  Operating lease for aircraft remains subject to regulatory conditions stated in
+                  the GIFT SEZ Letter of Approval; broader e-MOA objects require separate approvals
+                  where applicable.
                 </p>
                 <div className="mt-3">
                   <Link to="/gift-city" className="home-preview-link">
@@ -183,4 +191,3 @@ function ContactPage() {
     </SiteShell>
   );
 }
-

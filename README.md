@@ -24,12 +24,61 @@ Available scripts:
 
 - TanStack Start & TanStack Router
 - TypeScript
-- React
+- React 19
 - Tailwind CSS
 - GSAP & Lenis
 
-## Deployment (VPS + nginx)
+## Deployment
 
-`npm run build` writes `.output/`: static files in `.output/public/` and the Node server in `.output/server/index.mjs`. Copy `.output/` to the server, run `PORT=3000 node .output/server/index.mjs` (under pm2 or systemd), and reverse-proxy nginx to it with `proxy_set_header X-Forwarded-Proto $scheme;`.
+### Hostinger VPS (Recommended)
 
-Optional environment variables: `SITE_URL` (canonical origin) and `GOOGLE_SITE_VERIFICATION`.
+1. Clone the repository on your Hostinger VPS:
+   ```sh
+   git clone <repo-url>
+   cd cpa-aviation
+   ```
+2. Install dependencies & build:
+   ```sh
+   npm install
+   npm run build
+   ```
+3. Start with PM2:
+   ```sh
+   npm install -g pm2
+   pm2 start ecosystem.config.cjs
+   pm2 save
+   pm2 startup
+   ```
+4. Point Nginx reverse proxy to `http://127.0.0.1:3000` with:
+   ```nginx
+   location / {
+       proxy_pass http://127.0.0.1:3000;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection 'upgrade';
+       proxy_set_header Host $host;
+       proxy_set_header X-Forwarded-Proto $scheme;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_cache_bypass $http_upgrade;
+   }
+   ```
+
+### Hostinger hPanel (Node.js Application)
+
+1. Upload project files or connect your Git repository.
+2. In **hPanel > Advanced > Node.js**:
+   - **Node.js version**: 20.x or 22.x
+   - **Application root**: `public_html` (or your app directory)
+   - **Application startup file**: `.output/server/index.mjs`
+3. Click **npm install**, then run `npm run build` in the terminal / hPanel console.
+4. Click **Start** / **Restart Application**.
+
+### Vercel Deployment
+
+Vercel builds automatically via `vercel.json` and the built-in Nitro Vercel preset (`NITRO_PRESET=vercel npm run build`).
+
+### Optional Environment Variables
+
+- `PORT` — Server port (default: `3000`)
+- `SITE_URL` — Canonical domain (e.g. `https://cpaaviation.in`)
+- `GOOGLE_SITE_VERIFICATION` — Google Search Console token

@@ -28,15 +28,14 @@ function AviationAssetsPage() {
               Aviation Assets &amp; <span className="muted-heading">Portfolio Scope</span>
             </h1>
             <p className="lead-description">
-              Overview of commercial aircraft, helicopters, propulsion engines, and allied aviation assets stated in the electronic Memorandum of Association (e-MOA) of {LEGAL_NAME}, alongside how these objectives are distinguished from the company&apos;s present Letter of Approval.
+              Overview of commercial aircraft, helicopters, propulsion engines, and allied aviation
+              assets stated in the electronic Memorandum of Association (e-MOA) of {LEGAL_NAME},
+              alongside how these objectives are distinguished from the company&apos;s present
+              Letter of Approval.
             </p>
           </div>
           <div className="subpage-hero-visual">
-            <LiquidVisualFrame
-              liquidId="assets-hero"
-              asset={ASSETS_HERO_VISUAL}
-              eager
-            />
+            <LiquidVisualFrame liquidId="assets-hero" asset={ASSETS_HERO_VISUAL} eager />
           </div>
         </div>
       </section>
@@ -47,11 +46,15 @@ function AviationAssetsPage() {
         </div>
         <div className="scope-header reveal">
           <h2>
-            Memorandum of Association<br />
+            Memorandum of Association
+            <br />
             <span className="muted-heading">Asset Classes</span>
           </h2>
           <p className="scope-intro">
-            The classifications below summarise aviation asset categories referenced in the company&apos;s e-MOA. Only operating lease for aircraft falls within the present GIFT SEZ Letter of Approval; broader classes remain constitutional objectives subject to requisite approvals.
+            The classifications below summarise aviation asset categories referenced in the
+            company&apos;s e-MOA. Only operating lease for aircraft falls within the present GIFT
+            SEZ Letter of Approval; broader classes remain constitutional objectives subject to
+            requisite approvals.
           </p>
         </div>
 
@@ -92,15 +95,19 @@ function AviationAssetsPage() {
             />
             <div className="reveal" data-liquid-text>
               <h2>
-                Acquisition, Management &amp;<br />
+                Acquisition, Management &amp;
+                <br />
                 <span className="muted-heading">Financing Objectives</span>
               </h2>
               <div className="editorial-copy">
                 <p className="section-description">
-                  While our e-MOA sets out corporate objects encompassing asset acquisition, technical lifecycle management, and aviation financing, operational deployment is sequenced strictly in accordance with IFSC regulatory clearances.
+                  While our e-MOA sets out corporate objects encompassing asset acquisition,
+                  technical lifecycle management, and aviation financing, operational deployment is
+                  sequenced strictly in accordance with IFSC regulatory clearances.
                 </p>
                 <p className="section-description">
-                  Listed e-MOA objects represent constitutional powers of the company rather than active, separately licensed product offerings or an existing managed fleet.
+                  Listed e-MOA objects represent constitutional powers of the company rather than
+                  active, separately licensed product offerings or an existing managed fleet.
                 </p>
               </div>
             </div>
@@ -113,9 +120,7 @@ function AviationAssetsPage() {
                   <span className="scope-code">{item.code}</span>
                   <span
                     className={
-                      item.code === "02"
-                        ? "scope-status scope-status--authorised"
-                        : "scope-status"
+                      item.code === "02" ? "scope-status scope-status--authorised" : "scope-status"
                     }
                   >
                     {item.status}
@@ -135,11 +140,14 @@ function AviationAssetsPage() {
         </div>
         <div className="scope-header reveal">
           <h2>
-            Ownership &amp;<br />
+            Ownership &amp;
+            <br />
             <span className="muted-heading">Participation Structures</span>
           </h2>
           <p className="scope-intro">
-            Constitutional provisions permit structuring asset holdings through dedicated vehicles and co-ownership models where legally compliant, without offering public investment products or implied returns.
+            Constitutional provisions permit structuring asset holdings through dedicated vehicles
+            and co-ownership models where legally compliant, without offering public investment
+            products or implied returns.
           </p>
         </div>
 
@@ -156,13 +164,20 @@ function AviationAssetsPage() {
           ))}
         </div>
 
-        <div className="compliance-callout reveal" role="note" aria-label="Regulatory boundary disclosure">
+        <div
+          className="compliance-callout reveal"
+          role="note"
+          aria-label="Regulatory boundary disclosure"
+        >
           <p className="compliance-callout-title">
             <ShieldAlert size={14} aria-hidden="true" />
             Regulatory Distinction &amp; Disclosure Notice
           </p>
           <p>
-            References on this page to helicopters, engines, components, asset financing, co-ownership, or fractional participation reflect objects stated in {LEGAL_NAME}&apos;s e-MOA. They do not represent separate IFSCA permissions, active managed fleets, or solicitations of investment or guaranteed returns.
+            References on this page to helicopters, engines, components, asset financing,
+            co-ownership, or fractional participation reflect objects stated in {LEGAL_NAME}&apos;s
+            e-MOA. They do not represent separate IFSCA permissions, active managed fleets, or
+            solicitations of investment or guaranteed returns.
           </p>
         </div>
 
@@ -182,4 +197,3 @@ function AviationAssetsPage() {
     </SiteShell>
   );
 }
-

@@ -123,9 +123,22 @@ export function PageBreadcrumbs({ currentLabel }: { currentLabel: string }) {
 
 export function BlueprintSvg() {
   return (
-    <svg className="blueprint" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+    <svg
+      className="blueprint"
+      viewBox="0 0 1200 620"
+      preserveAspectRatio="xMidYMid meet"
+      aria-hidden="true"
+      focusable="false"
+    >
       <defs>
-        <linearGradient id="bp-sheen-grad" gradientUnits="userSpaceOnUse" x1="-460" y1="0" x2="-140" y2="0">
+        <linearGradient
+          id="bp-sheen-grad"
+          gradientUnits="userSpaceOnUse"
+          x1="-460"
+          y1="0"
+          x2="-140"
+          y2="0"
+        >
           <stop offset="0" className="bp-sheen-edge" />
           <stop offset=".5" className="bp-sheen-core" />
           <stop offset="1" className="bp-sheen-edge" />
@@ -138,7 +151,10 @@ export function BlueprintSvg() {
         </radialGradient>
       </defs>
       {/* Structural airframe contours & blueprint stations */}
-      <path className="bp-line" d="M1100 310 C1052 282 986 272 892 272 L340 272 C252 272 178 284 132 296 L132 324 C178 336 252 348 340 348 L892 348 C986 348 1052 338 1100 310 Z" />
+      <path
+        className="bp-line"
+        d="M1100 310 C1052 282 986 272 892 272 L340 272 C252 272 178 284 132 296 L132 324 C178 336 252 348 340 348 L892 348 C986 348 1052 338 1100 310 Z"
+      />
       <path className="bp-line" d="M648 272 L420 96 L378 102 L498 272 Z" />
       <path className="bp-line" d="M648 348 L420 524 L378 518 L498 348 Z" />
       <path className="bp-line" d="M246 288 L152 198 L122 204 L192 288 Z" />
@@ -166,29 +182,93 @@ export function BlueprintSvg() {
       {/* 1-second blinking aviation beacon and strobe lights */}
       <g className="bp-beacons">
         {/* Dorsal fuselage anti-collision beacon */}
-        <g className="bp-beacon-group" style={{ transformOrigin: '399px 310px' }}>
-          <circle className="bp-beacon-halo" cx="399" cy="310" r="24" fill="url(#bp-beacon-pulse)" />
-          <circle className="bp-beacon" cx="399" cy="310" r="5" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+        <g className="bp-beacon-group" style={{ transformOrigin: "399px 310px" }}>
+          <circle
+            className="bp-beacon-halo"
+            cx="399"
+            cy="310"
+            r="24"
+            fill="url(#bp-beacon-pulse)"
+          />
+          <circle
+            className="bp-beacon"
+            cx="399"
+            cy="310"
+            r="5"
+            fill="#FFFFFF"
+            stroke="#E6CA65"
+            strokeWidth="1.5"
+          />
         </g>
         {/* Port (Upper) wingtip strobe / navigation light */}
-        <g className="bp-beacon-group" style={{ transformOrigin: '420px 96px' }}>
+        <g className="bp-beacon-group" style={{ transformOrigin: "420px 96px" }}>
           <circle className="bp-beacon-halo" cx="420" cy="96" r="20" fill="url(#bp-beacon-pulse)" />
-          <circle className="bp-beacon" cx="420" cy="96" r="4.5" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+          <circle
+            className="bp-beacon"
+            cx="420"
+            cy="96"
+            r="4.5"
+            fill="#FFFFFF"
+            stroke="#E6CA65"
+            strokeWidth="1.5"
+          />
         </g>
         {/* Starboard (Lower) wingtip strobe / navigation light */}
-        <g className="bp-beacon-group" style={{ transformOrigin: '420px 524px' }}>
-          <circle className="bp-beacon-halo" cx="420" cy="524" r="20" fill="url(#bp-beacon-pulse)" />
-          <circle className="bp-beacon" cx="420" cy="524" r="4.5" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+        <g className="bp-beacon-group" style={{ transformOrigin: "420px 524px" }}>
+          <circle
+            className="bp-beacon-halo"
+            cx="420"
+            cy="524"
+            r="20"
+            fill="url(#bp-beacon-pulse)"
+          />
+          <circle
+            className="bp-beacon"
+            cx="420"
+            cy="524"
+            r="4.5"
+            fill="#FFFFFF"
+            stroke="#E6CA65"
+            strokeWidth="1.5"
+          />
         </g>
         {/* Tail white strobe beacon */}
-        <g className="bp-beacon-group" style={{ transformOrigin: '132px 310px' }}>
-          <circle className="bp-beacon-halo" cx="132" cy="310" r="18" fill="url(#bp-beacon-pulse)" />
-          <circle className="bp-beacon" cx="132" cy="310" r="4" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+        <g className="bp-beacon-group" style={{ transformOrigin: "132px 310px" }}>
+          <circle
+            className="bp-beacon-halo"
+            cx="132"
+            cy="310"
+            r="18"
+            fill="url(#bp-beacon-pulse)"
+          />
+          <circle
+            className="bp-beacon"
+            cx="132"
+            cy="310"
+            r="4"
+            fill="#FFFFFF"
+            stroke="#E6CA65"
+            strokeWidth="1.5"
+          />
         </g>
         {/* Forward nose marker light */}
-        <g className="bp-beacon-group" style={{ transformOrigin: '1100px 310px' }}>
-          <circle className="bp-beacon-halo" cx="1100" cy="310" r="20" fill="url(#bp-beacon-pulse)" />
-          <circle className="bp-beacon" cx="1100" cy="310" r="4.5" fill="#FFFFFF" stroke="#E6CA65" strokeWidth="1.5" />
+        <g className="bp-beacon-group" style={{ transformOrigin: "1100px 310px" }}>
+          <circle
+            className="bp-beacon-halo"
+            cx="1100"
+            cy="310"
+            r="20"
+            fill="url(#bp-beacon-pulse)"
+          />
+          <circle
+            className="bp-beacon"
+            cx="1100"
+            cy="310"
+            r="4.5"
+            fill="#FFFFFF"
+            stroke="#E6CA65"
+            strokeWidth="1.5"
+          />
         </g>
       </g>
       {/* Light sweep pass */}
@@ -203,7 +283,13 @@ export function BlueprintSvg() {
 
 export function FlightPathSvg() {
   return (
-    <svg className="flight-path" viewBox="0 0 1200 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+    <svg
+      className="flight-path"
+      viewBox="0 0 1200 460"
+      preserveAspectRatio="xMidYMid meet"
+      aria-hidden="true"
+      focusable="false"
+    >
       <defs>
         <linearGradient id="fp-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0">
           <stop offset="0" className="fp-edge" />
@@ -263,22 +349,45 @@ export function CharterSkyBackdrop({
           />
         </picture>
       ))}
-      <svg className="contact-charter" viewBox="0 0 1600 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      <svg
+        className="contact-charter"
+        viewBox="0 0 1600 520"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+        focusable="false"
+      >
         <defs>
-          <linearGradient id="cc-route-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="0">
+          <linearGradient
+            id="cc-route-grad"
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            y1="0"
+            x2="1600"
+            y2="0"
+          >
             <stop offset="0" stopColor="currentColor" stopOpacity="0" />
             <stop offset=".16" stopColor="currentColor" stopOpacity=".28" />
             <stop offset=".84" stopColor="currentColor" stopOpacity=".28" />
             <stop offset="1" stopColor="currentColor" stopOpacity="0" />
           </linearGradient>
-          <linearGradient id="cc-trail-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="0">
+          <linearGradient
+            id="cc-trail-grad"
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            y1="0"
+            x2="1600"
+            y2="0"
+          >
             <stop offset="0" stopColor="#a3752c" stopOpacity="0" />
             <stop offset=".35" stopColor="#a3752c" stopOpacity=".52" />
             <stop offset=".85" stopColor="#1e1b18" stopOpacity=".25" />
             <stop offset="1" stopColor="#1e1b18" stopOpacity="0" />
           </linearGradient>
         </defs>
-        <path className="cc-arc" d="M-60 320 C320 245 620 198 960 208 C1260 217 1460 178 1660 124" />
+        <path
+          className="cc-arc"
+          d="M-60 320 C320 245 620 198 960 208 C1260 217 1460 178 1660 124"
+        />
         <path className="cc-route" d="M-80 212 C280 160 560 92 880 116 C1180 138 1410 88 1680 46" />
         <path className="cc-trail" d="M-80 212 C280 160 560 92 880 116 C1180 138 1410 88 1680 46" />
         <g className="cc-waypoint" transform="translate(462 117)">
@@ -292,10 +401,22 @@ export function CharterSkyBackdrop({
         <g className="cc-plane" transform="translate(880 116) rotate(-1)">
           <g transform="scale(1.38)">
             <path className="cc-plane-contrail" d="M-132 -1.6 L-20 -0.6 L-20 0.6 L-132 1.6 Z" />
-            <path className="cc-plane-wings" d="M4 0 L-9 -22 L-13.5 -21.2 L-5 0 L-13.5 21.2 L-9 22 Z" />
-            <path className="cc-plane-tail" d="M-15 0 L-21.5 -8 L-24 -7.5 L-19.5 0 L-24 7.5 L-21.5 8 Z" />
-            <path className="cc-plane-body" d="M23 0 C17.5 -2.4 10 -2.7 -18 -1.8 L-23.5 0 L-18 1.8 C10 2.7 17.5 2.4 23 0 Z" />
-            <path className="cc-plane-cockpit" d="M16.5 -0.9 C19.5 -0.6 20.8 0 19.5 0.6 C18.2 0.9 16.5 0.9 16.5 -0.9 Z" />
+            <path
+              className="cc-plane-wings"
+              d="M4 0 L-9 -22 L-13.5 -21.2 L-5 0 L-13.5 21.2 L-9 22 Z"
+            />
+            <path
+              className="cc-plane-tail"
+              d="M-15 0 L-21.5 -8 L-24 -7.5 L-19.5 0 L-24 7.5 L-21.5 8 Z"
+            />
+            <path
+              className="cc-plane-body"
+              d="M23 0 C17.5 -2.4 10 -2.7 -18 -1.8 L-23.5 0 L-18 1.8 C10 2.7 17.5 2.4 23 0 Z"
+            />
+            <path
+              className="cc-plane-cockpit"
+              d="M16.5 -0.9 C19.5 -0.6 20.8 0 19.5 0.6 C18.2 0.9 16.5 0.9 16.5 -0.9 Z"
+            />
             <ellipse className="cc-plane-engine" cx="-9.5" cy="-3.8" rx="3.4" ry="1.25" />
             <ellipse className="cc-plane-engine" cx="-9.5" cy="3.8" rx="3.4" ry="1.25" />
           </g>
@@ -432,7 +553,10 @@ export function SiteShell({
         <div className="atmo-cool-haze" data-atmo-haze />
       </div>
 
-      <header ref={headerRef} className={`site-header${overHeroHeader ? "" : " site-header--solid"}`}>
+      <header
+        ref={headerRef}
+        className={`site-header${overHeroHeader ? "" : " site-header--solid"}`}
+      >
         <div className="page-width header-inner">
           <Wordmark
             onClick={() => {
@@ -479,7 +603,11 @@ export function SiteShell({
         </div>
 
         {parentPanelOpen && (
-          <section id="parent-company-panel" className="parent-panel" aria-label="Parent company overview">
+          <section
+            id="parent-company-panel"
+            className="parent-panel"
+            aria-label="Parent company overview"
+          >
             <div className="page-width">
               <div className="parent-panel-card">
                 <div className="parent-panel-body">
@@ -489,8 +617,8 @@ export function SiteShell({
                     <h2 className="parent-panel-headline">Building the Foundations of Progress.</h2>
                   </div>
                   <p className="parent-panel-overview">
-                    C P Arora Private Limited is an infrastructure company with experience across highways, airport
-                    infrastructure and urban development.
+                    C P Arora Private Limited is an infrastructure company with experience across
+                    highways, airport infrastructure and urban development.
                   </p>
                   <div className="parent-panel-rule" aria-hidden="true" />
                   <p className="parent-panel-supporting">
@@ -543,8 +671,8 @@ export function SiteShell({
                   <p className="parent-panel-name">C P Arora Private Limited</p>
                   <p className="parent-panel-headline">Building the Foundations of Progress.</p>
                   <p className="parent-panel-overview">
-                    C P Arora Private Limited is an infrastructure company with experience across highways, airport
-                    infrastructure and urban development.
+                    C P Arora Private Limited is an infrastructure company with experience across
+                    highways, airport infrastructure and urban development.
                   </p>
                   <div className="parent-panel-rule" aria-hidden="true" />
                   <p className="parent-panel-supporting">
