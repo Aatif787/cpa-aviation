@@ -134,13 +134,13 @@ function LeadershipPage() {
               </h2>
               <p className="scope-intro">
                 Senior leadership team overseeing commercial development, operational execution,
-                international corporate affairs, statutory governance, and airport turnaround
+                international corporate affairs, statutory governance, and fleet operations
                 workflows.
               </p>
             </div>
           </div>
 
-          {/* 6-Director Directorate Grid (3 columns on desktop, 2 on tablet, 1 on mobile) */}
+          {/* 4-Executive Directorate Grid (2 Columns × 2 Rows on Desktop & Tablet, 1 on Mobile) */}
           <div className="directorate-cards-grid">
             {team.map((member) => (
               <article key={member.id} className="director-dossier-card reveal">
