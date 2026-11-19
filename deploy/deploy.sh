@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
-# Build and (re)start cpaleasing.com on the VPS.
+# Build cpaleasing.com as a fully static site on the VPS.
 # Run:  bash /app/cpa-aviation/deploy/deploy.sh
+# Nginx serves /app/cpa-aviation/site directly — no Node server, no PM2, no reload needed.
 # Does NOT touch Nginx or SSL — those are managed by hand.
 set -euo pipefail
 
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BRANCH="${BRANCH:-main}"
-PORT=3003
 SITE_URL="https://www.cpaleasing.com"
+LIVE_DIR="$APP_DIR/site"
 
 cd "$APP_DIR"
 echo "==> $APP_DIR  (branch: $BRANCH)"
@@ -26,21 +27,23 @@ echo "    now at $(git log -1 --format='%h %s')"
 echo "==> Installing dependencies"
 npm ci --no-audit --no-fund
 
-echo "==> Building (vite build + prerender)"
-# SITE_URL / VITE_SITE_URL set the canonical, Open Graph and robots/sitemap URLs.
+echo "==> Building (vite build + prerender to static HTML)"
+# SITE_URL / VITE_SITE_URL set the canonical, Open Graph, robots and sitemap URLs.
+# The prerender step briefly runs an internal server on port 4399 to render each page.
 SITE_URL="$SITE_URL" VITE_SITE_URL="$SITE_URL" NITRO_PRESET=node-server npm run build
 
-echo "==> Starting / reloading with PM2"
-pm2 startOrReload deploy/ecosystem.config.cjs --update-env
-pm2 save
-
-echo "==> Health check on 127.0.0.1:$PORT"
-for i in $(seq 1 15); do
-  if curl -fs -o /dev/null -H "X-Forwarded-Proto: https" "http://127.0.0.1:$PORT/"; then
-    echo "    OK — site is responding"
-    exit 0
+for f in index.html contact/index.html 404.html sitemap.xml; do
+  if [ ! -f ".output/public/$f" ]; then
+    echo "    FAILED — .output/public/$f missing; live site left unchanged" >&2
+    exit 1
   fi
-  sleep 1
 done
-echo "    FAILED — check: pm2 logs cpa-aviation --lines 100" >&2
-exit 1
+
+echo "==> Publishing to $LIVE_DIR"
+# Copy first, then swap directories, so visitors never see a half-built site.
+rm -rf "$LIVE_DIR.new" "$LIVE_DIR.old"
+cp -a .output/public "$LIVE_DIR.new"
+if [ -d "$LIVE_DIR" ]; then mv "$LIVE_DIR" "$LIVE_DIR.old"; fi
+mv "$LIVE_DIR.new" "$LIVE_DIR"
+rm -rf "$LIVE_DIR.old"
+echo "    OK — static site published ($(find "$LIVE_DIR" -name index.html | wc -l) pages)"
