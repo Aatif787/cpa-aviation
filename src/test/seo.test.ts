@@ -21,6 +21,12 @@ describe("SEO utilities", () => {
     expect(resolveRequestOrigin("http://localhost:4173/", "https://cpaaviation.in/")).toBe(
       "https://cpaaviation.in",
     );
+    expect(resolveRequestOrigin("http://127.0.0.1:3000/", null, "https", "cpaaviation.in")).toBe(
+      "https://cpaaviation.in",
+    );
+    expect(
+      resolveRequestOrigin("http://127.0.0.1:3000/", null, "https", "cpaaviation.in:443"),
+    ).toBe("https://cpaaviation.in");
   });
 
   it("generates valid robots.txt and XML sitemap for all 7 dedicated routes", () => {

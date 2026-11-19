@@ -32,6 +32,13 @@ Available scripts:
 
 ### Hostinger VPS (Recommended)
 
+The production site (www.cpaleasing.com) is deployed as a **fully static site served by Nginx** — no
+Node server or PM2. `npm run build` prerenders every page plus `sitemap.xml`, `robots.txt` and
+`404.html` into `.output/public`; `deploy/deploy.sh` publishes that to `site/`. See
+[`deploy/README.md`](deploy/README.md) for the full guide and Nginx config.
+
+The older Node/PM2 approach below (and the root `ecosystem.config.cjs`) is no longer used:
+
 1. Clone the repository on your Hostinger VPS:
    ```sh
    git clone <repo-url>

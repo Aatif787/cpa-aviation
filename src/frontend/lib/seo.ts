@@ -151,14 +151,36 @@ export function resolveRequestOrigin(
   requestUrl: string,
   configuredSiteUrl?: string | null,
   forwardedProto?: string | null,
+  forwardedHost?: string | null,
 ): string {
   const configured = normalizeOrigin(configuredSiteUrl);
   if (configured) return configured;
 
   const parsed = new URL(requestUrl);
+  if (forwardedHost) {
+    const host = forwardedHost.split(",")[0]?.trim();
+    if (host) {
+      if (host.includes(":")) {
+        const [h, p] = host.split(":");
+        parsed.hostname = h ?? "";
+        parsed.port = p === "80" || p === "443" ? "" : (p ?? "");
+      } else {
+        parsed.hostname = host;
+        parsed.port = "";
+      }
+    }
+  }
+
   const proto = forwardedProto?.split(",")[0]?.trim().toLowerCase();
-  if (!isLocalHost(parsed.hostname) && (parsed.protocol === "http:" || proto === "http")) {
+  const effectiveProto = proto || parsed.protocol.replace(":", "");
+  if (!isLocalHost(parsed.hostname) || effectiveProto === "https") {
     parsed.protocol = "https:";
+    if (
+      !forwardedHost &&
+      (parsed.port === "80" || parsed.port === "443" || parsed.port === "3000")
+    ) {
+      parsed.port = "";
+    }
   }
   return parsed.origin;
 }

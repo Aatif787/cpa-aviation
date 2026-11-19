@@ -284,16 +284,6 @@ export const LEADERSHIP_PROFILES: readonly LeadershipProfile[] = [
     monogram: "AA",
   },
   {
-    id: "angel-thomas",
-    name: "Angel Thomas",
-    designation: "HEAD, AIRPORT OPERATIONS",
-    description:
-      "Oversees operational management and project execution across airport and aviation infrastructure operations.",
-    imageSrc: "/leadership/angel-thomas.jpg",
-    imageWebp: "/leadership/angel-thomas.webp",
-    monogram: "AT",
-  },
-  {
     id: "misha-singh",
     name: "Misha Singh",
     designation: "MANAGER OPERATIONS",

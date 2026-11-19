@@ -39,3 +39,8 @@ dist-ssr
 # Local tool / deprecation flag artifacts
 0.26.0
 
+
+# Static site published by deploy/deploy.sh
+/site
+/site.new
+/site.old

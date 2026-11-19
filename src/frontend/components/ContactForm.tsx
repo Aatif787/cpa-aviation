@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CONTACT_EMAIL, buildEnquiryMailto, contactSchema } from "@/lib/contact";
+import { leadsConfigured, submitLead } from "@/lib/leads";
 
 type ContactField = "name" | "company" | "email" | "subject" | "message";
 
@@ -19,8 +20,11 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
     message: "",
   });
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<ContactField, string>>>({});
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
+  // "sent": accepted by the leads API. "drafted": opened as an email draft (API not configured).
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "drafted">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [fallbackMailto, setFallbackMailto] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
 
   const clearFieldError = (key: ContactField) => {
     setFieldErrors((prev) => {
@@ -50,8 +54,9 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
       if (error) setError(null);
     };
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (status === "sending") return;
     const parsed = contactSchema.safeParse(form);
     if (!parsed.success) {
       const nextFieldErrors: Partial<Record<ContactField, string>> = {};
@@ -76,8 +81,34 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
 
     setError(null);
     setFieldErrors({});
-    window.location.href = buildEnquiryMailto(parsed.data);
-    setStatus("sent");
+    setFallbackMailto(null);
+    const mailto = buildEnquiryMailto(parsed.data);
+
+    // Leads API not configured in this build: open a prefilled email draft instead.
+    if (!leadsConfigured) {
+      window.location.href = mailto;
+      setStatus("drafted");
+      return;
+    }
+
+    setStatus("sending");
+    const result = await submitLead(parsed.data, honeypot);
+    if (result.status === "accepted") {
+      setForm({ name: "", company: "", email: "", subject: "", message: "" });
+      setStatus("sent");
+      return;
+    }
+
+    setStatus("idle");
+    if (result.status === "invalid") {
+      const nextFieldErrors: Partial<Record<ContactField, string>> = {};
+      for (const field of result.fields) nextFieldErrors[field] = "Please check this field.";
+      setFieldErrors(nextFieldErrors);
+      setError("Please review the highlighted fields.");
+      return;
+    }
+    setFallbackMailto(mailto);
+    setError("Your enquiry could not be sent right now. Please try again, or send it by email.");
   }
 
   function resetForm() {
@@ -87,6 +118,21 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
   }
 
   if (status === "sent") {
+    return (
+      <div className="contact-form-done-card" role="status">
+        <CheckCircle2 className="contact-done-icon" size={20} aria-hidden="true" />
+        <p className="contact-form-done">
+          Thank you. Your enquiry has been received by CPA Aviation Leasing Capital IFSC Private
+          Limited, and the team will respond to your email.
+        </p>
+        <Button type="button" variant="navigation" onClick={resetForm}>
+          Send another enquiry
+        </Button>
+      </div>
+    );
+  }
+
+  if (status === "drafted") {
     return (
       <div className="contact-form-done-card" role="status">
         <CheckCircle2 className="contact-done-icon" size={20} aria-hidden="true" />
@@ -213,14 +259,40 @@ export function ContactForm({ prefilledSubject, initialSubject }: ContactFormPro
           </span>
         )}
       </label>
+      {/* Honeypot for spam bots: hidden from people and assistive tech, must stay empty. */}
+      <div
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}
+      >
+        <input
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+        />
+      </div>
       {error && (
         <p className="contact-form-alert" role="alert">
           {error}
+          {fallbackMailto && (
+            <>
+              {" "}
+              <a href={fallbackMailto}>Send by email to {CONTACT_EMAIL}</a>
+            </>
+          )}
         </p>
       )}
-      <Button type="submit" variant="aviation" className="contact-submit-btn">
+      <Button
+        type="submit"
+        variant="aviation"
+        className="contact-submit-btn"
+        disabled={status === "sending"}
+        aria-busy={status === "sending"}
+      >
         <span>
-          Submit Enquiry <ArrowUpRight />
+          {status === "sending" ? "Sending…" : "Submit Enquiry"} <ArrowUpRight />
         </span>
       </Button>
     </form>
