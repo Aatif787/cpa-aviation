@@ -12,6 +12,11 @@ SITE_URL="https://www.cpaleasing.com"
 cd "$APP_DIR"
 echo "==> $APP_DIR  (branch: $BRANCH)"
 
+if ! grep -qs '^VITE_LEADS_SITE_KEY=.\+' .env.production; then
+  echo "    WARNING: VITE_LEADS_SITE_KEY is not set in $APP_DIR/.env.production" >&2
+  echo "             The contact form will fall back to opening an email draft." >&2
+fi
+
 echo "==> Pulling latest code"
 git fetch --prune origin
 git checkout "$BRANCH"

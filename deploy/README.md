@@ -21,10 +21,41 @@
 
 ---
 
+## Contact form (Leads API)
+
+Contact form browser से सीधे `https://clp.cpaleasing.com/api/v1/leads` पर enquiry भेजता है। भेजा जाने वाला payload:
+
+```json
+{ "type": "quote", "name": "...", "email": "...", "phone": "", "message": "Subject: ...\nCompany: ...\n\n...", "website": "" }
+```
+
+- Form में phone field नहीं है, इसलिए `phone` खाली जाता है।
+- Subject और Company `message` की शुरुआत में जुड़ जाते हैं।
+- `website` एक honeypot field है, यानी spam bots को पकड़ने के लिए छिपा हुआ field।
+
+Site key सिर्फ `www.cpaleasing.com` और `cpaleasing.com` से भेजी गई requests पर काम करती है, इसलिए browser bundle में इसका होना ठीक है। Key **git में नहीं** रखी जाती। VPS पर इसे `/app/cpa-aviation/.env.production` में डालें:
+
+```bash
+cat > /app/cpa-aviation/.env.production <<'EOF'
+VITE_LEADS_API_URL=https://clp.cpaleasing.com/api/v1/leads
+VITE_LEADS_SITE_KEY=<यहाँ site key>
+EOF
+```
+
+Vite यह फाइल build के समय पढ़ता है। Key बदलने पर `deploy.sh` दोबारा चलाना होगा। अगर key सेट नहीं है, तो form पहले की तरह email draft (mailto) खोल देगा।
+
+---
+
 ## 1. Code लाएं और साइट चालू करें
 
 ```bash
-git clone https://github.com/CPA-aviation/cpa-aviation.git /app/cpa-aviation && bash /app/cpa-aviation/deploy/deploy.sh
+git clone https://github.com/CPA-aviation/cpa-aviation.git /app/cpa-aviation
+```
+
+फिर ऊपर बताई गई `.env.production` फाइल बनाएं। उसके बाद:
+
+```bash
+bash /app/cpa-aviation/deploy/deploy.sh
 ```
 
 Script के आखिर में `OK — site is responding` दिखना चाहिए। फिर PM2 की list सेव करें, ताकि reboot के बाद भी app चालू रहे:
